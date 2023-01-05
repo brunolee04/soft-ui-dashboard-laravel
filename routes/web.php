@@ -33,6 +33,10 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('billing');
 	})->name('billing');
 
+	Route::get('movie', function () {
+		return view('movie');
+	})->name('movie');
+
 	Route::get('profile', function () {
 		return view('profile');
 	})->name('profile');

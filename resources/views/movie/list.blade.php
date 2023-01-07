@@ -6,10 +6,13 @@
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
+        
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Authors table</h6>
+              <h6>Filmes e Séries</h6>
+              <div style='float:right;'><a href="{{ url('/movie/register')}}" class='btn bg-gradient-info active mb-0 text-white'>+</a></div>
             </div>
+            
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">

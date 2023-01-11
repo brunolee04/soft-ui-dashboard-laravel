@@ -17,8 +17,8 @@
  
 
           <div class="ct-example" style="position: relative;border: 2px solid #f5f7ff !important;border-bottom: none !important;padding: 1rem 1rem 2rem 1rem;">
-            <form>
-
+            <form method="POST" action="/movie">
+              @csrf
               
               <div class="row">
                 <div class="col-md-6">

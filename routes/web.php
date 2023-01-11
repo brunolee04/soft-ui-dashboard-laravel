@@ -37,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('movie',[MovieController::class, 'list']);
 	Route::get('movie/register',[MovieController::class, 'register']);
 
+	Route::post('/movie',[MovieController::class, 'save']);
+
 	Route::get('profile', function () {
 		return view('profile');
 	})->name('profile');

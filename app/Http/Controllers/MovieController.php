@@ -14,4 +14,8 @@ class MovieController extends Controller{
     public function register(){
         return view('movie/register');
     }
+
+    public function save(Request $request){
+        va
+    }
 }

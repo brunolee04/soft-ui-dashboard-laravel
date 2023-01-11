@@ -2,9 +2,14 @@
 
 return [
 
+
+    'guzzle_tmd_api_url' => env('GUZZLE_TMD_API_URL'),
+
+
     'scheduled' => env('SCHEDULED_TIME', 15),
     'hour' => env('SCHEDULED_HOUR', ''),
     'min' => env('SCHEDULED_MIN', ''),
+    
 
     /*
     |--------------------------------------------------------------------------

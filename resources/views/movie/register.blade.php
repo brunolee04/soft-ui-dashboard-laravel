@@ -26,12 +26,12 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="email" class="form-control"  placeholder="Título" onfocus="focused(this)" onfocusout="defocused(this)">
+                        <input type="text" class="form-control" name='movie_url'  placeholder="Url" onfocus="focused(this)" onfocusout="defocused(this)">
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                       <div class="form-group">
-                        <input type="text" placeholder="Regular" class="form-control"  onfocus="focused(this)" onfocusout="defocused(this)">
+                        <button class='btn bg-gradient-primary active mb-0 text-white'><i class="fa fa-search"></i></a>
                       </div>
                     </div>
                   </div>

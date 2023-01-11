@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class MovieController extends Controller{
     //
@@ -16,6 +17,11 @@ class MovieController extends Controller{
     }
 
     public function save(Request $request){
-        va
+        $movie_url = $request->input('movie_url');
+        echo $movie_url;
+
+         $theUrl     = config('app.guzzle_tmd_api_url').'/example.json';
+         $users   = Http ::get($theUrl);
+         return $users;
     }
 }

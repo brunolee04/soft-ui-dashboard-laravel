@@ -4,6 +4,8 @@ return [
 
 
     'guzzle_tmd_api_url' => env('GUZZLE_TMD_API_URL'),
+    'guzzle_tmd_api_key' => env('GUZZLE_TMD_API_KEY'),
+    
 
 
     'scheduled' => env('SCHEDULED_TIME', 15),

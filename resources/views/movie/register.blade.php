@@ -26,7 +26,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="text" class="form-control" name='movie_url'  placeholder="Url" onfocus="focused(this)" onfocusout="defocused(this)">
+                        <input type="text" class="form-control" name='movie_id'  placeholder="ID do filme - TMDB" onfocus="focused(this)" onfocusout="defocused(this)">
                       </div>
                     </div>
                     <div class="col-md-3">

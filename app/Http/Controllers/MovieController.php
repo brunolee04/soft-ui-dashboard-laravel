@@ -16,6 +16,10 @@ class MovieController extends Controller{
         return view('movie/register');
     }
 
+    public function edit(){
+        return view('movie/editer');
+    }
+
     public function save(Request $request){
         $movie_id = $request->input('movie_id');
         

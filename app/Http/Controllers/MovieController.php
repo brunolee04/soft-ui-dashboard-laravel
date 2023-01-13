@@ -57,6 +57,10 @@ class MovieController extends Controller{
 
                $dbMovie->movie_feed_url = $theUrl;
 
+               $dbMovie->movie_image_1 = config('app.guzzle_tmd_image_url').$movie_info['poster_path'];
+
+               $dbMovie->movie_image_2 = config('app.guzzle_tmd_image_url').$movie_info['backdrop_path'];
+
                echo $theUrl;
 
              // var_dump($movie_info['runtime']);

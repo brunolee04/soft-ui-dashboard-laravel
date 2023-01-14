@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Movie;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Movie;
+
 
 class MovieController extends Controller{
     //
+
+    private $show_type = array(
+                                'movie' => 0,
+                                'serie' => 1
+                            );
 
     public function list(){
         return view('movie/list');
@@ -35,13 +42,32 @@ class MovieController extends Controller{
             $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$movie_id.'?api_key='.config('app.guzzle_tmd_api_key').'&language=pt-BR';
 
             $response   = Http ::get($theUrl);
-            
+           
             //
             if($response->getStatusCode()==200){
                $movie_info =  $response->json();
                $dbMovie = new Movie();
 
                var_dump($movie_info);
+
+               $movie_image_1 = config('app.guzzle_tmd_image_url').$movie_info['poster_path'];
+
+               $movie_image_1_parts = explode('/', $movie_image_1);
+
+               $local_image_url1 = config('app.local_image_url').'/movie/'.end($movie_image_1_parts); 
+
+               Storage::disk('local')->put(config('app.local_movie_image_url').end($movie_image_1_parts), file_get_contents($movie_image_1));
+
+
+               $movie_image_2 = config('app.guzzle_tmd_image_url').$movie_info['backdrop_path'];
+               
+               $movie_image_2_parts = explode('/', $movie_image_2);
+
+               $local_image_url2 = config('app.local_image_url').'/movie/'.end($movie_image_2_parts); 
+
+               Storage::disk('local')->put(config('app.local_movie_image_url').end($movie_image_2_parts), file_get_contents($movie_image_2));
+
+
 
                $dbMovie->movie_duration = $movie_info['runtime'];
                
@@ -61,9 +87,26 @@ class MovieController extends Controller{
 
                $dbMovie->movie_image_2 = config('app.guzzle_tmd_image_url').$movie_info['backdrop_path'];
 
-               echo $theUrl;
+               $dbMovie->local_url_movie_image1 = $local_image_url1;
 
-             // var_dump($movie_info['runtime']);
+               $dbMovie->local_url_movie_image2 = $local_image_url2;
+
+               $dbMovie->movie_type_movie_type_id = $this->show_type['movie'];
+
+               $dbMovie->save(); 
+            }
+            else{
+                $theUrl     = config('app.guzzle_tmd_api_url').'/tv/'.$movie_id.'?api_key='.config('app.guzzle_tmd_api_key').'&language=pt-BR';
+
+                $response   = Http ::get($theUrl);
+                //var_dump($response);
+                //
+                if($response->getStatusCode()==200){
+                    $movie_info =  $response->json();
+                    $dbMovie = new Movie();
+
+                    var_dump($movie_info);
+                }
             }
             
             //return $users;

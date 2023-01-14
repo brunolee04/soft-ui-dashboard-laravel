@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Movie extends Model{
     use HasFactory;
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'movie';
+    /**
      * The primary key associated with the table.
      *
      * @var string

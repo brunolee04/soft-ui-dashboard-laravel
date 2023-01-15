@@ -6,17 +6,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Movie;
+use App\Models\MovieDescription;
 
 
 class MovieController extends Controller{
     //
 
+    private $language_id = 0;
+
     private $show_type = array(
                                 'movie' => 0,
                                 'serie' => 1
                             );
+                            
 
     public function list(){
+        
         return view('movie/list');
     }
 
@@ -35,6 +40,8 @@ class MovieController extends Controller{
     }
 
     public function save(Request $request){
+        $this->language_id = config('app.language_id');
+
         $movie_id = $request->input('movie_id');
         
         if($this->formValidation(array('movie_id'=>1))){
@@ -94,6 +101,25 @@ class MovieController extends Controller{
                $dbMovie->movie_type_movie_type_id = $this->show_type['movie'];
 
                $dbMovie->save(); 
+
+               $movie_id = $dbMovie->movie_id;
+
+
+               // Saves the movie´s description
+               $dbMovieDescription = new MovieDescription();
+
+               $dbMovieDescription->movie_description_name = $movie_info['title'];
+
+               $dbMovieDescription->movie_description_description = $movie_info['overview'];
+
+               $dbMovieDescription->movie_description_tagline = $movie_info['tagline'];
+
+               $dbMovieDescription->language_id = $this->language_id;
+
+               $dbMovieDescription->movie_id = $movie_id;
+
+               $dbMovieDescription->save();
+
             }
             else{
                 $theUrl     = config('app.guzzle_tmd_api_url').'/tv/'.$movie_id.'?api_key='.config('app.guzzle_tmd_api_key').'&language=pt-BR';

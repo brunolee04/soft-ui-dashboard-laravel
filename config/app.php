@@ -2,7 +2,7 @@
 
 return [
 
-
+    'language_id'            => env('LANGUAGE_ID'),
     'guzzle_tmd_api_url'     => env('GUZZLE_TMD_API_URL'),
     'guzzle_tmd_api_key'     => env('GUZZLE_TMD_API_KEY'),
     'guzzle_tmd_image_url'   => env('GUZZLE_TMD_IMAGE_URL'),

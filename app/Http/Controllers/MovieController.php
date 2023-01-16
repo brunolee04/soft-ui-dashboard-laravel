@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\MovieGenderController;
 
@@ -67,7 +68,7 @@ class MovieController extends Controller{
 
                $local_image_url1 = config('app.local_image_url').'/movie/'.end($movie_image_1_parts); 
 
-               Storage::disk('local')->put(config('app.local_movie_image_url').end($movie_image_1_parts), file_get_contents($movie_image_1));
+              // Storage::disk('local')->put(config('app.local_movie_image_url').end($movie_image_1_parts), file_get_contents($movie_image_1));
 
 
                $movie_image_2 = config('app.guzzle_tmd_image_url').$movie_info['backdrop_path'];
@@ -76,7 +77,7 @@ class MovieController extends Controller{
 
                $local_image_url2 = config('app.local_image_url').'/movie/'.end($movie_image_2_parts); 
 
-               Storage::disk('local')->put(config('app.local_movie_image_url').end($movie_image_2_parts), file_get_contents($movie_image_2));
+              // Storage::disk('local')->put(config('app.local_movie_image_url').end($movie_image_2_parts), file_get_contents($movie_image_2));
 
 
 
@@ -125,6 +126,38 @@ class MovieController extends Controller{
                $dbMovieDescription->save();
 
                
+
+               $genres = $movie_info['genres'];
+
+               foreach($genres as $genre){
+                    //Dealling with movie´s gender
+                    $dbMovieGender = new MovieGender();
+                    var_dump($genre);
+                    $movie_gender_info = DB::table('movie_gender')->where('api_gender_id',$genre['id'])->first();
+                    var_dump($movie_gender_info);
+                    if(is_null($movie_gender_info)){
+
+                        $dbMovieGender->language_id       = $this->language_id;
+
+                        $dbMovieGender->movie_gender_name = $genre['name'];
+
+                        $dbMovieGender->api_gender_id     = $genre['id'];
+
+                        $dbMovieGender->save();
+
+                        $movie_gender_id = $dbMovieGender->movie_gender_id;
+   
+                    }
+                    else{
+                        $movie_gender_id = $movie_gender_info->movie_gender_id;
+                    }
+
+                    DB::table('movie_to_movie_gender')->insert([
+                        'movie_id' => $movie_id,
+                        'movie_gender_id' => $movie_gender_id
+                    ]);
+                    
+               }
 
             }
             else{

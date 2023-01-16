@@ -359,6 +359,12 @@ CREATE TABLE `movie_gender`(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 -- --------------------------------------------------------
 
+CREATE TABLE `movie_to_movie_gender`(
+  `movie_to_movie_gender_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `movie_id` int(11),
+  `movie_gender_id` int(11)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Estrutura da tabela `password_resets`
 --

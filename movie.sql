@@ -268,18 +268,6 @@ CREATE TABLE `movie` (
 -- Extraindo dados da tabela `movie`
 --
 
-INSERT INTO `movie` (`movie_id`, `movie_duration`, `movie_year_launch`, `movie_date_launch`, `movie_rating`, `movie_parental_rating`, `movie_date_added`, `movie_feed_url`, `movie_image_1`, `movie_image_2`, `movie_type_movie_type_id`, `movie_imdb_id`, `local_url_movie_image1`, `local_url_movie_image2`) VALUES
-(5, 95, 2023, '2023-01-13', NULL, 'L', '2023-01-14', 'https://api.themoviedb.org/3/movie/858408?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/ziAL5224J9QHA0S0exarpkz4eUN.jpg', 'https://image.tmdb.org/t/p/original/cJFNCdlWpmLTzHRqbmmOzKjXAjG.jpg', 0, 'tt15334430', 'http://127.0.0.1:8000/storage/app/public/movie/ziAL5224J9QHA0S0exarpkz4eUN.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/cJFNCdlWpmLTzHRqbmmOzKjXAjG.jpg'),
-(6, 90, 2011, '2011-10-27', NULL, 'L', '2023-01-15', 'https://api.themoviedb.org/3/movie/417859?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'https://image.tmdb.org/t/p/original/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg', 0, 'tt0448694', 'http://127.0.0.1:8000/storage/app/public/movie/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg'),
-(7, 90, 2011, '2011-10-27', NULL, 'L', '2023-01-15', 'https://api.themoviedb.org/3/movie/417859?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'https://image.tmdb.org/t/p/original/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg', 0, 'tt0448694', 'http://127.0.0.1:8000/storage/app/public/movie/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg'),
-(8, 90, 2011, '2011-10-27', NULL, 'L', '2023-01-15', 'https://api.themoviedb.org/3/movie/417859?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'https://image.tmdb.org/t/p/original/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg', 0, 'tt0448694', 'http://127.0.0.1:8000/storage/app/public/movie/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg'),
-(9, 90, 2011, '2011-10-27', NULL, 'L', '2023-01-15', 'https://api.themoviedb.org/3/movie/417859?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'https://image.tmdb.org/t/p/original/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg', 0, 'tt0448694', 'http://127.0.0.1:8000/storage/app/public/movie/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg'),
-(10, 90, 2011, '2011-10-27', NULL, 'L', '2023-01-15', 'https://api.themoviedb.org/3/movie/417859?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'https://image.tmdb.org/t/p/original/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg', 0, 'tt0448694', 'http://127.0.0.1:8000/storage/app/public/movie/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg'),
-(11, 90, 2011, '2011-10-27', NULL, 'L', '2023-01-15', 'https://api.themoviedb.org/3/movie/417859?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'https://image.tmdb.org/t/p/original/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg', 0, 'tt0448694', 'http://127.0.0.1:8000/storage/app/public/movie/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg'),
-(12, 90, 2011, '2011-10-27', NULL, 'L', '2023-01-15', 'https://api.themoviedb.org/3/movie/417859?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'https://image.tmdb.org/t/p/original/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg', 0, 'tt0448694', 'http://127.0.0.1:8000/storage/app/public/movie/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg'),
-(13, 90, 2011, '2011-10-27', NULL, 'L', '2023-01-15', 'https://api.themoviedb.org/3/movie/417859?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'https://image.tmdb.org/t/p/original/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg', 0, 'tt0448694', 'http://127.0.0.1:8000/storage/app/public/movie/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg'),
-(14, 90, 2011, '2011-10-27', NULL, 'L', '2023-01-15', 'https://api.themoviedb.org/3/movie/417859?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'https://image.tmdb.org/t/p/original/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg', 0, 'tt0448694', 'http://127.0.0.1:8000/storage/app/public/movie/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg'),
-(15, 90, 2011, '2011-10-27', NULL, 'L', '2023-01-15', 'https://api.themoviedb.org/3/movie/417859?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'https://image.tmdb.org/t/p/original/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg', 0, 'tt0448694', 'http://127.0.0.1:8000/storage/app/public/movie/ehBNf4ZO2xITFRC4KXr2v7rNeY3.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/eSdpZZQubPSZ47qppFfUPbKsWlw.jpg');
 
 -- --------------------------------------------------------
 
@@ -299,9 +287,6 @@ CREATE TABLE `movie_description` (
 --
 -- Extraindo dados da tabela `movie_description`
 --
-
-INSERT INTO `movie_description` (`movie_description_id`, `movie_description_name`, `movie_description_description`, `language_id`, `movie_id`, `movie_description_tagline`) VALUES
-(1, 'Gato de Botas', 'Muito antes de conhecer o ogro Shrek e sua turma, Gato de Botas vai viver uma grande aventura ao lado de Humpty Dumpty e Kitty Pata Mansa. Dipostos a roubar os feijões mágicos do casal fora da lei Jack e Jill, o trio quer mesmo é botar as mãos na famosa gansa que bota ovos de ouro. Mas algumas coisas não estavam nos planos e Gato vai descobrir, meio atrasado, que tem um grande problema pela frente para conseguir limpar o que ficou para trás: a sua honra.', 1, 15, 'Viva perigosamente. Lute por justiça. Reze por misericórdia.');
 
 -- --------------------------------------------------------
 
@@ -364,11 +349,20 @@ CREATE TABLE `movie_video` (
   `movie_videocol` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+
+CREATE TABLE `movie_gender`(
+  `movie_gender_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `language_id` int,
+  `movie_gender_name` varchar(50),
+  `api_gender_id` int
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 -- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `password_resets`
 --
+
 
 CREATE TABLE `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

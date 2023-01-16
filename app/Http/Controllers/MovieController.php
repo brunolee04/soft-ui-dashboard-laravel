@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+
+use App\Http\Controllers\MovieGenderController;
+
 use App\Models\Movie;
 use App\Models\MovieDescription;
+use App\Models\MovieGender;
 
 
 class MovieController extends Controller{
@@ -119,6 +123,8 @@ class MovieController extends Controller{
                $dbMovieDescription->movie_id = $movie_id;
 
                $dbMovieDescription->save();
+
+               
 
             }
             else{

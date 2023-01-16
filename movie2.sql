@@ -28,24 +28,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `actor` (
-  `actor_id` int(11) NOT NULL,
-  `actor_name` varchar(45) NOT NULL,
-  `actor_image_url` varchar(45) NOT NULL,
-  `actor_image_source` varchar(45) DEFAULT NULL,
-  `actor_source_url` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `actor_description`
---
-
-CREATE TABLE `actor_description` (
-  `actor_description_id` int(11) NOT NULL,
-  `actor_description_description` text DEFAULT NULL,
-  `actor_actor_id` int(11) NOT NULL,
-  `language_language_id` int(11) NOT NULL
+  `actor_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `actor_gender` smallint,
+  `actor_name` varchar(100) NOT NULL,
+  `actor_image_url` varchar(150) NOT NULL,
+  `actor_image_source` varchar(150) DEFAULT NULL,
+  `actor_source_url` varchar(150) DEFAULT NULL,
+  `api_actor_id` int
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -55,12 +44,16 @@ CREATE TABLE `actor_description` (
 --
 
 CREATE TABLE `actor_to_movie` (
-  `actor_to_movie_id` int(11) NOT NULL,
-  `movie_movie_id` int(11) NOT NULL,
-  `actor_actor_id` int(11) NOT NULL
+  `actor_to_movie_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `movie_id` int(11) NOT NULL,
+  `actor_id` int(11) NOT NULL,
+  `actor_character` varchar(100)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
+
+-- --------------------------------------------------------
+
 
 --
 -- Estrutura da tabela `challenge`
@@ -268,7 +261,7 @@ CREATE TABLE `movie` (
   `movie_rating` smallint(6) DEFAULT NULL COMMENT 'nota geral do filme baseado no calculo temporário da média das notas dadas.',
   `movie_parental_rating` varchar(3) DEFAULT NULL COMMENT 'classificação indicativa do filme',
   `movie_date_added` date DEFAULT NULL,
-  `movie_feed_url` varchar(120) DEFAULT NULL,
+  `movie_feed_url` varchar(150) DEFAULT NULL,
   `movie_image_1` varchar(120) DEFAULT NULL,
   `movie_image_2` varchar(120) DEFAULT NULL,
   `movie_type_movie_type_id` int(11) NOT NULL COMMENT '0 - filme, 1 - série',

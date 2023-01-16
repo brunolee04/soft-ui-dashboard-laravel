@@ -12,6 +12,7 @@ use App\Http\Controllers\MovieGenderController;
 use App\Models\Movie;
 use App\Models\MovieDescription;
 use App\Models\MovieGender;
+use App\Models\ProductionCompany;
 
 
 class MovieController extends Controller{
@@ -126,15 +127,15 @@ class MovieController extends Controller{
                $dbMovieDescription->save();
 
                
+                //Dealling with movie´s gender
+                $genres = $movie_info['genres'];
 
-               $genres = $movie_info['genres'];
-
-               foreach($genres as $genre){
-                    //Dealling with movie´s gender
+                foreach($genres as $genre){
+                    
                     $dbMovieGender = new MovieGender();
-                    var_dump($genre);
+
                     $movie_gender_info = DB::table('movie_gender')->where('api_gender_id',$genre['id'])->first();
-                    var_dump($movie_gender_info);
+
                     if(is_null($movie_gender_info)){
 
                         $dbMovieGender->language_id       = $this->language_id;
@@ -157,7 +158,42 @@ class MovieController extends Controller{
                         'movie_gender_id' => $movie_gender_id
                     ]);
                     
-               }
+                }
+
+
+
+                //Dealling with movie´s productions company
+                $production_companies = $movie_info['production_companies'];
+
+                foreach($production_companies as $production_company){
+                    
+                    $dbProductionCompany = new ProductionCompany();
+
+                    $production_company_info = DB::table('production_company')->where('api_production_company_id',$production_company['id'])->first();
+
+                    if(is_null($production_company_info)){
+
+                        $dbProductionCompany->production_company_name = $production_company['name'];
+
+                        $dbProductionCompany->production_companies_logo_url = config('app.guzzle_tmd_image_url').$production_company['logo_path'];
+
+                        $dbProductionCompany->api_production_company_id = $production_company['id'];
+
+                        $dbProductionCompany->save();
+
+                        $production_company_id = $dbProductionCompany->production_company_id;
+   
+                    }
+                    else{
+                        $production_company_id = $dbProductionCompany->production_company_id;
+                    }
+
+                    DB::table('movie_to_production_company')->insert([
+                        'movie_id' => $movie_id,
+                        'production_company_id' => $production_company_id
+                    ]);
+                    
+                }
 
             }
             else{

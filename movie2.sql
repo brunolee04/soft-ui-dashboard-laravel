@@ -72,6 +72,19 @@ CREATE TABLE `challenge` (
   `challenge_rule` text DEFAULT NULL COMMENT 'regra do desafio em formato json\n'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `production_company`(
+    `production_company_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `production_company_name` varchar(40),
+    `production_companies_logo_url` varchar(150),
+    `api_production_company_id` int(11)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `movie_to_production_company`(
+    `movie_to_production_company_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `movie_id` int(11),
+    `production_company_id` int(11)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- --------------------------------------------------------
 
 --

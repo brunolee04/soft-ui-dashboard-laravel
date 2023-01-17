@@ -158,11 +158,12 @@ CREATE TABLE `customer_rates_movie` (
 --
 
 CREATE TABLE `director` (
-  `director_id` int(11) NOT NULL,
+  `director_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `director_name` varchar(45) DEFAULT NULL,
   `director_image_source` varchar(45) DEFAULT NULL,
   `director_source_url` varchar(45) DEFAULT NULL,
-  `director_image_url` varchar(45) DEFAULT NULL
+  `director_image_url` varchar(45) DEFAULT NULL,
+  `api_director_id` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -185,8 +186,8 @@ CREATE TABLE `director_description` (
 
 CREATE TABLE `director_to_movie` (
   `director_to_movie_id` int(11) NOT NULL,
-  `director_director_id` int(11) NOT NULL,
-  `movie_movie_id` int(11) NOT NULL
+  `director_id` int(11) NOT NULL,
+  `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -254,7 +255,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `movie` (
-  `movie_id` int(11) NOT NULL,
+  `movie_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `movie_duration` smallint(6) DEFAULT NULL,
   `movie_year_launch` smallint(6) DEFAULT NULL,
   `movie_date_launch` date DEFAULT NULL,
@@ -267,7 +268,8 @@ CREATE TABLE `movie` (
   `movie_type_movie_type_id` int(11) NOT NULL COMMENT '0 - filme, 1 - série',
   `movie_imdb_id` varchar(15) DEFAULT NULL,
   `local_url_movie_image1` varchar(120) DEFAULT NULL,
-  `local_url_movie_image2` varchar(120) DEFAULT NULL
+  `local_url_movie_image2` varchar(120) DEFAULT NULL,
+  `api_movie_id` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -373,7 +375,7 @@ INSERT INTO `movie_gender` (`movie_gender_id`, `language_id`, `movie_gender_name
 CREATE TABLE `movie_image` (
   `movie_image_id` int(11) NOT NULL,
   `movie_image_source` varchar(45) DEFAULT NULL,
-  `movie_movie_id` int(11) NOT NULL
+  `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -383,8 +385,9 @@ CREATE TABLE `movie_image` (
 --
 
 CREATE TABLE `movie_season` (
-  `movie_season_id` int(11) NOT NULL,
-  `movie_movie_id` int(11) NOT NULL
+  `movie_season_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `movie_id` int(11) NOT NULL,
+  `season` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -396,7 +399,7 @@ CREATE TABLE `movie_season` (
 CREATE TABLE `movie_to_customer_list` (
   `movie_to_customer_list_id` int(11) NOT NULL,
   `customer_list_customer_list_id` int(11) NOT NULL,
-  `movie_movie_id` int(11) NOT NULL
+  `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -441,7 +444,7 @@ CREATE TABLE `movie_video` (
   `movie_video_id` int(11) NOT NULL,
   `movie_video_engine` varchar(15) NOT NULL COMMENT 'origem do módulo do vídeo: YOUTUBE, VIMEO... etc.',
   `movie_video_url_source` varchar(45) NOT NULL,
-  `movie_movie_id` int(11) NOT NULL,
+  `movie_id` int(11) NOT NULL,
   `movie_video_description` text DEFAULT NULL,
   `movie_videocol` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -588,7 +591,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `location`, `ab
 CREATE TABLE `writer` (
   `writer_id` int(11) NOT NULL,
   `writer_name` varchar(45) DEFAULT NULL,
-  `writer_description` text DEFAULT NULL
+  `writer_description` text DEFAULT NULL,
+  `api_writer_id` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -613,7 +617,7 @@ CREATE TABLE `writer_description` (
 CREATE TABLE `writer_to_movie` (
   `writer_to_movie_id` int(11) NOT NULL,
   `writer_writer_id` int(11) NOT NULL,
-  `movie_movie_id` int(11) NOT NULL
+  `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

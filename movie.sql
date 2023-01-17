@@ -56,7 +56,7 @@ CREATE TABLE `actor_description` (
 
 CREATE TABLE `actor_to_movie` (
   `actor_to_movie_id` int(11) NOT NULL,
-  `movie_movie_id` int(11) NOT NULL,
+  `movie_id` int(11) NOT NULL,
   `actor_actor_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -180,7 +180,7 @@ CREATE TABLE `director_description` (
 CREATE TABLE `director_to_movie` (
   `director_to_movie_id` int(11) NOT NULL,
   `director_director_id` int(11) NOT NULL,
-  `movie_movie_id` int(11) NOT NULL
+  `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -297,7 +297,7 @@ CREATE TABLE `movie_description` (
 CREATE TABLE `movie_image` (
   `movie_image_id` int(11) NOT NULL,
   `movie_image_source` varchar(45) DEFAULT NULL,
-  `movie_movie_id` int(11) NOT NULL
+  `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -308,7 +308,7 @@ CREATE TABLE `movie_image` (
 
 CREATE TABLE `movie_season` (
   `movie_season_id` int(11) NOT NULL,
-  `movie_movie_id` int(11) NOT NULL
+  `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -320,7 +320,7 @@ CREATE TABLE `movie_season` (
 CREATE TABLE `movie_to_customer_list` (
   `movie_to_customer_list_id` int(11) NOT NULL,
   `customer_list_customer_list_id` int(11) NOT NULL,
-  `movie_movie_id` int(11) NOT NULL
+  `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -344,7 +344,7 @@ CREATE TABLE `movie_video` (
   `movie_video_id` int(11) NOT NULL,
   `movie_video_engine` varchar(15) NOT NULL COMMENT 'origem do módulo do vídeo: YOUTUBE, VIMEO... etc.',
   `movie_video_url_source` varchar(45) NOT NULL,
-  `movie_movie_id` int(11) NOT NULL,
+  `movie_id` int(11) NOT NULL,
   `movie_video_description` text DEFAULT NULL,
   `movie_videocol` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -531,7 +531,7 @@ CREATE TABLE `writer_description` (
 CREATE TABLE `writer_to_movie` (
   `writer_to_movie_id` int(11) NOT NULL,
   `writer_writer_id` int(11) NOT NULL,
-  `movie_movie_id` int(11) NOT NULL
+  `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

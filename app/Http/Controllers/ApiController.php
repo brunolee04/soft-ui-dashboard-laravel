@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller{
 
     public function getMovies() {
-        // logic to get all students goes here
+        $db_movie_info = DB::table('movie')
+        ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
+        ->get();
+
         return response()->json([
-            "message" => "student record created"
+            "status"  => true,
+            "data"    => $db_movie_info
         ], 201);
       }
   

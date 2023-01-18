@@ -422,12 +422,25 @@ CREATE TABLE `movie_type` (
 --
 
 CREATE TABLE `movie_video` (
-  `movie_video_id` int(11) NOT NULL,
-  `movie_video_engine` varchar(15) NOT NULL COMMENT 'origem do módulo do vídeo: YOUTUBE, VIMEO... etc.',
-  `movie_video_url_source` varchar(45) NOT NULL,
+  `movie_video_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `movie_video_site` varchar(15) NOT NULL COMMENT 'origem do módulo do vídeo: YOUTUBE, VIMEO... etc.',
+  `movie_video_key` varchar(45) NOT NULL,
   `movie_id` int(11) NOT NULL,
+  `movie_video_iso_639_1` varchar(2),
+  `movie_video_iso_3166_1` varchar(2),
+  `movie_video_type` varchar(15),
+  `movie_video_official` smallint,
+  `movie_video_published_at` date,
+  `api_movie_video_id` varchar(40)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `movie_video_description` (
+  `movie_video_description_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `movie_video_name` varchar(200) DEFAULT NULL,
   `movie_video_description` text DEFAULT NULL,
-  `movie_videocol` varchar(45) DEFAULT NULL
+  `movie_video_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

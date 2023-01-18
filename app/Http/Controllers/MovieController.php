@@ -18,6 +18,7 @@ use App\Models\Director;
 use App\Models\Writer;
 use App\Models\Keyword;
 use App\Models\MovieCollection;
+use App\Models\MovieVideo;
 
 
 class MovieController extends Controller{
@@ -61,16 +62,15 @@ class MovieController extends Controller{
             echo $theUrl;
             $response   = Http ::get($theUrl);
            
-            //
+
             if($response->getStatusCode()==200){
 
                $movie_info =  $response->json();
-             //   var_dump($movie_info);
+
                $db_movie_info = DB::table('movie')
                         ->where('api_movie_id',$movie_info['id'])
                         ->first();
 
-             //   var_dump($db_movie_info);
                 $key = true;
                 if(is_null($db_movie_info) && $key){
                     $dbMovie = new Movie();
@@ -151,8 +151,9 @@ class MovieController extends Controller{
                     $dbMovieDescription->save();
      
                     
-                     //Dealling with movie´s gender
-                     $genres = $movie_info['genres'];
+                    //Dealling with movie´s gender
+                    if(isset($movie_info['genres'])){
+                        $genres = $movie_info['genres'];
      
                      foreach($genres as $genre){
                          
@@ -183,10 +184,9 @@ class MovieController extends Controller{
                          ]);
                          
                      }
-     
-     
-     
-                     //Dealling with movie´s productions company
+                    }
+                     
+                    //Dealling with movie´s productions company
                     if(isset($movie_info['production_companies'])){
                         $production_companies = $movie_info['production_companies'];
      
@@ -220,9 +220,8 @@ class MovieController extends Controller{
                             
                         }
                     }
-                     
-     
-                     //Dealing with Credits
+                         
+                    //Dealing with Credits
                      if(isset($movie_info['credits'])){
      
                          $credits = $movie_info['credits'];
@@ -419,6 +418,60 @@ class MovieController extends Controller{
                                 'movie_collection_id' => $movie_collection_id
                             ]);
                         
+                    }
+
+                    //Dealing with Videos
+                    if(isset($movie_info['videos'])){
+                        $videos = $movie_info['videos'];
+
+                        $videos = isset($videos['results']) ? $videos['results'] : $videos;
+
+                        foreach($videos as $video){
+
+                            $dbVideo = new MovieVideo();
+     
+                            $video_info = DB::table('movie_video')->where('api_movie_video_id',$keyword['id'])->first();
+        
+                            if(is_null($video_info)){
+
+                                $date_published_at = $video['published_at'];
+
+                                $date_published_at = strpos($date_published_at,'T')!==false? explode('T',$date_published_at) : $date_published_at;
+
+                                $date_published_at = $date_published_at[0];
+
+                                $dbVideo->api_movie_video_id = $video['id'];
+
+                                $dbVideo->movie_video_site = $video['site'];
+
+                                $dbVideo->movie_video_key = $video['key'];
+
+                                $dbVideo->movie_video_iso_639_1 = $video['iso_639_1'];
+
+                                $dbVideo->movie_video_iso_3166_1 = $video['iso_3166_1'];
+
+                                $dbVideo->movie_video_type = $video['type'];
+
+                                $dbVideo->movie_video_official = $video['official'];
+
+                                $dbVideo->movie_video_published_at = $date_published_at;
+
+                                $dbVideo->movie_id = $movie_id;
+
+                                $dbVideo->save();
+
+                                $movie_video_id = $dbVideo->movie_video_id;
+                            }
+                            else $movie_video_id = $video_info->movie_video_id;
+
+                            DB::table('movie_video_description')->insert([
+                                'movie_video_id' => $movie_video_id,
+                                'movie_video_name' => $video['name'],
+                                'language_id' => $this->language_id
+                            ]);
+                        }
+
+
                     }
 
 

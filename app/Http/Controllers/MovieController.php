@@ -15,6 +15,7 @@ use App\Models\MovieGender;
 use App\Models\ProductionCompany;
 use App\Models\Actor;
 use App\Models\Director;
+use App\Models\Writer;
 
 
 class MovieController extends Controller{
@@ -55,19 +56,21 @@ class MovieController extends Controller{
         if($this->formValidation(array('movie_id'=>1))){
 
             $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$movie_id.'?api_key='.config('app.guzzle_tmd_api_key').'&language=pt-BR&append_to_response=credits';
-
+            echo $theUrl;
             $response   = Http ::get($theUrl);
            
             //
             if($response->getStatusCode()==200){
 
                $movie_info =  $response->json();
-
+             //   var_dump($movie_info);
                $db_movie_info = DB::table('movie')
                         ->where('api_movie_id',$movie_info['id'])
                         ->first();
-            
-                if(is_null($db_movie_info)){
+
+             //   var_dump($db_movie_info);
+                $key = true;
+                if(is_null($db_movie_info) && $key){
                     $dbMovie = new Movie();
 
                     $movie_image_1 = config('app.guzzle_tmd_image_url').$movie_info['poster_path'];
@@ -112,7 +115,8 @@ class MovieController extends Controller{
                     $dbMovie->local_url_movie_image2 = $local_image_url2;
      
                     $dbMovie->movie_type_movie_type_id = $this->show_type['movie'];
-                 
+
+                    $dbMovie->api_movie_id = $movie_info['id'];                
      
                     
      
@@ -221,7 +225,7 @@ class MovieController extends Controller{
      
                          foreach($cast as $actor){
      
-                             var_dump($actor);
+                            // var_dump($actor);
                              $dbActor = new Actor();
      
                              $actor_info = DB::table('actor')->where('api_actor_id',$actor['id'])->first();
@@ -242,13 +246,18 @@ class MovieController extends Controller{
          
                              }
                              else{
-                                 $actor_id = $dbActor->actor_id;
+                                 $actor_id = $actor_info->actor_id;
                              }
-     
+                             
+
                              $actor_to_movie_info = DB::table('actor_to_movie')
                              ->where('movie_id',$movie_id)
                              ->where('actor_id',$actor_id)
                              ->first();
+
+                             if($actor['id']==8691){
+                                var_dump($actor_to_movie_info);
+                             }
      
                              if(is_null($actor_to_movie_info)){
                                  DB::table('actor_to_movie')->insert([
@@ -300,6 +309,45 @@ class MovieController extends Controller{
                                     ]);
                                 }
                             }
+
+
+                            //Dealing with Writers
+                            if(strcmp(strtolower($component['department']),'writing')==0 ){
+
+                                $writer_info = DB::table('writer')
+                                ->where('api_writer_id',$component['id'])
+                                ->first();
+
+                                if(is_null($writer_info)){
+
+                                    $dbWriter = new Writer();
+
+                                    $dbWriter->writer_name = $component['name'];
+
+                                    $dbWriter->api_writer_id = $component['id'];
+
+                                    $dbWriter->save();
+
+                                    $writer_id = $dbWriter->writer_id;
+                                }
+                                else $writer_id = $writer_info->writer_id;
+
+                                $writer_to_movie_info = DB::table('writer_to_movie')
+                                ->where('writer_id',$writer_id)
+                                ->where('movie_id',$movie_id)
+                                ->first();
+
+                                if(is_null($writer_to_movie_info)){
+                                    DB::table('writer_to_movie')->insert([
+                                        'movie_id' => $movie_id,
+                                        'writer_id' => $writer_id
+                                    ]);
+                                }
+                            }
+
+
+
+
                            
                         }
                      }

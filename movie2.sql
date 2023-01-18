@@ -37,6 +37,19 @@ CREATE TABLE `actor` (
   `api_actor_id` int
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `actor_description`
+--
+
+CREATE TABLE `actor_description` (
+  `actor_description_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `actor_description_description` text DEFAULT NULL,
+  `actor_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- --------------------------------------------------------
 
 --
@@ -66,14 +79,14 @@ CREATE TABLE `challenge` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `production_company`(
-    `production_company_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `production_company_id` int(11) NOT NULL,
     `production_company_name` varchar(40),
     `production_companies_logo_url` varchar(150),
     `api_production_company_id` int(11)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `movie_to_production_company`(
-    `movie_to_production_company_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `movie_to_production_company_id` int(11) NOT NULL,
     `movie_id` int(11),
     `production_company_id` int(11)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -134,7 +147,7 @@ CREATE TABLE `customer_movie_comment` (
   `customer_movie_comment_language_code` varchar(10) DEFAULT NULL,
   `customer_movie_comment_date_added` datetime DEFAULT NULL,
   `customer_customer_id` int(11) NOT NULL,
-  `movie_season_movie_season_id` int(11) NOT NULL
+  `movie_season_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -148,7 +161,7 @@ CREATE TABLE `customer_rates_movie` (
   `customer_rates_movie_rate` float DEFAULT NULL COMMENT 'pode ser nulo, no caso do cliente apenas marcar o filme como ''visto'', sem ter o ter avaliado. Em caso de uma avaliação, a linha será editada.',
   `customer_rates_movie_date_added` datetime NOT NULL,
   `customer_customer_id` int(11) NOT NULL,
-  `movie_season_movie_season_id` int(11) NOT NULL COMMENT 'Cada filme ou série deverá ter obrigatóriamente ao menos 1 temporada. Inclusive, no caso dos filmes, 1 temporada será vinculada a ele.'
+  `movie_season_id` int(11) NOT NULL COMMENT 'Cada filme ou série deverá ter obrigatóriamente ao menos 1 temporada. Inclusive, no caso dos filmes, 1 temporada será vinculada a ele.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -158,11 +171,11 @@ CREATE TABLE `customer_rates_movie` (
 --
 
 CREATE TABLE `director` (
-  `director_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `director_name` varchar(45) DEFAULT NULL,
-  `director_image_source` varchar(45) DEFAULT NULL,
-  `director_source_url` varchar(45) DEFAULT NULL,
-  `director_image_url` varchar(45) DEFAULT NULL,
+  `director_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `director_name` varchar(60) DEFAULT NULL,
+  `director_image_source` varchar(100) DEFAULT NULL,
+  `director_source_url` varchar(100) DEFAULT NULL,
+  `director_image_url` varchar(100) DEFAULT NULL,
   `api_director_id` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -173,7 +186,7 @@ CREATE TABLE `director` (
 --
 
 CREATE TABLE `director_description` (
-  `director_description_id` int(11) NOT NULL,
+  `director_description_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
   `director_description_description` text DEFAULT NULL,
   `director_director_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -185,7 +198,7 @@ CREATE TABLE `director_description` (
 --
 
 CREATE TABLE `director_to_movie` (
-  `director_to_movie_id` int(11) NOT NULL,
+  `director_to_movie_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
   `director_id` int(11) NOT NULL,
   `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -255,7 +268,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `movie` (
-  `movie_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `movie_id` int(11) NOT NULL,
   `movie_duration` smallint(6) DEFAULT NULL,
   `movie_year_launch` smallint(6) DEFAULT NULL,
   `movie_date_launch` date DEFAULT NULL,
@@ -272,34 +285,7 @@ CREATE TABLE `movie` (
   `api_movie_id` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Extraindo dados da tabela `movie`
---
 
-INSERT INTO `movie` (`movie_id`, `movie_duration`, `movie_year_launch`, `movie_date_launch`, `movie_rating`, `movie_parental_rating`, `movie_date_added`, `movie_feed_url`, `movie_image_1`, `movie_image_2`, `movie_type_movie_type_id`, `movie_imdb_id`, `local_url_movie_image1`, `local_url_movie_image2`) VALUES
-(1, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(2, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(3, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(4, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(5, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(6, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(7, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(8, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(9, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(10, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(11, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(12, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(13, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(14, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(15, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(16, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(17, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(18, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(19, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(20, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(21, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(22, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
-(23, 192, 2022, '2022-12-14', NULL, 'L', '2023-01-16', 'https://api.themoviedb.org/3/movie/76600?api_key=dad5a9de706bc0fc9219b3b42cb9c530&language=pt-BR', 'https://image.tmdb.org/t/p/original/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg', 0, 'tt1630029', 'http://127.0.0.1:8000/storage/app/public/movie/mbYQLLluS651W89jO7MOZcLSCUw.jpg', 'http://127.0.0.1:8000/storage/app/public/movie/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg');
 
 -- --------------------------------------------------------
 
@@ -316,33 +302,7 @@ CREATE TABLE `movie_description` (
   `movie_description_tagline` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Extraindo dados da tabela `movie_description`
---
 
-INSERT INTO `movie_description` (`movie_description_id`, `movie_description_name`, `movie_description_description`, `language_id`, `movie_id`, `movie_description_tagline`) VALUES
-(1, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 2, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(2, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 3, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(3, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 4, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(4, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 5, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(5, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 6, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(6, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 7, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(7, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 8, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(8, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 9, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(9, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 10, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(10, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 11, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(11, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 12, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(12, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 13, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(13, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 14, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(14, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 15, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(15, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 16, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(16, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 17, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(17, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 18, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(18, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 19, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(19, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 20, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(20, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 21, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(21, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 22, 'Aonde nós formos, esta família é a nossa fortaleza.'),
-(22, 'Avatar: O Caminho da Água', '12 anos depois de explorar Pandora e se juntar aos Na\'vi, Jake Sully formou uma família com Neytiri e se estabeleceu entre os clãs do novo mundo. Porém, a paz não durará para sempre.', 1, 23, 'Aonde nós formos, esta família é a nossa fortaleza.');
 
 -- --------------------------------------------------------
 
@@ -361,10 +321,6 @@ CREATE TABLE `movie_gender` (
 -- Extraindo dados da tabela `movie_gender`
 --
 
-INSERT INTO `movie_gender` (`movie_gender_id`, `language_id`, `movie_gender_name`, `api_gender_id`) VALUES
-(11, 1, 'Ficção científica', 878),
-(12, 1, 'Aventura', 12),
-(13, 1, 'Ação', 28);
 
 -- --------------------------------------------------------
 
@@ -385,7 +341,7 @@ CREATE TABLE `movie_image` (
 --
 
 CREATE TABLE `movie_season` (
-  `movie_season_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `movie_season_id` int(11) NOT NULL,
   `movie_id` int(11) NOT NULL,
   `season` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -414,14 +370,6 @@ CREATE TABLE `movie_to_movie_gender` (
   `movie_gender_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Extraindo dados da tabela `movie_to_movie_gender`
---
-
-INSERT INTO `movie_to_movie_gender` (`movie_to_movie_gender_id`, `movie_id`, `movie_gender_id`) VALUES
-(32, 23, 11),
-(33, 23, 12),
-(34, 23, 13);
 
 -- --------------------------------------------------------
 
@@ -589,9 +537,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `location`, `ab
 --
 
 CREATE TABLE `writer` (
-  `writer_id` int(11) NOT NULL,
+  `writer_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `writer_name` varchar(45) DEFAULT NULL,
-  `writer_description` text DEFAULT NULL,
   `api_writer_id` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -602,10 +549,10 @@ CREATE TABLE `writer` (
 --
 
 CREATE TABLE `writer_description` (
-  `writer_description_id` int(11) NOT NULL,
+  `writer_description_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
   `writer_description_description` text DEFAULT NULL,
-  `language_language_id` int(11) NOT NULL,
-  `writer_writer_id` int(11) NOT NULL
+  `language_id` int(11) NOT NULL,
+  `writer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -615,32 +562,11 @@ CREATE TABLE `writer_description` (
 --
 
 CREATE TABLE `writer_to_movie` (
-  `writer_to_movie_id` int(11) NOT NULL,
-  `writer_writer_id` int(11) NOT NULL,
+  `writer_to_movie_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+  `writer_id` int(11) NOT NULL,
   `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Índices para tabelas despejadas
---
-
---
--- Índices para tabela `actor`
---
-ALTER TABLE `actor`
-  ADD PRIMARY KEY (`actor_id`);
-
---
--- Índices para tabela `actor_description`
---
-ALTER TABLE `actor_description`
-  ADD PRIMARY KEY (`actor_description_id`);
-
---
--- Índices para tabela `actor_to_movie`
---
-ALTER TABLE `actor_to_movie`
-  ADD PRIMARY KEY (`actor_to_movie_id`);
 
 --
 -- Índices para tabela `challenge`
@@ -678,6 +604,10 @@ ALTER TABLE `movie`
 --
 ALTER TABLE `movie_description`
   ADD PRIMARY KEY (`movie_description_id`);
+
+
+ALTER TABLE `movie_season`
+  ADD PRIMARY KEY (`movie_season_id`);
 
 --
 -- Índices para tabela `movie_gender`
@@ -732,7 +662,8 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de tabela `movie`
 --
 ALTER TABLE `movie`
-  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT;
+
 
 --
 -- AUTO_INCREMENT de tabela `movie_description`
@@ -745,6 +676,13 @@ ALTER TABLE `movie_description`
 --
 ALTER TABLE `movie_gender`
   MODIFY `movie_gender_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+
+--
+-- AUTO_INCREMENT de tabela `movie_season`
+--
+ALTER TABLE `movie_season`
+  MODIFY `movie_season_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `movie_to_movie_gender`

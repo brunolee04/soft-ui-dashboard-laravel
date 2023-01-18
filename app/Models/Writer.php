@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Director extends Model{
+class Writer extends Model{
     use HasFactory;
      /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'director';
+    protected $table = 'writer';
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'director_id';
+    protected $primaryKey = 'writer_id';
     /**
      * Indicates if the model should be timestamped.
      *

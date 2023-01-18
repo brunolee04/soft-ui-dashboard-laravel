@@ -296,6 +296,7 @@ CREATE TABLE `movie` (
 CREATE TABLE `movie_description` (
   `movie_description_id` int(11) NOT NULL,
   `movie_description_name` varchar(100) NOT NULL,
+  `movie_description_original_name` varchar(100) NOT NULL,
   `movie_description_description` text DEFAULT NULL,
   `language_id` int(11) NOT NULL,
   `movie_id` int(11) NOT NULL,
@@ -303,6 +304,25 @@ CREATE TABLE `movie_description` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `movie_collection`
+--
+
+CREATE TABLE `movie_collection`(
+ `movie_collection_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ `movie_collection_name` varchar(40),
+ `movie_collection_image_url` varchar(120),
+ `api_movie_collection_id` int(11)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `movie_to_movie_collection`(
+  `movie_to_movie_collection_id`  int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `movie_collection_id` int(11),
+  `movie_id` int(11)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -344,6 +364,19 @@ CREATE TABLE `movie_season` (
   `movie_season_id` int(11) NOT NULL,
   `movie_id` int(11) NOT NULL,
   `season` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `movie_key_word` (
+  `movie_key_word_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `keyword` varchar(50) NOT NULL,
+  `api_movie_key_word_id` int(11)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `movie_key_word_to_movie` (
+  `movie_key_word_to_movie_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `movie_id` int(11) NOT NULL,
+  `movie_key_word_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

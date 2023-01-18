@@ -16,6 +16,8 @@ use App\Models\ProductionCompany;
 use App\Models\Actor;
 use App\Models\Director;
 use App\Models\Writer;
+use App\Models\Keyword;
+use App\Models\MovieCollection;
 
 
 class MovieController extends Controller{
@@ -55,7 +57,7 @@ class MovieController extends Controller{
         
         if($this->formValidation(array('movie_id'=>1))){
 
-            $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$movie_id.'?api_key='.config('app.guzzle_tmd_api_key').'&language=pt-BR&append_to_response=credits';
+            $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$movie_id.'?api_key='.config('app.guzzle_tmd_api_key').'&language=pt-BR&append_to_response=credits,videos,keywords';
             echo $theUrl;
             $response   = Http ::get($theUrl);
            
@@ -135,6 +137,8 @@ class MovieController extends Controller{
                     $dbMovieDescription = new MovieDescription();
      
                     $dbMovieDescription->movie_description_name = $movie_info['title'];
+
+                    $dbMovieDescription->movie_description_original_name = $movie_info['original_title'];
      
                     $dbMovieDescription->movie_description_description = $movie_info['overview'];
      
@@ -183,37 +187,40 @@ class MovieController extends Controller{
      
      
                      //Dealling with movie´s productions company
-                     $production_companies = $movie_info['production_companies'];
+                    if(isset($movie_info['production_companies'])){
+                        $production_companies = $movie_info['production_companies'];
      
-                     foreach($production_companies as $production_company){
-                         
-                         $dbProductionCompany = new ProductionCompany();
-     
-                         $production_company_info = DB::table('production_company')->where('api_production_company_id',$production_company['id'])->first();
-     
-                         if(is_null($production_company_info)){
-     
-                             $dbProductionCompany->production_company_name = $production_company['name'];
-     
-                             $dbProductionCompany->production_companies_logo_url = config('app.guzzle_tmd_image_url').$production_company['logo_path'];
-     
-                             $dbProductionCompany->api_production_company_id = $production_company['id'];
-     
-                             $dbProductionCompany->save();
-     
-                             $production_company_id = $dbProductionCompany->production_company_id;
+                        foreach($production_companies as $production_company){
+                            
+                            $dbProductionCompany = new ProductionCompany();
         
-                         }
-                         else{
-                             $production_company_id = $dbProductionCompany->production_company_id;
-                         }
-     
-                         DB::table('movie_to_production_company')->insert([
-                             'movie_id' => $movie_id,
-                             'production_company_id' => $production_company_id
-                         ]);
-                         
-                     }
+                            $production_company_info = DB::table('production_company')->where('api_production_company_id',$production_company['id'])->first();
+        
+                            if(is_null($production_company_info)){
+        
+                                $dbProductionCompany->production_company_name = $production_company['name'];
+        
+                                $dbProductionCompany->production_companies_logo_url = config('app.guzzle_tmd_image_url').$production_company['logo_path'];
+        
+                                $dbProductionCompany->api_production_company_id = $production_company['id'];
+        
+                                $dbProductionCompany->save();
+        
+                                $production_company_id = $dbProductionCompany->production_company_id;
+            
+                            }
+                            else{
+                                $production_company_id = $dbProductionCompany->production_company_id;
+                            }
+        
+                            DB::table('movie_to_production_company')->insert([
+                                'movie_id' => $movie_id,
+                                'production_company_id' => $production_company_id
+                            ]);
+                            
+                        }
+                    }
+                     
      
                      //Dealing with Credits
                      if(isset($movie_info['credits'])){
@@ -351,6 +358,71 @@ class MovieController extends Controller{
                            
                         }
                      }
+
+                    //Dealing with Keywords
+                    if(isset($movie_info['keywords'])){
+                        
+                        $keywords = $movie_info['keywords'];
+
+                        $keywords = isset($keywords['keywords']) ? $keywords['keywords'] : $keywords;
+
+                        foreach($keywords as $keyword){
+
+                            $dBKeyword = new Keyword();
+     
+                            $keyword_info = DB::table('movie_key_word')->where('api_movie_key_word_id',$keyword['id'])->first();
+        
+                            if(is_null($keyword_info)){
+
+                                $dBKeyword->api_movie_key_word_id = $keyword['id'];
+
+                                $dBKeyword->keyword = $keyword['name'];
+
+                                $dBKeyword->save();
+
+                                $keyword_id = $dBKeyword->movie_key_word_id;
+                            }
+                            else $keyword_id = $keyword_info->movie_key_word_id;
+
+                            DB::table('movie_key_word_to_movie')->insert([
+                                'movie_id' => $movie_id,
+                                'movie_key_word_id' => $keyword_id
+                            ]);
+                        }
+                    }
+
+                    //Dealing with Collections
+                    if(isset($movie_info['belongs_to_collection'])){
+
+                        $belongs_to_collection = $movie_info['belongs_to_collection'];
+     
+                        $movieCollection_info = DB::table('movie_collection')->where('api_movie_collection_id',$belongs_to_collection['id'])->first();
+        
+                        if(is_null($movieCollection_info)){
+
+                            $dbMovieCollection = new MovieCollection();
+
+                            $dbMovieCollection->api_movie_collection_id = $belongs_to_collection['id'];
+
+                            $dbMovieCollection->movie_collection_name = $belongs_to_collection['name'];
+
+                            $dbMovieCollection->movie_collection_image_url = config('app.guzzle_tmd_image_url').$belongs_to_collection['poster_path'];
+
+                            $dbMovieCollection->save();
+
+                            $movie_collection_id = $dbMovieCollection->movie_collection_id;
+                        }
+                        else $movie_collection_id = $movieCollection_info->movie_collection_id;
+
+                        DB::table('movie_to_movie_collection')->insert([
+                                'movie_id' => $movie_id,
+                                'movie_collection_id' => $movie_collection_id
+                            ]);
+                        
+                    }
+
+
+
                 }
               
                 

@@ -42,7 +42,7 @@ class MovieController extends Controller{
     }
 
     public function edit(){
-        return view('movie/editer');
+        return view('movie/list');
     }
 
 
@@ -474,11 +474,14 @@ class MovieController extends Controller{
 
                     }
 
-
+                    
 
                 }
-              
                 
+                return redirect()->action(
+                    [MovieController::class, 'edit'], ['movie_id'=>$movie_id]
+                );
+               
 
             }
             else{

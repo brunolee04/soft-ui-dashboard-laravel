@@ -498,6 +498,13 @@ CREATE TABLE `system_list_description` (
   `language_language_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+CREATE TABLE `movie_to_system_list`(
+  `movie_to_system_list_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `movie_id` int(11),
+  `system_list_id` int(11) 
+);
+
 -- --------------------------------------------------------
 
 --

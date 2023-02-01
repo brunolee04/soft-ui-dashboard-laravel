@@ -35,9 +35,10 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('billing');
 	})->name('billing');
 
-	Route::get('movie',[MovieController::class, 'list']);
+	Route::get('movie/',[MovieController::class, 'list']);
+	Route::get('movieediter/{movie_id}',[MovieController::class, 'edit']);
 	Route::get('movie/register',[MovieController::class, 'register']);
-	Route::get('movie/edit/',[MovieController::class, 'edit']);
+	
 	Route::post('/movie',[MovieController::class, 'save']);
 
 	Route::get('systemlist/',[SystemMovieListController::class, 'listOfSystemLists']);

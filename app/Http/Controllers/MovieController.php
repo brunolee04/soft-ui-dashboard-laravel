@@ -41,8 +41,9 @@ class MovieController extends Controller{
         return view('movie/register');
     }
 
-    public function edit(){
-        return view('movie/list');
+    public function edit(Request $request){
+        var_dump($request->movie_id);
+        return view('movie/editer');
     }
 
 

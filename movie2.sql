@@ -268,7 +268,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `movie` (
-  `movie_id` int(11) NOT NULL,
+  `movie_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `movie_duration` smallint(6) DEFAULT NULL,
   `movie_year_launch` smallint(6) DEFAULT NULL,
   `movie_date_launch` date DEFAULT NULL,
@@ -620,19 +620,6 @@ CREATE TABLE `writer_to_movie` (
   `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
---
--- Índices para tabela `challenge`
---
-ALTER TABLE `challenge`
-  ADD PRIMARY KEY (`challenge_id`);
-
---
--- Índices para tabela `challenge_description`
---
-ALTER TABLE `challenge_description`
-  ADD PRIMARY KEY (`challenge_description_id`);
-
 --
 -- Índices para tabela `failed_jobs`
 --
@@ -646,11 +633,7 @@ ALTER TABLE `failed_jobs`
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
---
--- Índices para tabela `movie`
---
-ALTER TABLE `movie`
-  ADD PRIMARY KEY (`movie_id`);
+
 
 --
 -- Índices para tabela `movie_description`
@@ -711,11 +694,6 @@ ALTER TABLE `failed_jobs`
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
---
--- AUTO_INCREMENT de tabela `movie`
---
-ALTER TABLE `movie`
-  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT;
 
 
 --

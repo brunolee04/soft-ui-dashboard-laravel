@@ -46,8 +46,7 @@ class MovieController extends Controller{
     }
 
 
-    private function getYearLaunch($dateString){
-        
+    private function getYearLaunch($dateString){        
         return date('Y', strtotime($dateString));
     }
 

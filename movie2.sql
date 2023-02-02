@@ -73,20 +73,20 @@ CREATE TABLE `actor_to_movie` (
 --
 
 CREATE TABLE `challenge` (
-  `challenge_id` int(11) NOT NULL,
+  `challenge_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
   `challenge_image_url` varchar(45) DEFAULT NULL,
   `challenge_rule` text DEFAULT NULL COMMENT 'regra do desafio em formato json\n'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `production_company`(
-    `production_company_id` int(11) NOT NULL,
+    `production_company_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `production_company_name` varchar(40),
     `production_companies_logo_url` varchar(150),
     `api_production_company_id` int(11)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `movie_to_production_company`(
-    `movie_to_production_company_id` int(11) NOT NULL,
+    `movie_to_production_company_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
     `movie_id` int(11),
     `production_company_id` int(11)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -98,7 +98,7 @@ CREATE TABLE `movie_to_production_company`(
 --
 
 CREATE TABLE `challenge_description` (
-  `challenge_description_id` int(11) NOT NULL,
+  `challenge_description_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
   `challenge_description_name` varchar(45) NOT NULL,
   `challenge_description_description` text NOT NULL,
   `challenge_challenge_id` int(11) NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE `challenge_description` (
 --
 
 CREATE TABLE `customer` (
-  `customer_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
   `customer_firstname` varchar(25) NOT NULL,
   `customer_lastname` varchar(45) NOT NULL,
   `customer_mail` varchar(45) DEFAULT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE `customer` (
 --
 
 CREATE TABLE `customer_list` (
-  `customer_list_id` int(11) NOT NULL,
+  `customer_list_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
   `customer_list_name` varchar(45) NOT NULL,
   `customer_list_date_added` date DEFAULT NULL,
   `customer_customer_id` int(11) NOT NULL
@@ -142,7 +142,7 @@ CREATE TABLE `customer_list` (
 --
 
 CREATE TABLE `customer_movie_comment` (
-  `customer_movie_comment_id` int(11) NOT NULL,
+  `customer_movie_comment_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
   `customer_movie_comment_comment` varchar(300) NOT NULL,
   `customer_movie_comment_language_code` varchar(10) DEFAULT NULL,
   `customer_movie_comment_date_added` datetime DEFAULT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE `customer_movie_comment` (
 --
 
 CREATE TABLE `customer_rates_movie` (
-  `customer_rates_movie_id` int(11) NOT NULL,
+  `customer_rates_movie_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
   `customer_rates_movie_rate` float DEFAULT NULL COMMENT 'pode ser nulo, no caso do cliente apenas marcar o filme como ''visto'', sem ter o ter avaliado. Em caso de uma avaliação, a linha será editada.',
   `customer_rates_movie_date_added` datetime NOT NULL,
   `customer_customer_id` int(11) NOT NULL,
@@ -497,6 +497,13 @@ CREATE TABLE `system_list_description` (
   `system_list_system_list_id` int(11) NOT NULL,
   `language_language_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `movie_to_system_list`(
+  `movie_to_system_list_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `movie_id` int(11),
+  `system_list_id` int(11) 
+);
 
 -- --------------------------------------------------------
 

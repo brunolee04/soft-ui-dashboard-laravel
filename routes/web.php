@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\SystemMovieListController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
@@ -34,11 +35,14 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('billing');
 	})->name('billing');
 
-	Route::get('movie',[MovieController::class, 'list']);
+	Route::get('movie/',[MovieController::class, 'list']);
+	Route::get('movieediter/{movie_id}',[MovieController::class, 'edit']);
 	Route::get('movie/register',[MovieController::class, 'register']);
-	Route::get('movie/edit/',[MovieController::class, 'edit']);
-
+	
 	Route::post('/movie',[MovieController::class, 'save']);
+
+	Route::get('systemlist/',[SystemMovieListController::class, 'listOfSystemLists']);
+	Route::get('systemlist/register',[SystemMovieListController::class, 'register']);
 
 	Route::get('profile', function () {
 		return view('profile');

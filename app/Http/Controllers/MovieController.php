@@ -356,7 +356,7 @@ class MovieController extends Controller{
 
                            
                         }
-                     }
+                    }
 
                     //Dealing with Keywords
                     if(isset($movie_info['keywords'])){

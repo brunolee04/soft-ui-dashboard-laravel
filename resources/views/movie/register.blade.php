@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <button class='btn bg-gradient-primary active mb-0 text-white'><i class="fa fa-search"></i></a>
+                        <button class='btn bg-gradient-primary active mb-0 text-white'><i class="fa fa-search"></i></button>
                       </div>
                     </div>
                   </div>

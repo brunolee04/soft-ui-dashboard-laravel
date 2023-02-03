@@ -17,33 +17,68 @@
  
 
           <div class="ct-example" style="position: relative;border: 2px solid #f5f7ff !important;border-bottom: none !important;padding: 1rem 1rem 2rem 1rem;">
-            <form method="POST" action="/systemlist">
+            <form method="POST" action="/systemlist/save">
               @csrf
               
               <div class="row">
 
+                <!-- List Form -->
+                <div class="col-md-4">
 
-                <div class="col-md-6">
-                  <!-- Movie Form -->
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                       <div class="form-group">
-                        <input type="text" class="form-control" name='movie_id'  placeholder="ID do filme - TMDB" onfocus="focused(this)" onfocusout="defocused(this)">
+                        <input type="text" class="form-control" name='system_list_description_name'  placeholder="Nome da Lista" onfocus="focused(this)" onfocusout="defocused(this)">
                       </div>
                     </div>
-                    <div class="col-md-3">
+                  </row>
+
+                  <row>
+                    <div class="col-md-12">
                       <div class="form-group">
-                        <button class='btn bg-gradient-primary active mb-0 text-white'><i class="fa fa-search"></i></a>
+                        <textarea class="form-control" name='system_list_description'  placeholder="Descrição" ></textarea>
                       </div>
                     </div>
                   </div>
-                  <!-- Movie Form -->
-                </div>
 
-                
-                <div class="col-md-6">
-                  <!-- Movie Additional -->
                 </div>
+                <!-- List Form -->
+
+                <!-- List shows -->
+                <div class="col-md-8">
+                  <div class="row">
+                      <div class="col-md-8">
+                          <table class="table">
+                            <tr>
+                              <td>Selecionar</td>
+                              <td>ID</td>
+                              <td>Imagem</td>
+                              <td>Nome</td>
+                              <td>Tipo do show</td>
+                              <td>Data Lançamento</td>
+                            </tr>
+                            @foreach($shows as $show)
+                              <tr>
+                                <td><input type="checkbox" value="{{ $show->movie_id }}"></td>
+                                <td>{{ $show->movie_id }}</td>
+                                <td><img src="{{ $show->movie_image_1 }}" style="width:50px;height:auto;"></td>
+                                <td>{{ $show->movie_description_name }}</td>
+                                @if ($show->movie_type_movie_type_id == 0)<td>Filme</td>
+                                @else <td>Série</td>
+                                @endif
+                                <td>{{  \Carbon\Carbon::parse($show->movie_date_launch)->format('d/m/Y') }}</td>
+                                
+                              </tr>
+                            @endforeach
+                          </table>
+                      </div>
+                  </div>
+                </div>
+                <!-- List shows -->
+              </div>
+
+              <div class="row">
+                <div class="col-md-12"><div style="float:right;"><button class="btn btn-success" type="button">Salvar</button></div></div>
               </div>
 
             

@@ -31,9 +31,9 @@
                         <input type="text" class="form-control" name='system_list_description_name'  placeholder="Nome da Lista" onfocus="focused(this)" onfocusout="defocused(this)">
                       </div>
                     </div>
-                  </row>
+                  </div class="row">
 
-                  <row>
+                  <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
                         <textarea class="form-control" name='system_list_description'  placeholder="Descrição" ></textarea>
@@ -59,7 +59,7 @@
                             </tr>
                             @foreach($shows as $show)
                               <tr>
-                                <td><input type="checkbox" value="{{ $show->movie_id }}"></td>
+                                <td><input type="checkbox" name="movie_{{ $show->movie_id }}" value="{{ $show->movie_id }}"></td>
                                 <td>{{ $show->movie_id }}</td>
                                 <td><img src="{{ $show->movie_image_1 }}" style="width:50px;height:auto;"></td>
                                 <td>{{ $show->movie_description_name }}</td>
@@ -78,7 +78,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-12"><div style="float:right;"><button class="btn btn-success" type="button">Salvar</button></div></div>
+                <div class="col-md-12"><div style="float:right;"><button class="btn btn-success">Salvar</button></div></div>
               </div>
 
             

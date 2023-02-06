@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('systemlist/',[SystemMovieListController::class, 'listOfSystemLists']);
 	Route::get('systemlist/register',[SystemMovieListController::class, 'register']);
-	Route::get('/systemlist/save',[SystemMovieListController::class, 'save']);
+	Route::post('/systemlist/save',[SystemMovieListController::class, 'save']);
 
 	Route::get('profile', function () {
 		return view('profile');

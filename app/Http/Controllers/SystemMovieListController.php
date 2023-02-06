@@ -36,9 +36,10 @@ class SystemMovieListController extends Controller{
     public function save(Request $request){
         $system_list_description_name = $request->input('system_list_description_name');
         $system_list_description = $request->input('system_list_description');
-        echo $system_list_description_name;
-        echo $system_list_description;
-        if($request->input('movie_1'))echo $request->input('movie_1');
-        if($request->input('movie_2'))echo $request->input('movie_2');
+        $shows_to_save = [];
+        $shows = DB::table('movie')->get();
+        foreach($shows as $show){
+            if($request->input('movie_'.$show->movie_id)) $shows_to_save[] = $request->input('movie_'.$show->movie_id);
+        }
     }
 }

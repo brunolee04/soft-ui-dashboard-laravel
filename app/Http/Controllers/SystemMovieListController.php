@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\SystemMovieList;
 use App\Models\SystemMovieListDescription;
+use App\Models\MovieToSystemList;
 
 class SystemMovieListController extends Controller{
 
@@ -78,6 +79,17 @@ class SystemMovieListController extends Controller{
         $dbSystemListDescription->language_id = $this->language_id;
 
         $dbSystemListDescription->save();
+
+        
+
+        foreach($shows_to_save as $movie_id){
+            $dbMovieToSystemList = new MovieToSystemList();
+            
+            $dbMovieToSystemList->movie_id = $movie_id;
+            $dbMovieToSystemList->system_list_id = $systemListId;
+
+            $dbMovieToSystemList->save();
+        }
 
         return redirect()->action(
             [SystemMovieListController::class, 'listOfSystemLists']

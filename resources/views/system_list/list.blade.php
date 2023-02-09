@@ -1,7 +1,8 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-
+<!--<link href="../../assets/css/soft-ui-dashboard.min.css" rel="stylesheet">
+<script src="../../assets/js/plugins/sweetalert.min.js"></script>-->
   <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
     <div class="container-fluid py-4">
       <div class="row">
@@ -37,6 +38,7 @@
                             @endforeach
                   </tbody>
                 </table>
+                <!--<button class="btn bg-gradient-primary mb-0" onclick="soft.showSwal('success-message')">Try me!</button>-->
               </div>
             </div>
           </div>

@@ -31,7 +31,15 @@
                         <input type="text" class="form-control" name='system_list_description_name'  placeholder="Nome da Lista" onfocus="focused(this)" onfocusout="defocused(this)">
                       </div>
                     </div>
-                  </div class="row">
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <input type="date" class="form-control" name='system_list_date_avaiability'   onfocus="focused(this)" onfocusout="defocused(this)">
+                      </div>
+                    </div>
+                  </div>
 
                   <div class="row">
                     <div class="col-md-12">

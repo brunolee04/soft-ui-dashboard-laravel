@@ -50,9 +50,12 @@ class SystemMovieListController extends Controller{
 
         $system_list_description_name = $request->input('system_list_description_name');
 
+        $system_list_date_avaiability = $request->input('system_list_date_avaiability');
+
         $system_list_description = $request->input('system_list_description');
 
         $shows_to_save = [];
+      
 
         $shows = DB::table('movie')->get();
 
@@ -66,11 +69,14 @@ class SystemMovieListController extends Controller{
 
         $dbSystemList->system_list_date_added = date('Y-m-d');
 
+        $dbSystemList->system_list_date_avaiability = $system_list_date_avaiability;
+
         $dbSystemList->save();
 
         $systemListId = $dbSystemList->system_list_id;
 
         $dbSystemListDescription->system_list_description_name = $system_list_description_name;
+
 
         $dbSystemListDescription->system_list_description = $system_list_description;
 
@@ -94,5 +100,6 @@ class SystemMovieListController extends Controller{
         return redirect()->action(
             [SystemMovieListController::class, 'listOfSystemLists']
         );
+        
     }
 }

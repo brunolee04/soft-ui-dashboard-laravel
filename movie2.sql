@@ -481,7 +481,8 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `system_list` (
   `system_list_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `system_list_date_added` date NOT NULL
+  `system_list_date_added` date NOT NULL,
+  `system_list_date_avaiability` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

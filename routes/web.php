@@ -49,10 +49,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/systemlist/save',[SystemMovieListController::class, 'save']);
 
 
-	Route::get('posts', [PostController::class, 'index']);
-	Route::post('posts', [PostController::class, 'store']);
-	Route::get('posts/{id}', [PostController::class, 'show']);
-
 	Route::get('profile', function () {
 		return view('profile');
 	})->name('profile');

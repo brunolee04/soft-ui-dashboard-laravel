@@ -30,6 +30,8 @@ class SystemMovieListController extends Controller{
 
     public function register(){
 
+        $show_errors = [];
+
         $this->language_id = config('app.language_id');
 
         $shows = DB::table('movie')
@@ -39,14 +41,14 @@ class SystemMovieListController extends Controller{
         ->get();
 
         $this->shows = $shows;
-        return view('system_list/register',['shows'=>$shows]);
+        return view('system_list/register',['shows'=>$shows,'show_errors'=>$show_errors]);
     }
 
 
 
     public function save(Request $request){
         
-        $errors = [];
+        $show_errors = [];
 
         $this->language_id = config('app.language_id');
 
@@ -105,7 +107,11 @@ class SystemMovieListController extends Controller{
             }
         }
         else{
-            $errors[] = ['required_show'=> 'Ao menos 1 show deve ser selecionado.'];
+            $show_errors[] = ['required_show'=> 'Ao menos 1 show deve ser selecionado.'];
+
+            return redirect()->action(
+                [SystemMovieListController::class, 'listOfSystemLists',['show_errors'=>$show_errors]]
+            );
         }
 
         

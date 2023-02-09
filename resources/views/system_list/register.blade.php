@@ -22,6 +22,26 @@
               
               <div class="row">
 
+              @if ($errors->any())
+                  <div class="alert alert-danger">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+              @endif
+
+
+              @if ($show_errors)
+              <div class="alert alert-danger">
+                      <ul>
+                          @foreach ($show_errors as $show_error)
+                              <li>{{ $show_errors }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+              @endif
                 <!-- List Form -->
                 <div class="col-md-4">
 

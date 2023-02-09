@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SystemMovieList extends Model {
+class MovieToSystemList extends Model{
     use HasFactory;
      /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'system_list';
+    protected $table = 'movie_to_system_list';
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'system_list_id';
+    protected $primaryKey = 'movie_to_system_list_id ';
     /**
      * Indicates if the model should be timestamped.
      *

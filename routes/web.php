@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('systemlist/',[SystemMovieListController::class, 'listOfSystemLists']);
 	Route::get('systemlist/register',[SystemMovieListController::class, 'register']);
+	Route::get('systemlist/delete/{system_list_id}',[SystemMovieListController::class, 'delete']);
 	Route::post('/systemlist/save',[SystemMovieListController::class, 'save']);
 
 

@@ -18,7 +18,7 @@ class MovieToSystemList extends Model{
      *
      * @var string
      */
-    protected $primaryKey = 'movie_to_system_list_id ';
+    protected $primaryKey = 'movie_to_system_list_id';
     /**
      * Indicates if the model should be timestamped.
      *

@@ -102,4 +102,15 @@ class SystemMovieListController extends Controller{
         );
         
     }
+
+    public function delete(Request $request){
+        $system_list_id = $request->system_list_id;
+        SystemMovieList::destroy($system_list_id);
+        SystemMovieListDescription::destroy($system_list_id);
+        MovieToSystemList::where('system_list_id',$system_list_id)->delete();
+
+        return redirect()->action(
+            [SystemMovieListController::class, 'listOfSystemLists']
+        );
+    }
 }

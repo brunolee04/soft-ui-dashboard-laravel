@@ -22,6 +22,7 @@
                       <th>Lista</th>
                       <th>Data Registro</th>
                       <th></th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -30,7 +31,8 @@
                                 <td>{{ $systemList->system_list_id }}</td>
                                 <td>{{ $systemList->system_list_description_name }}</td>
                                 <td>{{  \Carbon\Carbon::parse($systemList->system_list_date_added)->format('d/m/Y') }}</td>
-                                <td>Editar</td>
+                                <td><a href="{{ url('systemlist/edit/'.$systemList->system_list_id)}}" class="btn btn-outline-warning btn-sm">Editar</a></td>
+                                <td><a href="{{ url('systemlist/delete/'.$systemList->system_list_id)}}" class="btn btn-outline-danger btn-sm">Excluir</a></td>
                               </tr>
                             @endforeach
                   </tbody>

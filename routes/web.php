@@ -8,9 +8,12 @@ use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\PayController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +47,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('systemlist/',[SystemMovieListController::class, 'listOfSystemLists']);
 	Route::get('systemlist/register',[SystemMovieListController::class, 'register']);
 	Route::get('/systemlist/save',[SystemMovieListController::class, 'save']);
+
+
+	Route::get('posts', [PostController::class, 'index']);
+	Route::post('posts', [PostController::class, 'store']);
+	Route::get('posts/{id}', [PostController::class, 'show']);
 
 	Route::get('profile', function () {
 		return view('profile');

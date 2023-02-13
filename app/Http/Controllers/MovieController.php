@@ -33,8 +33,16 @@ class MovieController extends Controller{
                             
 
     public function list(){
-        
-        return view('movie/list');
+        $this->language_id = config('app.language_id');
+
+        $shows = DB::table('movie')
+        ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
+        ->where('movie_description.language_id', $this->language_id)
+        ->orderBy('movie_description.movie_description_name')
+        ->get();
+
+        $this->shows = $shows;
+        return view('movie/list',['shows'=>$shows]);
     }
 
     public function register(){

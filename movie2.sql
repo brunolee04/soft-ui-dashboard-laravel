@@ -558,6 +558,15 @@ CREATE TABLE `user` (
   `user_pass` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+CREATE TABLE `banner`(
+    `banner_id` int not null auto_increment primary key,
+    `banner_description` text,
+    `banner_url` varchar(150),
+    `banner_date_added` date,
+    `banner_date_avaiable` date
+);
+
 -- --------------------------------------------------------
 
 --

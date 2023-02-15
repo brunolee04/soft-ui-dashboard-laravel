@@ -563,6 +563,7 @@ CREATE TABLE `banner`(
     `banner_id` int not null auto_increment primary key,
     `banner_description` text,
     `banner_url` varchar(150),
+    `banner_image_url` varchar(150),
     `banner_date_added` date,
     `banner_date_avaiable` date
 );

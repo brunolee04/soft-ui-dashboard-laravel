@@ -24,5 +24,7 @@ Route::get('movies',[ApiController::class, 'getMovies']);
 
 Route::get('homemovies',[ApiController::class, 'homemovies']);
 
+Route::get('homeBanners',[ApiController::class, 'getHomeBanners']);
+
 
 

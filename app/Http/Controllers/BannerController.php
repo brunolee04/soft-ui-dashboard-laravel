@@ -3,16 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+
 use App\Models\Banner;
 
 class BannerController extends Controller{
     //
 
     public function list(){
-        echo "hello world";
-        return view('banner/list');
+        $this->language_id = config('app.language_id');
+
+        $banners = DB::table('banner')
+        ->orderBy('banner.banner_id')
+        ->get();
+
+
+        return view('banner/list',['banners'=>$banners]);
     }
 
     public function register(){
@@ -33,9 +41,16 @@ class BannerController extends Controller{
 
         $banner_description = $request->input('banner_description');
 
+
+        $request->validate([
+            'banner_date_avaiable' => ['date']
+        ]);
+
+        
+
         $fileName = time().'.'.$request->banner_image_url->extension();  
 
-        $path = 'public/uploads/'.$fileName;
+        $path = 'uploads/'.$fileName;
      
         $request->banner_image_url->move(public_path('uploads'), $fileName);
 
@@ -54,7 +69,32 @@ class BannerController extends Controller{
         $dbBanner->save();
 
 
-        var_dump($banner_image_url);
+        return redirect()->action(
+            [BannerController::class, 'list']
+        );
 
+    }
+
+    public function delete(Request $request){
+        $banner_id = $request->banner_id;
+
+        $banner = DB::table('banner')
+        ->where('banner.banner_id',$banner_id)
+        ->first();
+
+
+        $filepath = $banner->banner_image_url;
+        ## Check file exists
+        if (File::exists($filepath)) {
+
+            ## Delete file
+            File::delete($filepath);
+        }
+
+        Banner::where('banner_id',$banner_id)->delete();       
+
+        return redirect()->action(
+            [BannerController::class, 'list']
+        );
     }
 }

@@ -69,23 +69,15 @@
                     </div>
                   </div>
 
+                  <div class="row">
+                    <div class="col-md-12"><div style="float:right;"><button class="btn btn-success">Salvar</button></div></div>
+                  </div>
+
                 </div>
                 <!-- List Form -->
-
-                <!-- List shows -->
-                <div class="col-md-8">
-                  <div class="row">
-                      <div class="col-md-8">
-                          fsdf
-                      </div>
-                  </div>
-                </div>
-                <!-- List shows -->
               </div>
 
-              <div class="row">
-                <div class="col-md-12"><div style="float:right;"><button class="btn btn-success">Salvar</button></div></div>
-              </div>
+              
 
             
 

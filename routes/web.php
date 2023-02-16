@@ -50,7 +50,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/systemlist/save',[SystemMovieListController::class, 'save']);
 
 	Route::get('bannerlist/',[BannerController::class, 'list']);
-	Route::get('banner/editer/{movie_id}',[BannerController::class, 'edit']);
+	Route::get('banner/editer/{banner_id}',[BannerController::class, 'edit']);
+	Route::get('banner/delete/{banner_id}',[BannerController::class, 'delete']);
 	Route::get('banner/register',[BannerController::class, 'register']);
 	Route::post('/banner',[BannerController::class, 'save']);
 

@@ -9,7 +9,7 @@ class ApiController extends Controller{
 
   private $language_id = 0;
 
-    public function getMovies() {
+     public function getMovies() {
         $db_movie_info = DB::table('movie')
         ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
         ->get();
@@ -49,5 +49,17 @@ class ApiController extends Controller{
           "status"  => true,
           "data"    => $list_to_home
       ], 201);
+      }
+
+      public function getHomeBanners(){
+        $banners = DB::table('banner')
+        ->orderBy('banner.banner_id')
+        ->get();
+
+          return response()->json([
+            "status"  => true,
+            "data"    => $banners
+        ], 201);
+
       }
 }

@@ -9,9 +9,22 @@ class ApiController extends Controller{
 
   private $language_id = 0;
 
-     public function getMovies() {
+      public function getMovies() {
         $db_movie_info = DB::table('movie')
         ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
+        ->get();
+
+        return response()->json([
+            "status"  => true,
+            "data"    => $db_movie_info
+        ], 201);
+      }
+
+
+      public function getMovie($show_id){
+        $db_movie_info = DB::table('movie')
+        ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
+        ->where('movie.movie_id','=',$show_id)
         ->get();
 
         return response()->json([

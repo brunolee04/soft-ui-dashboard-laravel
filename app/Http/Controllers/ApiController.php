@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller{
 
-  private $language_id = 0;
+  private $language_id = 1;
 
       public function getMovies() {
         $db_movie_info = DB::table('movie')
@@ -22,14 +22,84 @@ class ApiController extends Controller{
 
 
       public function getMovie($show_id){
+        $movie_data = [];
+
         $db_movie_info = DB::table('movie')
         ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
+        ->join('movie_season', 'movie.movie_id', '=', 'movie_season.movie_id')
         ->where('movie.movie_id','=',$show_id)
         ->get();
 
+        $db_movie_gender_info = DB::table('movie_gender')
+        ->select('movie_gender.movie_gender_id','movie_gender_name')
+        ->join('movie_to_movie_gender', 'movie_gender.movie_gender_id', '=', 'movie_to_movie_gender.movie_gender_id')
+        ->where('movie_to_movie_gender.movie_id','=',$show_id)
+        ->where('movie_gender.language_id','=',$this->language_id)
+        ->get();
+
+        $db_movie_collection_info = DB::table('movie_collection')
+        ->select('movie_collection.movie_collection_id','movie_collection_name','movie_collection_image_url')
+        ->join('movie_to_movie_collection', 'movie_collection.movie_collection_id', '=', 'movie_to_movie_collection.movie_collection_id')
+        ->where('movie_to_movie_collection.movie_id','=',$show_id)
+        ->get();
+
+        $db_movie_image_info = DB::table('movie_image')
+        ->where('movie_id','=',$show_id)
+        ->get();
+
+        $db_movie_keyword_info = DB::table('movie_key_word')
+        ->select('movie_key_word.movie_key_word_id','keyword')
+        ->join('movie_key_word_to_movie', 'movie_key_word.movie_key_word_id', '=', 'movie_key_word_to_movie.movie_key_word_id')
+        ->where('movie_key_word_to_movie.movie_id','=',$show_id)
+        ->get();
+
+        $db_movie_production_company_info = DB::table('production_company')
+        ->select('production_company.production_company_id','production_company_name','production_companies_logo_url')
+        ->join('movie_to_production_company', 'production_company.production_company_id', '=', 'movie_to_production_company.production_company_id')
+        ->where('movie_to_production_company.movie_id','=',$show_id)
+        ->get();
+
+        $db_movie_video_info = DB::table('movie_video')
+        ->join('movie_video_description', 'movie_video.movie_video_id', '=', 'movie_video_description.movie_video_id')
+        ->where('movie_video_description.language_id','=',$this->language_id)
+        ->where('movie_video.movie_id','=',$show_id)
+        ->get();
+
+        $db_movie_actor_info = DB::table('actor')
+        ->select('actor.actor_id','actor_name','actor_image_url','actor_character')
+        ->join('actor_to_movie', 'actor.actor_id', '=', 'actor_to_movie.actor_id')
+        ->where('actor_to_movie.movie_id','=',$show_id)
+        ->get();
+
+        $db_movie_director_info = DB::table('director')
+        ->select('director.director_id','director_name','director_image_url')
+        ->join('director_to_movie', 'director.director_id', '=', 'director_to_movie.director_id')
+        ->where('director_to_movie.movie_id','=',$show_id)
+        ->get();
+
+        $db_movie_writer_info = DB::table('writer')
+        ->select('writer.writer_id','writer_name')
+        ->join('writer_to_movie', 'writer.writer_id', '=', 'writer_to_movie.writer_id')
+        ->where('writer_to_movie.movie_id','=',$show_id)
+        ->get();
+
+        
+
+
+        $movie_data['db_movie_info'] = $db_movie_info;
+        $movie_data['db_movie_gender_info'] = $db_movie_gender_info;
+        $movie_data['db_movie_image_info'] = $db_movie_image_info;
+        $movie_data['db_movie_keyword_info'] = $db_movie_keyword_info;
+        $movie_data['db_movie_production_company_info'] = $db_movie_production_company_info;
+        $movie_data['db_movie_collection_info'] = $db_movie_collection_info;
+        $movie_data['db_movie_video_info'] = $db_movie_video_info;
+        $movie_data['db_movie_actor_info'] = $db_movie_actor_info;
+        $movie_data['db_movie_director_info'] = $db_movie_director_info;
+        $movie_data['db_movie_writer_info'] = $db_movie_writer_info;
+
         return response()->json([
             "status"  => true,
-            "data"    => $db_movie_info
+            "data"    => $movie_data
         ], 201);
       }
   

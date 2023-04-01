@@ -145,4 +145,9 @@ class ApiController extends Controller{
         ], 201);
 
       }
+
+      public function markThisShowAsSaw(Request $request){
+        $inputs = $request->all();
+        var_dump($inputs);
+      }
 }

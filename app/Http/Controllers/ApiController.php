@@ -148,6 +148,10 @@ class ApiController extends Controller{
 
       public function markThisShowAsSaw(Request $request){
         $inputs = $request->all();
-        var_dump($inputs);
+        return response()->json([
+          "status"  => true,
+          "data"    => $inputs
+      ], 201);
+        
       }
 }

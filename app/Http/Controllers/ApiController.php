@@ -153,6 +153,7 @@ class ApiController extends Controller{
         $inputs = $request->all();
 
         $response = [];
+        var_dump($inputs);
 
         $dbCustomerRatesMovie = new CustomerRatesMovie();
 

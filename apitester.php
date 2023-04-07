@@ -1,11 +1,11 @@
 <?php
-$url = 'https://codevalley.dev/api/movie/markThisShowAsSaw';
-$data = '{
-    show_id:showId,
-    movie_season_id:1,
-    customer_id:1
-  }';
-$data_string = $data;
+$url = 'http://127.0.0.1:8000/api/movie/markThisShowAsSaw';
+$data = array(
+ "show_id"=>1,
+ "movie_season_id"=>1,
+ "customer_id"=>1
+);
+$data_string = json_encode($data);
 $ch=curl_init($url);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);

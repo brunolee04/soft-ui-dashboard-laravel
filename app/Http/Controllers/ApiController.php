@@ -159,7 +159,7 @@ class ApiController extends Controller{
 
         $dbCustomerRatesMovie->customer_rates_movie_rate = null;
         $dbCustomerRatesMovie->customer_rates_movie_date_added = date("Y-m-d H:i:s");
-        $dbCustomerRatesMovie->customer_id = $inputs->customer_id;
+        $dbCustomerRatesMovie->customer_id = $inputs['customer_id'];
         $dbCustomerRatesMovie->movie_season_id = $inputs->movie_season_id;
 
         if($dbCustomerRatesMovie->save()){

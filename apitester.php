@@ -1,5 +1,6 @@
 <?php
 $url = 'http://127.0.0.1:8000/api/movie/markThisShowAsSaw';
+$url = 'https://codevalley.dev/api/movie/markThisShowAsSaw';
 $data = array(
  "show_id"=>1,
  "movie_season_id"=>1,

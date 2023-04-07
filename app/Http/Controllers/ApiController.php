@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\CustomerRatesMovie;
+
 class ApiController extends Controller{
 
   private $language_id = 1;
@@ -147,10 +149,32 @@ class ApiController extends Controller{
       }
 
       public function markThisShowAsSaw(Request $request){
+
         $inputs = $request->all();
+
+        $response = [];
+
+        $dbCustomerRatesMovie = new CustomerRatesMovie();
+
+        $dbCustomerRatesMovie->customer_rates_movie_rate = null;
+        $dbCustomerRatesMovie->customer_rates_movie_date_added = date("Y-m-d H:i:s");
+        $dbCustomerRatesMovie->customer_id = $inputs->customer_id;
+        $dbCustomerRatesMovie->movie_season_id = $inputs->movie_season_id;
+
+        if($dbCustomerRatesMovie->save()){
+          $response['status'] = true;
+          $response['message'] = "Você marcou o filme como Visto.";
+        }
+        else{
+          $response['status'] = false;
+          $response['message'] = "Erro ao marcar o filme como Visto";
+        }
+        
+
+        
         return response()->json([
           "status"  => true,
-          "data"    => $inputs
+          "data"    => $response
       ], 201);
         
       }

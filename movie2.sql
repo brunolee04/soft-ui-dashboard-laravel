@@ -160,7 +160,8 @@ CREATE TABLE `customer_rates_movie` (
   `customer_rates_movie_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
   `customer_rates_movie_rate` float DEFAULT NULL COMMENT 'pode ser nulo, no caso do cliente apenas marcar o filme como ''visto'', sem ter o ter avaliado. Em caso de uma avaliação, a linha será editada.',
   `customer_rates_movie_date_added` datetime NOT NULL,
-  `customer_customer_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `movie_id` int(11) NOT NULL,
   `movie_season_id` int(11) NOT NULL COMMENT 'Cada filme ou série deverá ter obrigatóriamente ao menos 1 temporada. Inclusive, no caso dos filmes, 1 temporada será vinculada a ele.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

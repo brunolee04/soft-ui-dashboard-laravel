@@ -163,7 +163,7 @@ class ApiController extends Controller{
        
         $customer_rates_movie_info = DB::table('customer_rates_movie')
                   ->where('customer_id',$customer_id)
-                  ->where('movie_id',$movie_id)
+                  ->where('movie_id',$show_id)
                   ->where('movie_season_id',$movie_season_id)
                   ->first();
 

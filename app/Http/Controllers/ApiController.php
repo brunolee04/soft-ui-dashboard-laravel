@@ -85,6 +85,9 @@ class ApiController extends Controller{
         ->where('writer_to_movie.movie_id','=',$show_id)
         ->get();
 
+      
+
+
         
 
 
@@ -153,24 +156,42 @@ class ApiController extends Controller{
         $inputs = $request->all();
 
         $response = [];
+
+        $show_id = $inputs['show_id'];
+        $customer_id = $inputs['customer_id'];
+        $movie_season_id = $inputs['movie_season_id'];
        
+        $customer_rates_movie_info = DB::table('customer_rates_movie')
+                  ->where('customer_id',$customer_id)
+                  ->where('movie_id',$movie_id)
+                  ->where('movie_season_id',$movie_season_id)
+                  ->first();
 
-        $dbCustomerRatesMovie = new CustomerRatesMovie();
+        if(is_null($customer_rates_movie_info)){
 
-        $dbCustomerRatesMovie->customer_rates_movie_rate = null;
-        $dbCustomerRatesMovie->customer_rates_movie_date_added = date("Y-m-d H:i:s");
-        $dbCustomerRatesMovie->movie_id = $inputs['show_id'];
-        $dbCustomerRatesMovie->customer_id = $inputs['customer_id'];
-        $dbCustomerRatesMovie->movie_season_id = $inputs['movie_season_id'];
+          $dbCustomerRatesMovie = new CustomerRatesMovie();
 
-        if($dbCustomerRatesMovie->save()){
-          $response['status'] = true;
-          $response['message'] = "Você marcou o filme como Visto.";
+          $dbCustomerRatesMovie->customer_rates_movie_rate = null;
+          $dbCustomerRatesMovie->customer_rates_movie_date_added = date("Y-m-d H:i:s");
+          $dbCustomerRatesMovie->movie_id = $show_id;
+          $dbCustomerRatesMovie->customer_id = $customer_id;
+          $dbCustomerRatesMovie->movie_season_id = $movie_season_id;
+
+          if($dbCustomerRatesMovie->save()){
+            $response['status'] = true;
+            $response['message'] = "Você marcou o filme como visto.";
+          }
+          else{
+            $response['status'] = false;
+            $response['message'] = "Erro ao marcar o filme como visto";
+          }
         }
         else{
           $response['status'] = false;
-          $response['message'] = "Erro ao marcar o filme como Visto";
+          $response['message'] = "Você já marcou o filme como visto";
         }
+
+        
         
 
         

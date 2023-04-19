@@ -223,9 +223,15 @@ class ApiController extends Controller{
 
 
         if(!is_null($customer_rates_movie_info)){
-          $customer_rates_movie_info->customer_rates_movie_rate = $rate;
-          $customer_rates_movie_info->save();
-            var_dump($customer_rates_movie_info);
+          $customer_rates_movie_id = $customer_rates_movie_info->customer_rates_movie_id;
+
+          $customerRateInfo = CustomerRatesMovie::find($customer_rates_movie_id);
+          
+          $customerRateInfo->customer_rates_movie_rate = $rate;
+
+          $customerRateInfo->save();
+          
+          var_dump($customer_rates_movie_info);
         }
         else echo "deu ruim";
       }

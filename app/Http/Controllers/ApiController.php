@@ -191,8 +191,6 @@ class ApiController extends Controller{
           $response['message'] = "Você já marcou o filme como visto";
         }
 
-        
-        
 
         
         return response()->json([

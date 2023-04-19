@@ -202,6 +202,9 @@ class ApiController extends Controller{
 
 
       public function rateMovie(Request $request){
+
+
+
         $inputs = $request->all();
 
         $response = [];
@@ -221,7 +224,7 @@ class ApiController extends Controller{
 
         if(!is_null($customer_rates_movie_info)){
           $customer_rates_movie_info->customer_rates_movie_rate = $rate;
-          $customer_rates_movie_info();
+          $customer_rates_movie_info->save();
             var_dump($customer_rates_movie_info);
         }
         else echo "deu ruim";

@@ -217,8 +217,11 @@ class ApiController extends Controller{
         ->where('movie_season_id',$movie_season_id)
         ->first();
 
+
+
         if(!is_null($customer_rates_movie_info)){
             var_dump($customer_rates_movie_info);
         }
+        else echo "deu ruim";
       }
 }

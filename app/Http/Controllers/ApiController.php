@@ -229,10 +229,25 @@ class ApiController extends Controller{
           
           $customerRateInfo->customer_rates_movie_rate = $rate;
 
-          $customerRateInfo->save();
-          
-          var_dump($customer_rates_movie_info);
+          if($customerRateInfo->save()){
+            $response['status'] = true;
+            $response['message'] = "Você avaliou o show.";
+          }
+          else{
+            $response['status'] = false;
+            $response['message'] = "O show não foi avaliado.";
+          }
+
         }
-        else echo "deu ruim";
+        else{
+          $response['status'] = false;
+          $response['message'] = "Você ainda não marcou o filme como visto";
+        }
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+      ], 201);
+
       }
 }

@@ -241,7 +241,7 @@ class ApiController extends Controller{
         }
         else{
           $response['status'] = false;
-          $response['message'] = "Você ainda não marcou o filme como visto";
+          $response['message'] = "Você ainda não marcou o filme como visto.";
         }
 
         return response()->json([

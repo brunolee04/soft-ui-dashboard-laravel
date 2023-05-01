@@ -25,7 +25,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::apiResource('homemovies',ApiController::class)
 //         ->middleware('auth:sanctum');
 
-Route::middleware('auth:sanctum')->get('/homemovies', [ApiController::class, 'homemovies']);
+Route::middleware('auth:sanctum')->get('/homemovies', function (Request $request) {
+    return $request->homemovies();
+});
 
 
 

@@ -14,6 +14,7 @@ class RegisterController extends Controller{
         
         //TO-DO: to valid request
         $userData  = $request->only('name','email','password');
+        $userData['password'] = bcrypt($userData['password']);
       
         if(!$user = $user->create($userData))
             abort(500,'Error to create new user');

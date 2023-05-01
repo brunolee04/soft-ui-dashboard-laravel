@@ -17,13 +17,21 @@ class LoginController extends Controller{
 
         $token = auth()->user()->createToken('auth_token');
 
-        var_dump($token);
+        $user_id = auth()->user()->id;
+        $user_name = auth()->user()->name;
+        $user_mail = auth()->user()->email;
+
+   
 
         return response()->json([
             'data'=>[
                 'token' => $token->plainTextToken,
                 'auth_type' => 'Bearer ',
-                'user' => auth()->user()
+                'user' => {
+                    'id' => $user_id,
+                    'name' => $user_name,
+                    'mail' => $user_mail
+                }
             ]
         ]);
     }

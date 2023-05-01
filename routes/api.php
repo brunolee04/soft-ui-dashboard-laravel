@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // });
 
 
-Route::get('homemovies',[ApiController::class, 'homemovies'])->middleware('auth:sanctum');
+Route::get('homemovies',[ApiController::class, 'homemovies']);
 
 
 Route::get('movies',[ApiController::class, 'getMovies']);

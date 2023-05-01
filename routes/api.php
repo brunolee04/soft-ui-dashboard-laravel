@@ -20,9 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->group(function(){
-    Route::get('homemovies',[ApiController::class, 'homemovies']);
-});
 
 Route::get('movies',[ApiController::class, 'getMovies']);
 Route::get('movie/{show_id}',[ApiController::class, 'getMovie']);
@@ -45,6 +42,8 @@ Route::prefix('auth')->group(function(){
     Route::post('logout',[\App\Http\Controllers\Auth\Api\LoginController::class,'logout']);
 
     Route::post('register',[\App\Http\Controllers\Auth\Api\RegisterController::class,'register']);
+
+    Route::get('homemovies',[ApiController::class, 'homemovies']);
 });
 
 

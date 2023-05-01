@@ -15,7 +15,7 @@ class LoginController extends Controller{
 
         if(auth()->attempt($credentials)) abort(401,'Invalid credentials');
 
-        $token = auth()->user()->createToken('application_token');
+        $token = auth()->user()->createToken('auth_token');
 
         return response()->json([
             'data'=>[

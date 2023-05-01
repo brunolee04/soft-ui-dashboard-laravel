@@ -16,13 +16,18 @@ use App\Http\Controllers\ApiController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('homemovies',[ApiController::class, 'homemovies']);
 });
+
+
+// Route::group(['middleware' => 'auth'], function () {
+//     Route::get('homemovies',[ApiController::class, 'homemovies']);
+// });
 
 //Route::get('/homemovies',[ApiController::class, 'homemovies']);
 

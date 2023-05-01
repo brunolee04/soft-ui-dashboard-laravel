@@ -27,11 +27,11 @@ class LoginController extends Controller{
             'data'=>[
                 'token' => $token->plainTextToken,
                 'auth_type' => 'Bearer ',
-                'user' => {
+                'user' => [
                     'id' => $user_id,
                     'name' => $user_name,
                     'mail' => $user_mail
-                }
+                ]
             ]
         ]);
     }

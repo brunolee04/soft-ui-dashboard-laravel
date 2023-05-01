@@ -23,9 +23,7 @@ class LoginController extends Controller{
             'data'=>[
                 'token' => $token->plainTextToken,
                 'auth_type' => 'Bearer ',
-                'user' =>{
-
-                }
+                'user' => $token
             ]
         ]);
     }

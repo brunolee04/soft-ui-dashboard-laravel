@@ -35,3 +35,12 @@ Route::get('homeBanners',[ApiController::class, 'getHomeBanners']);
 
 
 
+Route::prefix('auth')->group(function(){
+    Route::post('login',[\App\Http\Controllers\Auth\Api\LoginController::class,'login']);
+
+    Route::post('logout',[\App\Http\Controllers\Auth\Api\LoginController::class,'logout']);
+
+    Route::post('register',[\App\Http\Controllers\Auth\Api\RegisterController::class,'register']);
+})
+
+

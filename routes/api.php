@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('homemovies',[ApiController::class, 'homemovies']);
-})
+});
 
 Route::get('movies',[ApiController::class, 'getMovies']);
 Route::get('movie/{show_id}',[ApiController::class, 'getMovie']);

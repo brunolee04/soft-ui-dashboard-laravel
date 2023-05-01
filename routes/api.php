@@ -21,24 +21,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    //Home apis
+    Route::get('homeBanners',[ApiController::class, 'getHomeBanners']);
     Route::get('homemovies',[ApiController::class, 'homemovies']);
+
+    //App apis
+    Route::get('movies',[ApiController::class, 'getMovies']);
+    Route::get('movie/{show_id}',[ApiController::class, 'getMovie']);
+    Route::get('movie/{show_id}',[ApiController::class, 'getMovie']);
+    Route::post('/movie/markThisShowAsSaw',[ApiController::class, 'markThisShowAsSaw']);
+    Route::post('/movie/rateShow',[ApiController::class, 'rateMovie']);
 });
 
 
 
 
-Route::get('movies',[ApiController::class, 'getMovies']);
-Route::get('movie/{show_id}',[ApiController::class, 'getMovie']);
-Route::get('movie/{show_id}',[ApiController::class, 'getMovie']);
-Route::post('/movie/markThisShowAsSaw',[ApiController::class, 'markThisShowAsSaw']);
-Route::post('/movie/rateShow',[ApiController::class, 'rateMovie']);
 
 
 
-
-
-
-Route::get('homeBanners',[ApiController::class, 'getHomeBanners']);
 
 
 

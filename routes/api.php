@@ -41,6 +41,6 @@ Route::prefix('auth')->group(function(){
     Route::post('logout',[\App\Http\Controllers\Auth\Api\LoginController::class,'logout']);
 
     Route::post('register',[\App\Http\Controllers\Auth\Api\RegisterController::class,'register']);
-})
+});
 
 

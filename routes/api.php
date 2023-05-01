@@ -20,6 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('homemovies',[ApiController::class, 'homemovies']);
+});
+
 //Route::get('/homemovies',[ApiController::class, 'homemovies']);
 
 // Route::apiResource('homemovies',ApiController::class)
@@ -30,7 +34,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // });
 
 
-Route::get('homemovies',[ApiController::class, 'homemovies']);
+//Route::get('/homemovies',[ApiController::class, 'homemovies'])->middleware('auth:sanctum');
 
 
 Route::get('movies',[ApiController::class, 'getMovies']);

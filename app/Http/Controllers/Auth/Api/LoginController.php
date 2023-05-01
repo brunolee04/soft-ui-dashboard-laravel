@@ -17,9 +17,15 @@ class LoginController extends Controller{
 
         $token = auth()->user()->createToken('auth_token');
 
+        var_dump($token);
+
         return response()->json([
             'data'=>[
-                'token' => $token->plainTextToken
+                'token' => $token->plainTextToken,
+                'auth_type' => 'Bearer ',
+                'user' =>{
+
+                }
             ]
         ]);
     }

@@ -25,10 +25,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::apiResource('homemovies',ApiController::class)
 //         ->middleware('auth:sanctum');
 
-Route::middleware('auth:sanctum')->get('/homemovies', function (Request $request) {
-    return $request->homemovies();
-});
+// Route::middleware('auth:sanctum')->get('/homemovies', function (Request $request) {
+//     return $request->homemovies();
+// });
 
+
+Route::get('homemovies',[ApiController::class, 'homemovies'])->middleware('auth:sanctum');
 
 
 Route::get('movies',[ApiController::class, 'getMovies']);

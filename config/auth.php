@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'mobile',
-        'passwords' => 'mobile',
+        'guard' => 'web',
+        'passwords' => 'users',
     ],
 
     /*

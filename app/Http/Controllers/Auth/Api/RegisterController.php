@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+
 use App\Models\Customer;
 
 class RegisterController extends Controller{
@@ -14,6 +15,8 @@ class RegisterController extends Controller{
         
         //TO-DO: to valid request
         $customerData  = $request->only('customer_firstname','customer_lastname','customer_date_birth','customer_mail','customer_pass');
+        $customerData['customer_date_birth']  = Carbon\Carbon::createFromFormat('Y-m-d',$customerData['customer_date_birth']);
+
         $customerData['customer_pass'] = bcrypt($customerData['customer_pass']);
       
         if(!$customer = $customer->create($customerData))

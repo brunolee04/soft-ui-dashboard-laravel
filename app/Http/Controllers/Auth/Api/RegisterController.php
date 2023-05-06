@@ -5,23 +5,23 @@ namespace App\Http\Controllers\Auth\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\User;
+use App\Models\Customer;
 
 class RegisterController extends Controller{
     
     
-    public function register(Request $request,User $user){
+    public function register(Request $request,Customer $customer){
         
         //TO-DO: to valid request
-        $userData  = $request->only('name','email','password');
-        $userData['password'] = bcrypt($userData['password']);
+        $customerData  = $request->only('customer_firstname','customer_lastname','customer_date_birth','customer_mail','customer_pass');
+        $customerData['customer_pass'] = bcrypt($customerData['customer_pass']);
       
-        if(!$user = $user->create($userData))
-            abort(500,'Error to create new user');
+        if(!$customer = $customer->create($customerData))
+            abort(500,'Error to create new customer');
 
         return response()->json([
             'data'=>[
-                'user' => $user
+                'customer' => $customer
             ]
         ]);
     }

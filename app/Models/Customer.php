@@ -8,8 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Sanctum\PersonalAccessToken;
-use Laravel\Sanctum\Sanctum;
+
 
 class Customer extends Authenticatable{
 
@@ -17,13 +16,7 @@ class Customer extends Authenticatable{
 
     
     
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
-    }
+   
      /**
      * The table associated with the model.
      *

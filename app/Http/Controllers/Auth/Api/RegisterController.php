@@ -16,7 +16,7 @@ class RegisterController extends Controller{
         
         //TO-DO: to valid request
         $customerData  = $request->only('customer_firstname','customer_lastname','customer_date_birth','customer_mail','customer_pass');
-        $customerData['customer_date_birth']  = Carbon::createFromFormat('Y-m-d',$customerData['customer_date_birth'])->format('Y-m-d');;
+        $customerData['customer_date_birth']  = \Carbon\Carbon::createFromFormat('Y-m-d',$customerData['customer_date_birth'])->format('Y-m-d');;
 
         $customerData['customer_pass'] = bcrypt($customerData['customer_pass']);
       

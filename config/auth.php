@@ -66,8 +66,8 @@ return [
         // ],
 
         'users' => [
-            'driver' => 'database',
-            'table' => 'customers',
+            'driver' => 'eloquent',
+            'table' => App\Models\Customer::class,,
         ],
     ],
 

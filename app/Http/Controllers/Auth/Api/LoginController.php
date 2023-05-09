@@ -13,15 +13,13 @@ class LoginController extends Controller{
         //TO-DO: to valid request
         $credentials  = $request->only('email','password');
 
-        if($response = !auth('customer')->attempt($credentials)){
-            var_dump($response);
-        } //abort(401,'Invalid credentials');
+        if(auth('customer')->attempt($credentials)===false)abort(401,'Invalid credentials');
 
-        $token = auth()->user()->createToken('auth_token');
+        $token = auth('customer')->user()->createToken('auth_token');
 
-        $user_id = auth()->user()->id;
-        $user_name = auth()->user()->name;
-        $user_mail = auth()->user()->email;
+        $user_id = auth('customer')->user()->id;
+        $user_name = auth('customer')->user()->name;
+        $user_mail = auth('customer')->user()->email;
 
    
 

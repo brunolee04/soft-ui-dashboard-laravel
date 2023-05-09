@@ -18,20 +18,15 @@ class RegisterController extends Controller{
 
         $customerData['password'] = bcrypt($customerData['password']);
         
+    
+        if(!$customer = $customer->create($customerData))
+            abort(500,'Error to create new customer');
+
         return response()->json([
             'data'=>[
-                'customer' => $customerData
+                'customer' => $customer
             ]
         ]);
-
-        // if(!$customer = $customer->create($customerData))
-        //     abort(500,'Error to create new customer');
-
-        // return response()->json([
-        //     'data'=>[
-        //         'customer' => $customer
-        //     ]
-        // ]);
     }
 
     // public function register(Request $request,User $user){

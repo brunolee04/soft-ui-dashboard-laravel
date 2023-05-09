@@ -16,15 +16,21 @@ class RegisterController extends Controller{
         $customerData['customer_date_birth']  = Carbon::createFromFormat('d/m/Y',$customerData['customer_date_birth'])->format('Y-m-d');
 
         $customerData['customer_pass'] = bcrypt($customerData['customer_pass']);
-      
-        if(!$customer = $customer->create($customerData))
-            abort(500,'Error to create new customer');
-
+        
         return response()->json([
             'data'=>[
-                'customer' => $customer
+                'customer' => $customerData
             ]
         ]);
+
+        // if(!$customer = $customer->create($customerData))
+        //     abort(500,'Error to create new customer');
+
+        // return response()->json([
+        //     'data'=>[
+        //         'customer' => $customer
+        //     ]
+        // ]);
     }
 
     // public function register(Request $request,User $user){

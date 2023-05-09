@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Customer;
+use \Carbon\Carbon;
 
 class RegisterController extends Controller{
     

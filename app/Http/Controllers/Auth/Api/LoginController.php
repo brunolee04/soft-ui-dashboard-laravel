@@ -13,7 +13,7 @@ class LoginController extends Controller{
         //TO-DO: to valid request
         $credentials  = $request->only('email','password');
 
-        if(!auth('customer')->attempt($credentials)) abort(401,'Invalid credentials');
+        if(!auth('web')->attempt($credentials)) abort(401,'Invalid credentials');
 
         $token = auth()->user()->createToken('auth_token');
 

@@ -11,7 +11,7 @@ class LoginController extends Controller{
     public function login(Request $request){
         
         //TO-DO: to valid request
-        $credentials  = $request->only('email','password');
+        $credentials  = $request->only('customer_mail','customer_pass');
 
         if(auth('customer')->attempt($credentials)===false)abort(401,'Invalid credentials');
 

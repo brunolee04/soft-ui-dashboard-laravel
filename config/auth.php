@@ -40,15 +40,9 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-<<<<<<< HEAD
-        'mobile' =>[
-            'driver' => 'session',
-            'provider' => 'mobile'
-=======
         'customer' => [
             'driver' => 'session',
             'provider' => 'customers'
->>>>>>> authcustomer
         ]
     ],
 
@@ -74,15 +68,9 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-<<<<<<< HEAD
-        'mobile' => [
-            'driver' => 'eloquent',
-            'table' => App\Models\Customer::class,
-=======
         'customers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Customer::class,
->>>>>>> authcustomer
         ],
     ],
 

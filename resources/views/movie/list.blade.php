@@ -35,7 +35,7 @@
                                 <td><span style="font-size:10px;">{{ $show->movie_description_name }}</span></td>
                                 <td>{{  \Carbon\Carbon::parse($show->movie_date_added)->format('d/m/Y') }}</td>
                                 <td>{{  \Carbon\Carbon::parse($show->movie_date_launch)->format('d/m/Y') }}</td>
-                                <td><a href="{{ url('systemlist/edit/'.$show->movie_id)}}" class="btn btn-outline-warning btn-sm">Editar</a></td>
+                                <td><a href="{{ url('movieediter/'.$show->movie_id)}}" class="btn btn-outline-warning btn-sm">Editar</a></td>
                                 <td><a href="{{ url('systemlist/delete/'.$show->movie_id)}}" class="btn btn-outline-danger btn-sm">Excluir</a></td>
                               </tr>
                             @endforeach

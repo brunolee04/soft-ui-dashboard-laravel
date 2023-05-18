@@ -50,8 +50,22 @@ class MovieController extends Controller{
     }
 
     public function edit(Request $request){
-        var_dump($request->movie_id);
-        return view('movie/editer');
+
+        $this->language_id = config('app.language_id');
+
+        $movie_id = $request->movie_id;
+
+        $show = DB::table('movie')
+        ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
+        ->where('movie_description.language_id', $this->language_id)
+        ->where('movie.movie_id', $movie_id)
+        ->first();
+
+        $show = json_decode(json_encode($show),true);
+
+        var_dump($show);
+
+        return view('movie/editer',$show);
     }
 
 

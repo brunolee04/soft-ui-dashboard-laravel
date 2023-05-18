@@ -9,7 +9,7 @@
         
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>[nome do filme] - Confirmar Informações</h6>
+              <h6>{{$movie_description_name}} - Confirmar Informações</h6>
             </div>
             
             <div class="card-body px-0 pt-0 pb-2">
@@ -24,27 +24,52 @@
                         <!-- Movie Form -->
 
                         <div class="row">
-                          <div class="col-md-4">      
-                            <div class="input-group mb-2">
-                              <span class="input-group-text"><img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/icons/flags/BR.png" /></span>
-                              <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                          <div class="col-md-4"> 
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="input-group mb-2">
+                                  <span class="input-group-text"><img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/icons/flags/BR.png" /></span>
+                                  <input type="text" class="form-control" value="{{$movie_description_name}}">
+                                </div>
+    
+                                <div class="input-group mb-2">
+                                  <span class="input-group-text"><img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/icons/flags/US.png" /></span>
+                                  <input type="text" class="form-control" value="{{$movie_description_original_name}}">
+                                </div>
+                              </div>
                             </div>
 
-                            <div class="input-group mb-2">
-                              <span class="input-group-text"><img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/icons/flags/US.png" /></span>
-                              <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                            <div class="row">
+                              <div class="col-md-12">   
+                                <div class="input-group mb-2">
+                                  <span class="input-group-text"><img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/icons/flags/BR.png" /></span>
+                                  <textarea class="form-control">{{$movie_description_description}}</textarea>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-12">
+                                <span>Data lançamento:</span>
+                                <label>{{$movie_date_launch}}</label><br>
+  
+                                <span>Rating:</span>
+                                <label>{{$movie_parental_rating}}</label><br>
+
+                                <span>Tagline:</span>
+                                <label>{{$movie_description_tagline}}</label><br>
+                              </div>
                             </div>
                           </div>
 
                           <div class="col-md-4">
                             <div class="form-group">
-                              Imagem Poster
+                              <img src="{{$movie_image_1}}" class="imagePoster">
                             </div>
                           </div>
 
                           <div class="col-md-4">
                             <div class="form-group">
-                              Imagem Capa
+                              <img src="{{$movie_image_2}}" class="imagePoster">
                             </div>
                           </div>
                         </div>
@@ -115,5 +140,9 @@
       </div>
     </div>
   </main>
-  
+  <style>
+    .imagePoster{
+      width:260px;
+    }
+  </style>
   @endsection

@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 
 use App\Models\CustomerRatesMovie;
+use App\Models\Movie;
+use App\Models\MovieSeason;
+
 
 class ApiController extends Controller{
 
@@ -85,11 +88,6 @@ class ApiController extends Controller{
         ->join('writer_to_movie', 'writer.writer_id', '=', 'writer_to_movie.writer_id')
         ->where('writer_to_movie.movie_id','=',$show_id)
         ->get();
-
-      
-
-
-        
 
 
         $movie_data['db_movie_info'] = $db_movie_info;
@@ -200,55 +198,104 @@ class ApiController extends Controller{
       ], 201);
         
       }
-
-
+   
+      /**
+       * Rate Movie
+       *
+       * @param Request $request
+       * @return json data
+       */
       public function rateMovie(Request $request){
 
+          $inputs = $request->all();
 
+          $response = [];
 
-        $inputs = $request->all();
+          $show_id         = $inputs['show_id'];
+          $customer_id     = $inputs['customer_id'];
+          $movie_season_id = $inputs['movie_season_id'];
+          $rate            = $inputs['rate'];
 
-        $response = [];
+          $customer_rates_movie_info = DB::table('customer_rates_movie')
+          ->where('customer_id',$customer_id)
+          ->where('movie_id',$show_id)
+          ->where('movie_season_id',$movie_season_id)
+          ->first();
 
-        $show_id         = $inputs['show_id'];
-        $customer_id     = $inputs['customer_id'];
-        $movie_season_id = $inputs['movie_season_id'];
-        $rate            = $inputs['rate'];
+          if(!is_null($customer_rates_movie_info)){
+            $customer_rates_movie_id = $customer_rates_movie_info->customer_rates_movie_id;
 
-        $customer_rates_movie_info = DB::table('customer_rates_movie')
-        ->where('customer_id',$customer_id)
-        ->where('movie_id',$show_id)
-        ->where('movie_season_id',$movie_season_id)
-        ->first();
+            $customerRateInfo = CustomerRatesMovie::find($customer_rates_movie_id);
+            
+            $customerRateInfo->customer_rates_movie_rate = $rate;
 
+            if($customerRateInfo->save()){
 
+              //makes the general rate
+              $mediumRate = $this->generalRateToMovie($show_id,$movie_season_id);
 
-        if(!is_null($customer_rates_movie_info)){
-          $customer_rates_movie_id = $customer_rates_movie_info->customer_rates_movie_id;
+              $response['status'] = true;
+              $response['mediumRate'] = $mediumRate;
+              $response['message'] = "Você avaliou o show.";
+            }
+            else{
+              $response['status'] = false;
+              $response['mediumRate'] = 0;
+              $response['message'] = "O show não foi avaliado.";
+            }
 
-          $customerRateInfo = CustomerRatesMovie::find($customer_rates_movie_id);
-          
-          $customerRateInfo->customer_rates_movie_rate = $rate;
-
-          if($customerRateInfo->save()){
-            $response['status'] = true;
-            $response['message'] = "Você avaliou o show.";
           }
           else{
             $response['status'] = false;
-            $response['message'] = "O show não foi avaliado.";
+            $response['message'] = "Você ainda não marcou o filme como visto.";
           }
 
-        }
-        else{
-          $response['status'] = false;
-          $response['message'] = "Você ainda não marcou o filme como visto.";
-        }
-
-        return response()->json([
-          "status"  => true,
-          "data"    => $response
-      ], 201);
+          
+          return response()->json([
+            "status"  => true,
+            "data"    => $response
+        ], 201);
 
       }
+      /**
+       * Rate the movie with general rating
+       *
+       * @param [int] $movie_id
+       * @param [int] $movie_season_id
+       * @return void
+       */
+      private function generalRateToMovie($movie_id,$movie_season_id){
+
+        $rates    = DB::table('customer_rates_movie')
+                  ->select("customer_rates_movie_rate as totalRate")
+                  ->where('movie_id', $movie_id)
+                  ->where('movie_season_id', $movie_season_id)
+                  ->sum('customer_rates_movie_rate');
+
+        $rateQty  = DB::table('customer_rates_movie')
+        ->where('movie_id', $movie_id)
+        ->where('movie_season_id', $movie_season_id)
+        ->count('customer_rates_movie_id');   
+        
+        
+        $mediumRate = $rates / $rateQty;
+
+        MovieSeason::where('movie_id', $movie_id)
+        ->where('season', $movie_season_id)
+        ->update([
+          'rating' => $mediumRate
+        ]);
+                  
+        return $mediumRate;
+      }
+
+
+      public function test(){
+        $show=1;
+        $season = 1;
+
+        $this->generalRateToMovie($show,$season);
+      }
+      
+      
 }

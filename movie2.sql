@@ -273,7 +273,6 @@ CREATE TABLE `movie` (
   `movie_duration` smallint(6) DEFAULT NULL,
   `movie_year_launch` smallint(6) DEFAULT NULL,
   `movie_date_launch` date DEFAULT NULL,
-  `movie_rating` smallint(6) DEFAULT NULL COMMENT 'nota geral do filme baseado no calculo temporário da média das notas dadas.',
   `movie_parental_rating` varchar(3) DEFAULT NULL COMMENT 'classificação indicativa do filme',
   `movie_date_added` date DEFAULT NULL,
   `movie_feed_url` varchar(150) DEFAULT NULL,
@@ -362,9 +361,10 @@ CREATE TABLE `movie_image` (
 --
 
 CREATE TABLE `movie_season` (
-  `movie_season_id` int(11) NOT NULL,
+  `movie_season_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `movie_id` int(11) NOT NULL,
-  `season` int(11) NOT NULL
+  `season` int(11) NOT NULL,
+  `rating` float(1) DEFAULT NULL COMMENT 'nota geral do filme baseado no calculo temporário da média das notas dadas.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 

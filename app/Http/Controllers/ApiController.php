@@ -222,14 +222,14 @@ class ApiController extends Controller{
           ->where('movie_id',$show_id)
           ->where('movie_season_id',$movie_season_id)
           ->first();
-/*
+
           if(!is_null($customer_rates_movie_info)){
             $customer_rates_movie_id = $customer_rates_movie_info->customer_rates_movie_id;
 
             $customerRateInfo = CustomerRatesMovie::find($customer_rates_movie_id);
             
             $customerRateInfo->customer_rates_movie_rate = $rate;
-
+/*
             if($customerRateInfo->save()){
 
               //makes the general rate
@@ -245,14 +245,14 @@ class ApiController extends Controller{
               $response['mediumRate'] = 0;
               $response['message'] = "O show não foi avaliado.";
             }
-
+*/
           }
           else{
             $response['status'] = false;
             $response['message'] = "Você ainda não marcou o filme como visto.";
           }
 
-          */
+          
           return response()->json([
             "status"  => true,
             "data"    => $response

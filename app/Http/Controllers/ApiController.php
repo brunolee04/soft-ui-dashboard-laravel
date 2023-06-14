@@ -297,7 +297,7 @@ class ApiController extends Controller{
 
 
       public function test(){
-        $show=1;
+        $show=6;
         $season = 1;
         
         $this->generalRateToMovie($show,$season);

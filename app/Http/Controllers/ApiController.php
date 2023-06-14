@@ -216,13 +216,13 @@ class ApiController extends Controller{
           $movie_season_id = $inputs['movie_season_id'];
           $rate            = $inputs['rate'];
 
-          /*
+          
           $customer_rates_movie_info = DB::table('customer_rates_movie')
           ->where('customer_id',$customer_id)
           ->where('movie_id',$show_id)
           ->where('movie_season_id',$movie_season_id)
           ->first();
-
+/*
           if(!is_null($customer_rates_movie_info)){
             $customer_rates_movie_id = $customer_rates_movie_info->customer_rates_movie_id;
 

@@ -234,9 +234,10 @@ class ApiController extends Controller{
               //makes the general rate
               $mediumRate = $this->generalRateToMovie($show_id,$movie_season_id);
 
-              $response['status'] = true;
+              $response['status']     = true;
               $response['mediumRate'] = $mediumRate;
-              $response['message'] = "Você avaliou o show.";
+              $response['myRate']     = $rate;
+              $response['message']    = "Você avaliou o show.";
             }
             else{
               $response['status'] = false;
@@ -293,7 +294,7 @@ class ApiController extends Controller{
       public function test(){
         $show=1;
         $season = 1;
-
+        
         $this->generalRateToMovie($show,$season);
       }
       

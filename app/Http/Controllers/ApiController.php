@@ -280,7 +280,8 @@ class ApiController extends Controller{
         ->where('movie_season_id', $movie_season_id)
         ->count('customer_rates_movie_id');   
         
-        
+        echo "rate: ".$rates;
+        echo "rateQty: ".$rateQty;
         $mediumRate = $rates > 0 && $rateQty > 0 ? $rates / $rateQty : 0;
 
         //echo "publico: ".$mediumRate;

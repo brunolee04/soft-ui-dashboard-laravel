@@ -283,6 +283,8 @@ class ApiController extends Controller{
         
         $mediumRate = $rates / $rateQty;
 
+        echo "publico: ".$mediumRate;
+
         MovieSeason::where('movie_id', $movie_id)
         ->where('season', $movie_season_id)
         ->update([

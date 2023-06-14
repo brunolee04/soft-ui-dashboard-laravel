@@ -269,7 +269,7 @@ class ApiController extends Controller{
        */
       private function generalRateToMovie($movie_id,$movie_season_id){
 
-        $rates    = DB::table('customer_rates_movie')
+        $rates    = DB::table('customer_rates_movie ')
                   ->select("customer_rates_movie_rate as totalRate")
                   ->where('movie_id', $movie_id)
                   ->where('movie_season_id', $movie_season_id)

@@ -231,10 +231,10 @@ class ApiController extends Controller{
             $customerRateInfo->customer_rates_movie_rate = $rate;
 
             if($customerRateInfo->save()){
-/*
+
               //makes the general rate
               $mediumRate = $this->generalRateToMovie($show_id,$movie_season_id);
-
+/*
               $response['status']     = true;
               $response['mediumRate'] = $mediumRate;
               $response['myRate']     = $rate;

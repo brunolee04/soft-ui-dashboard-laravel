@@ -48,7 +48,10 @@ Route::prefix('auth')->group(function(){
 
     Route::post('register',[\App\Http\Controllers\Auth\Api\RegisterController::class,'register']);
 
+
+    //Rotas para teste
     Route::get('test',[ApiController::class,'test']);
+    Route::post('/movie/rateShow2',[ApiController::class, 'rateMovie']);
 
 });
 

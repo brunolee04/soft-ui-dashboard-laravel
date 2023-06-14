@@ -2,7 +2,7 @@
 // $url = 'http://127.0.0.1:8000/api/movie/markThisShowAsSaw';
 // $url = 'https://codevalley.dev/api/movie/markThisShowAsSaw';
 
-$url = 'https://codevalley.dev/api/movie/rateShow';
+$url = 'https://codevalley.dev/api/movie/rateShow2';
 
 $data = array(
  "show_id"=>1,

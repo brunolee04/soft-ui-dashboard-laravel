@@ -281,7 +281,7 @@ class ApiController extends Controller{
         ->count('customer_rates_movie_id');   
         
         
-        $mediumRate = $rates / $rateQty;
+        $mediumRate = $rates > 0 && $rateQty > 0 ? $rates / $rateQty : 0;
 
         echo "publico: ".$mediumRate;
 

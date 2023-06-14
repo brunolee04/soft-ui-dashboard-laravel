@@ -229,9 +229,9 @@ class ApiController extends Controller{
             $customerRateInfo = CustomerRatesMovie::find($customer_rates_movie_id);
             
             $customerRateInfo->customer_rates_movie_rate = $rate;
-/*
-            if($customerRateInfo->save()){
 
+            if($customerRateInfo->save()){
+/*
               //makes the general rate
               $mediumRate = $this->generalRateToMovie($show_id,$movie_season_id);
 
@@ -239,13 +239,14 @@ class ApiController extends Controller{
               $response['mediumRate'] = $mediumRate;
               $response['myRate']     = $rate;
               $response['message']    = "Você avaliou o show.";
+              */
             }
             else{
               $response['status'] = false;
               $response['mediumRate'] = 0;
               $response['message'] = "O show não foi avaliado.";
             }
-*/
+
           }
           else{
             $response['status'] = false;

@@ -216,6 +216,7 @@ class ApiController extends Controller{
           $movie_season_id = $inputs['movie_season_id'];
           $rate            = $inputs['rate'];
 
+          /*
           $customer_rates_movie_info = DB::table('customer_rates_movie')
           ->where('customer_id',$customer_id)
           ->where('movie_id',$show_id)
@@ -251,7 +252,7 @@ class ApiController extends Controller{
             $response['message'] = "Você ainda não marcou o filme como visto.";
           }
 
-          
+          */
           return response()->json([
             "status"  => true,
             "data"    => $response

@@ -90,6 +90,8 @@ class ApiController extends Controller{
         ->get();
 
 
+
+
         $movie_data['db_movie_info'] = $db_movie_info;
         $movie_data['db_movie_gender_info'] = $db_movie_gender_info;
         $movie_data['db_movie_image_info'] = $db_movie_image_info;
@@ -100,6 +102,7 @@ class ApiController extends Controller{
         $movie_data['db_movie_actor_info'] = $db_movie_actor_info;
         $movie_data['db_movie_director_info'] = $db_movie_director_info;
         $movie_data['db_movie_writer_info'] = $db_movie_writer_info;
+       
 
         return response()->json([
             "status"  => true,

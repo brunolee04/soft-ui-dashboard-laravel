@@ -29,7 +29,7 @@ class ApiController extends Controller{
 
       public function getMovie($show_id,$customer_id){
 
-        var_dump($customer_id);
+      
         $movie_data = [];
 
         $db_movie_info = DB::table('movie')
@@ -95,7 +95,7 @@ class ApiController extends Controller{
         $db_my_rate_movie_info = DB::table('customer_rates_movie')
         ->select('customer_rates_movie.customer_rates_movie_rate','customer_rates_movie.customer_rates_movie_date_added','customer_rates_movie.movie_season_id')
         ->where('customer_rates_movie.movie_id','=',$show_id)
-        ;
+        ->where('customer_rates_movie.movie_id','=',$customer_id)  ;
 
 
 
@@ -110,6 +110,7 @@ class ApiController extends Controller{
         $movie_data['db_movie_actor_info'] = $db_movie_actor_info;
         $movie_data['db_movie_director_info'] = $db_movie_director_info;
         $movie_data['db_movie_writer_info'] = $db_movie_writer_info;
+        $movie_data['db_my_rate_movie_info'] = $db_my_rate_movie_info;
        
 
         return response()->json([

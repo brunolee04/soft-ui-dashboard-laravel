@@ -95,7 +95,8 @@ class ApiController extends Controller{
         $db_my_rate_movie_info = DB::table('customer_rates_movie')
         ->select('customer_rates_movie.customer_rates_movie_rate','customer_rates_movie.customer_rates_movie_date_added','customer_rates_movie.movie_season_id')
         ->where('customer_rates_movie.movie_id','=',$show_id)
-        ->where('customer_rates_movie.movie_id','=',$customer_id)  ;
+        ->where('customer_rates_movie.movie_id','=',$customer_id)
+        ->get();
 
 
 

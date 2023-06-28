@@ -27,9 +27,9 @@ class ApiController extends Controller{
       }
 
 
-      public function getMovie($show_id,$customer_id){
+      public function getMovie($show_id){
 
-        var_dump($customer_id);
+        //var_dump($customer_id);
         $movie_data = [];
 
         $db_movie_info = DB::table('movie')

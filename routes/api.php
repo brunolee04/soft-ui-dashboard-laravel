@@ -52,7 +52,7 @@ Route::prefix('auth')->group(function(){
     //Rotas para teste
     Route::get('test',[ApiController::class,'test']);
     Route::post('/movie/rateShow2',[ApiController::class, 'rateMovie']);
-    Route::get('movieaa/{show_id}',[ApiController::class, 'getMovie']);
+    Route::get('movieaa/{show_id}/{customer_id}',[ApiController::class, 'getMovie']);
 
 });
 

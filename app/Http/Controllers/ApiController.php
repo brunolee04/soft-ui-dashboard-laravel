@@ -33,6 +33,7 @@ class ApiController extends Controller{
         $db_movie_info = DB::table('movie')
         ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
         ->join('movie_season', 'movie.movie_id', '=', 'movie_season.movie_id')
+        
         ->where('movie.movie_id','=',$show_id)
         ->get();
 

@@ -76,7 +76,7 @@ class MovieController extends Controller{
     public function save(Request $request){
         $this->language_id = config('app.language_id');
 
-        $movie_id = $request->input('movie_id');
+        $api_movie_id = $movie_id = $request->input('movie_id');
         
         if($this->formValidation(array('movie_id'=>1))){
 
@@ -496,13 +496,16 @@ class MovieController extends Controller{
 
                     }
 
+                    //Dealing with Movie Watch Providers
+                    $watch_providers = $this->getMovieWatchProviders($api_movie_id);
+
                     
 
                 }
                 
-                return redirect()->action(
-                    [MovieController::class, 'edit'], ['movie_id'=>$movie_id]
-                );
+                // return redirect()->action(
+                //     [MovieController::class, 'edit'], ['movie_id'=>$movie_id]
+                // );
                
 
             }
@@ -524,6 +527,35 @@ class MovieController extends Controller{
         }
 
         
+    }
+
+
+
+    private function getMovieWatchProviders($id){
+
+        $locale = "BR";
+
+        $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$movie_id.'/watch/providers?api_key='.config('app.guzzle_tmd_api_key');
+
+        $response   = Http ::get($theUrl); 
+        
+        $providers_package = [];
+
+            if($response->getStatusCode()==200){
+
+               $watch_providers =  $response->json();
+
+               $watch_providers = json_decode($watch_providers,true);
+
+                foreach($watch_providers as $watch_provider){
+
+                    $providers_package = isset($watch_providers[$locale])?$watch_providers[$locale]:null;
+
+                }
+            }
+        
+        return $providers_package;
+
     }
 
     private function formValidation($rules){

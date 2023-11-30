@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\ApiGameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,8 @@ Route::prefix('auth')->group(function(){
     Route::post('/movie/rateShow2',[ApiController::class, 'rateMovie']);
     Route::get('movieaa/{show_id}/{customer_id}',[ApiController::class, 'getMovie']);
 
+    Route::get('game/getParty/{party_token}',[ApiGameController::class,'getParty']);
+    Route::post('game/joinParty/{party_token}',[ApiGameController::class,'joinParty']);
 });
 
 

@@ -4,6 +4,8 @@
 
 $url = 'https://codevalley.dev/api/movie/rateShow2';
 
+$url = 'http://127.0.0.1:8000/api/auth/game/joinParty/123';
+
 $data = array(
  "show_id"=>1,
  "movie_season_id"=>1,

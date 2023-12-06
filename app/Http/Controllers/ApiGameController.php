@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 
 use App\Models\JoinParty;
+use App\Models\GameParty;
 
 
 
 class ApiGameController extends Controller{
 
       private $language_id = 1;
+
+      private $local_party_dir = "public/party";
+
+      private $party_keep_alive = 3600; //seconds
 
       public function getParty($token) {
         $db_party_info = DB::table('party')
@@ -94,6 +100,63 @@ class ApiGameController extends Controller{
           "status"  => true,
           "data"    => $response
         ], 201);
+
+      }
+
+      /*
+        @name: Creates Party
+        @desc: Creates a party based on recieved token:
+          # Checks if "token party " already exists
+          # Saves the new token
+          # Creates a token.json file to give the party feedback in Server Side Event
+      */
+      public function createsParty(Request $request){
+
+        // 1 - Gets the Party´s token
+
+        $inputs      = $request->all();
+
+        $response    = [];
+
+        $party_token = $inputs['party_token'];
+
+        $game_id     = $inputs['game_id'];
+
+        // 2 - Checks if token already exists
+
+        $db_party_info = DB::table('party')
+        ->where('party.party_token','=',$party_token)
+        ->get();
+
+        if($db_party_info->count() == 0 ){
+
+          // 2.1 - If token doesn´t exist, so a new party is created
+
+          $dbParty = new GameParty();
+
+          $dbParty->party_token = $party_token;
+
+          $dbParty->game_id     = $game_id;
+
+          $dbParty->date_added  = date("Y-m-d H:m:i");
+
+          $dbParty->save();
+
+          $party_id = 1;
+
+          // 2.2 - A new json file with token name is created
+
+          $data = array(
+            "token"     => $party_token,
+            "party_id"  => $party_id,
+            "keep_alive"=> $this->party_keep_alive,
+            "data"      => []
+          );
+    
+          Storage::disk($this->local_party_dir)->put("{$party_token}.json", json_encode($data));
+
+        }
+
 
       }
 

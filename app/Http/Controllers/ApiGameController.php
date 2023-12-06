@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+use App\Http\Controllers\Game\PartyJsonCreator;
 
 use App\Models\JoinParty;
 use App\Models\GameParty;
@@ -44,6 +45,15 @@ class ApiGameController extends Controller{
       }
 
 
+      private function checkTmpUserInAPartyQty($party_id){
+
+        $tmpUserToPartyInfo = DB::table('tmp_user_to_party')
+        ->where('tmp_user_to_party.party_id','=',$party_id)
+        ->get();
+
+        return $tmpUserToPartyInfo;
+      }
+
 
       public function joinParty(Request $request){
 
@@ -81,16 +91,31 @@ class ApiGameController extends Controller{
 
             $dbJoinParty->point_qty = 0;
 
-            $dbJoinParty->save();
+         
+            if($dbJoinParty->save()){
+
+              $tmpUserInParty = $this->checkTmpUserInAPartyQty($db_party_info['party_id']);
+
+               $tmpUserInPartyQty = $tmpUserInParty->count();
+
+              $jsonCreatorObj = new PartyJsonCreator();
+
+              $data = array(
+                "last_user" => array(
+                  "mail" => $mail,
+                  "nick" => "xablau"
+                ),
+                "qty_users" => $tmpUserInPartyQty
+              );
+              
+
+              $response['status'] = $jsonCreatorObj->updateJson($party_token,$party_id,$data);
+   
+            }
 
           }
  
         }
-
-
-
-
-
 
 
         $response['party_token'] = $party_token;
@@ -138,25 +163,38 @@ class ApiGameController extends Controller{
 
           $dbParty->game_id     = $game_id;
 
-          $dbParty->date_added  = date("Y-m-d H:m:i");
+          $dbParty->party_date_added  = date("Y-m-d H:m:i");
 
           $dbParty->save();
 
-          $party_id = 1;
+          $party_id =  $dbParty->party_id;
 
           // 2.2 - A new json file with token name is created
 
-          $data = array(
-            "token"     => $party_token,
-            "party_id"  => $party_id,
-            "keep_alive"=> $this->party_keep_alive,
-            "data"      => []
-          );
-    
-          Storage::disk($this->local_party_dir)->put("{$party_token}.json", json_encode($data));
+          $jsonCreatorObj = new PartyJsonCreator();
+
+          $data = $jsonCreatorObj->createJson($party_token,$party_id,[]);
+          
+          $file = $this->local_party_dir."/".$party_token.".json";
+
+          if(Storage::put($file, json_encode($data))){
+
+            $response['party_token'] = $party_token;
+
+            $response['message'] = "Party criada com sucesso.";
+        
+          }else{
+
+            $response['message'] = "Erro ao criar party";
+
+          }
 
         }
 
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+        ], 201);
 
       }
 

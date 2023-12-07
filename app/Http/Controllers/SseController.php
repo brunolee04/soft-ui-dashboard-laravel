@@ -26,10 +26,10 @@ class SseController extends Controller{
                     $file_name = storage_path($this->local_party_dir."\\".$this->party_token.".json");
                     
                     if(file_exists($file_name)){
-                        $handle = fopen($file_name, "r");
-                        $contents = fgets($handle);
-                        fclose($handle);
-
+                        // $handle = fopen($file_name, "r");
+                        // $contents = fgets($handle);
+                        // fclose($handle);
+                        $contents = "xablau";
                         echo "event: {$this->party_token}\n";
                         echo "data: {$contents}";
                         echo "\n\n";
@@ -42,7 +42,7 @@ class SseController extends Controller{
                     // }
 
                     if (ob_get_contents()) ob_end_clean();
-                        flush();
+                        @ob_flush();@flush();
         
                         // Break the loop if the client aborted the connection (closed the page)
                         if (connection_aborted()) {break;}
@@ -61,7 +61,7 @@ class SseController extends Controller{
         return response()->stream(function () {
             while (true) {
                 echo "event: ping\n";
-                $curDate = date(DATE_ISO8601);
+    
                 echo 'data: {"time": "' . $curDate . '"}';
                 echo "\n\n";
 

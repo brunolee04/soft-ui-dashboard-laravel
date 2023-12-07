@@ -17,6 +17,8 @@ class PartyJsonCreator extends Controller{
     
     private $local_party_dir = "app\public\party";
 
+    private $file_name = "";
+
     public function createJson($party_token,$party_id,$data = []){
         $this->sse["token"] = $party_token;
         $this->sse["party_id"] = $party_id;
@@ -32,12 +34,28 @@ class PartyJsonCreator extends Controller{
 
         $file_name = storage_path($this->local_party_dir."\\".$party_token.".json");
 
-        if(file_exists($file_name)){
-            $handle = fopen($file_name, "r+");
-            fwrite($handle,json_encode($this->sse));
-            fclose($handle);
-            return true;
-        }
-        else return false;
+        return $this->writeFile($file_name);
+    }
+
+    public function writeFile($file_name){
+
+        $this->file_name = $file_name;
+
+        return response()->stream(function () {
+            if(file_exists($this->file_name)){
+                while(true){
+                    $handle = fopen($this->file_name, "w+");
+                    if(fwrite($handle,json_encode($this->sse)))break;
+                    fclose($handle);
+                }
+               
+                return true;
+            }
+            else return false;
+            
+        }, 200, [
+            'Cache-Control' => 'no-cache',
+            'Content-Type' => 'text/event-stream',
+        ]);
     }
 }

@@ -109,14 +109,14 @@ class ApiGameController extends Controller{
               );
               
 
-              $response['status'] = $jsonCreatorObj->updateJson($party_token,$party_id,$data);
+            //  $response['status'] = $jsonCreatorObj->updateJson($party_token,$party_id,$data);
    
             }
 
           }
  
         }
-
+        session_write_close(); 
 
         $response['party_token'] = $party_token;
 

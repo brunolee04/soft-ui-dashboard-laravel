@@ -50,6 +50,10 @@ Route::prefix('auth')->group(function(){
 
     Route::post('register',[\App\Http\Controllers\Auth\Api\RegisterController::class,'register']);
 
+    //tmp user Login
+    //tmp_user_token
+    //Route::post('tmpLogin',);
+
 
     //Rotas para teste
     Route::get('test',[ApiController::class,'test']);

@@ -12,13 +12,15 @@ while(true){
         fclose($fpointer);
         // infinite loop
   
-        // output the current timestamp; REPLACE WITH YOUR FUNCTIONALITY
+        // output the current timestamp; 
         $time = date('H:m:s');
         echo "event: horario\n";
         echo "data: {$string}\n\n"; // 2 new line characters
 
         if (ob_get_contents()) ob_end_clean();
         flush();
-        sleep(1); // wait for 2 seconds
+         // Break the loop if the client aborted the connection (closed the page)
+         if (connection_aborted()) {break;}
+         usleep(50000); // 50ms
    
 }

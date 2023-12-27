@@ -63,11 +63,8 @@ class MovieController extends Controller{
 
         $show = json_decode(json_encode($show),true);
 
-        var_dump($show);
-
         return view('movie/editer',$show);
     }
-
 
     private function getYearLaunch($dateString){        
         return date('Y', strtotime($dateString));
@@ -261,8 +258,8 @@ class MovieController extends Controller{
                              if(is_null($actor_info)){
      
                                  $dbActor->actor_gender = $actor['gender'];
-     
-                                 $dbActor->actor_image_url = config('app.guzzle_tmd_image_url').$actor['profile_path'];
+                                
+                                 $dbActor->actor_image_url = strlen($actor['profile_path']) >0 ? config('app.guzzle_tmd_image_url').$actor['profile_path']: 'no_image';
      
                                  $dbActor->actor_name = $actor['name'];
      
@@ -528,8 +525,6 @@ class MovieController extends Controller{
 
         
     }
-
-
 
     private function getMovieWatchProviders($id){
 

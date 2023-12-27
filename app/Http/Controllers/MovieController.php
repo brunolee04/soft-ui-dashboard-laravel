@@ -259,7 +259,7 @@ class MovieController extends Controller{
      
                                  $dbActor->actor_gender = $actor['gender'];
                                 
-                                 $dbActor->actor_image_url = strlen($actor['profile_path']) >0 ? config('app.guzzle_tmd_image_url').$actor['profile_path']: null;
+                                 $dbActor->actor_image_url = strlen($actor['profile_path']) >0 ? config('app.guzzle_tmd_image_url').$actor['profile_path']: 'no_image';
      
                                  $dbActor->actor_name = $actor['name'];
      

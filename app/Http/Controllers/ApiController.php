@@ -191,16 +191,16 @@ class ApiController extends Controller{
 
           if($dbCustomerRatesMovie->save()){
             $response['status'] = true;
-            $response['message'] = "Você marcou o filme como visto.";
+            $response['message'] = "Você marcou %o% %show% como visto.";
           }
           else{
             $response['status'] = false;
-            $response['message'] = "Erro ao marcar o filme como visto";
+            $response['message'] = "Erro ao marcar %o% %show% como visto";
           }
         }
         else{
           $response['status'] = false;
-          $response['message'] = "Você já marcou o filme como visto";
+          $response['message'] = "Você já marcou %o% %show% como visto";
         }
 
 
@@ -251,19 +251,19 @@ class ApiController extends Controller{
               $response['status']     = true;
               $response['mediumRate'] = $mediumRate;
               $response['myRate']     = $rate;
-              $response['message']    = "Você avaliou o show.";
+              $response['message']    = "Você avaliou %o% %show%.";
              
             }
             else{
               $response['status'] = false;
               $response['mediumRate'] = 0;
-              $response['message'] = "O show não foi avaliado.";
+              $response['message'] = "%o% %show% não foi avaliado.";
             }
 
           }
           else{
             $response['status'] = false;
-            $response['message'] = "Você ainda não marcou o filme como visto.";
+            $response['message'] = "Você ainda não marcou %o% %show% como visto.";
           }
 
           
@@ -282,7 +282,7 @@ class ApiController extends Controller{
        */
       private function generalRateToMovie($movie_id,$movie_season_id){
 
-        $rates    = DB::table('customer_rates_movie')
+        $rateSum    = DB::table('customer_rates_movie')
                   ->select("customer_rates_movie_rate as totalRate")
                   ->where('movie_id', $movie_id)
                   ->where('movie_season_id', $movie_season_id)
@@ -294,12 +294,12 @@ class ApiController extends Controller{
         ->count('customer_rates_movie_id');   
         
     
-        $mediumRate = $rates > 0 && $rateQty > 0 ? $rates / $rateQty : 0;
+        $mediumRate = $rateSum > 0 && $rateQty > 0 ? $rateSum / $rateQty : 0;
 
         //echo "publico: ".$mediumRate;
 
         MovieSeason::where('movie_id', $movie_id)
-        ->where('season', $movie_season_id)
+        ->where('movie_season_id', $movie_season_id)
         ->update([
           'rating' => $mediumRate
         ]);

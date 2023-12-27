@@ -7,11 +7,11 @@ $file = '../../storage/app/public/party/8IOW.json';
 
 
 while(true){
-        $fpointer = fopen($file,'r');
-        $string = fgets($fpointer);
-        fclose($fpointer);
+       // $fpointer = fopen($file,'r');
+      //  $string = fgets($fpointer);
+      //  fclose($fpointer);
         // infinite loop
-  
+        $string = "invoca";
         // output the current timestamp; 
         $time = date('H:m:s');
         echo "event: horario\n";

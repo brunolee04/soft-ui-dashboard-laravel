@@ -309,7 +309,11 @@ class ApiController extends Controller{
 
 
       public function getMyLists($customer_id){
-        var_dump($customer_id);
+        $response = array('xablau');
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+      ], 201);
       }
 
 

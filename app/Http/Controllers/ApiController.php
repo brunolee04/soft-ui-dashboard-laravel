@@ -309,10 +309,14 @@ class ApiController extends Controller{
 
 
       public function getMyLists($customer_id){
-        $response = array('xablau'=>$customer_id);
+
+        $myLists = DB::table('customer_lists')
+        ->where('customer_id', $customer_id)
+        ->get();
+    
         return response()->json([
           "status"  => true,
-          "data"    => $response
+          "data"    => $myLists
       ], 201);
       }
 

@@ -308,6 +308,11 @@ class ApiController extends Controller{
       }
 
 
+      public function getMyLists($customer_id){
+        var_dump($customer_id);
+      }
+
+
       public function test(){
         $show=6;
         $season = 1;

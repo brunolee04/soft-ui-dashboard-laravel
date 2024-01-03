@@ -37,6 +37,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
    // Route::get('movie/{show_id}',[ApiController::class, 'getMovie']);
     Route::post('/movie/markThisShowAsSaw',[ApiController::class, 'markThisShowAsSaw']);
     Route::post('/movie/rateShow',[ApiController::class, 'rateMovie']);
+    //List apis
+    Route::get('mylists/{customer_id}',[ApiController::class,'getMyLists']);
+
 });
 
 

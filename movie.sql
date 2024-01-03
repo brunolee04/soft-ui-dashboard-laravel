@@ -110,10 +110,10 @@ CREATE TABLE `customer` (
 --
 
 CREATE TABLE `customer_list` (
-  `customer_list_id` int(11) NOT NULL,
+  `customer_list_id` int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
   `customer_list_name` varchar(45) NOT NULL,
   `customer_list_date_added` date DEFAULT NULL,
-  `customer_customer_id` int(11) NOT NULL
+  `customer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

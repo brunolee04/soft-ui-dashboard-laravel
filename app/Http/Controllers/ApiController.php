@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\CustomerRatesMovie;
 use App\Models\Movie;
 use App\Models\MovieSeason;
+use App\Models\MovieToCustomerList;
 
 
 class ApiController extends Controller{
@@ -318,6 +319,35 @@ class ApiController extends Controller{
           "status"  => true,
           "data"    => $myLists
       ], 201);
+      }
+
+      public function setShowToMyList(Request $request){
+        $inputs = $request->all();
+
+        $response = [];
+
+        $show_id = $inputs['show_id'];
+        $list_id = $inputs['list_id'];
+
+        $dbShowToCustomerList = new MovieToCustomerList();
+
+        $dbShowToCustomerList->customer_list_id = $list_id;
+        $dbShowToCustomerList->movie_id = $show_id;
+
+        if($dbShowToCustomerList->save()){
+          $response['status']     = true;
+          $response['message']    = "Você adicionou %o% %show% na lista %list%.";
+        }
+        else{
+          $response['status']     = false;
+          $response['message']    = "Estamos com problemas em adcionar %o% %show% na lista %list%, tente novamente mais tarde.";
+        }
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+        ], 201);
+        
       }
 
 

@@ -318,8 +318,8 @@ CREATE TABLE `movie_season` (
 --
 
 CREATE TABLE `movie_to_customer_list` (
-  `movie_to_customer_list_id` int(11) NOT NULL,
-  `customer_list_customer_list_id` int(11) NOT NULL,
+  `movie_to_customer_list_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `customer_list_id` int(11) NOT NULL,
   `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

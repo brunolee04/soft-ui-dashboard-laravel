@@ -94,7 +94,7 @@ CREATE TABLE `challenge_description` (
 --
 
 CREATE TABLE `customer` (
-  `customer_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `customer_firstname` varchar(25) NOT NULL,
   `customer_lastname` varchar(45) NOT NULL,
   `customer_mail` varchar(45) DEFAULT NULL,

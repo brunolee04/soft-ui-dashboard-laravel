@@ -49,7 +49,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 /**
  * Auth Routes, don´t need to be authenticated to access
  */
-Route::group(['middleware' => 'cors'], function () {
+//Route::group(['middleware' => 'cors'], function () {
+    Route::group(['prefix' => 'auth', 'middleware' => ['cors']], function(){
     Route::post('/login',[\App\Http\Controllers\Auth\Api\LoginController::class,'login']);
 
     Route::post('/logout',[\App\Http\Controllers\Auth\Api\LoginController::class,'logout']);

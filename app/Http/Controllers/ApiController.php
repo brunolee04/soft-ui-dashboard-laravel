@@ -357,6 +357,10 @@ class ApiController extends Controller{
         
         $this->generalRateToMovie($show,$season);
       }
+
+      public function teste2(Request $request){
+        echo "ok";
+      }
       
       
 }

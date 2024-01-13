@@ -63,6 +63,7 @@ Route::group(['middleware' => 'cors'], function () {
 
     //Rotas para teste
     Route::get('test',[ApiController::class,'test']);
+    Route::post('test2',[ApiController::class,'teste2']);
     Route::post('/movie/rateShow2',[ApiController::class, 'rateMovie']);
     Route::get('movieaa/{show_id}/{customer_id}',[ApiController::class, 'getMovie']);
 

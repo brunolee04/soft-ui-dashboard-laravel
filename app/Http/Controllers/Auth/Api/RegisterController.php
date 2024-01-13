@@ -29,6 +29,10 @@ class RegisterController extends Controller{
         ]);
     }
 
+    public function test(Request $request){
+        echo "teste";
+    }
+
     // public function register(Request $request,User $user){
         
     //     //TO-DO: to valid request

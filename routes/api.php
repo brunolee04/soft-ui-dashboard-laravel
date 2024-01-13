@@ -42,7 +42,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('mylists/{customer_id}',[ApiController::class,'getMyLists']);
     Route::post('/myList/addShow',[ApiController::class, 'setShowToMyList']);
     
-    Route::post('/register',[RegisterController::class,'register']);
+   
 });
 
 

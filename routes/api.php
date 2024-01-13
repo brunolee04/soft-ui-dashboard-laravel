@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ApiGameController;
 use App\Http\Controllers\SseController;
+use App\Http\Controllers\Auth\Api\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,12 +49,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 /**
  * Auth Routes, don´t need to be authenticated to access
  */
-Route::middleware(['auth:sanctum'])->group(function(){
-    Route::post('login',[\App\Http\Controllers\Auth\Api\LoginController::class,'login']);
+Route::prefix('auth')->group(function(){
+    Route::post('/login',[\App\Http\Controllers\Auth\Api\LoginController::class,'login']);
 
-    Route::post('logout',[\App\Http\Controllers\Auth\Api\LoginController::class,'logout']);
+    Route::post('/logout',[\App\Http\Controllers\Auth\Api\LoginController::class,'logout']);
 
-    Route::post('/register',[\App\Http\Controllers\Auth\Api\RegisterController::class,'register']);
+    Route::post('/register',[RegisterController::class,'register']);
 
     //tmp user Login
     //tmp_user_token

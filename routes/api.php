@@ -55,7 +55,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/logout',[\App\Http\Controllers\Auth\Api\LoginController::class,'logout']);
 
-    Route::post('/register',[ApiController::class,'teste2']);
+    Route::post('/newcustomer',[RegisterController::class,'register']);
 
     //tmp user Login
     //tmp_user_token

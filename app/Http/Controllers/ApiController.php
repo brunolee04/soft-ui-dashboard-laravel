@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\CustomerRatesMovie;
 use App\Models\Movie;
 use App\Models\MovieSeason;
+use App\Models\MovieToCustomerList;
+use App\Models\CustomerList;
 
 
 class ApiController extends Controller{
@@ -191,16 +193,16 @@ class ApiController extends Controller{
 
           if($dbCustomerRatesMovie->save()){
             $response['status'] = true;
-            $response['message'] = "Você marcou o filme como visto.";
+            $response['message'] = "Você marcou %o% %show% como visto.";
           }
           else{
             $response['status'] = false;
-            $response['message'] = "Erro ao marcar o filme como visto";
+            $response['message'] = "Erro ao marcar %o% %show% como visto";
           }
         }
         else{
           $response['status'] = false;
-          $response['message'] = "Você já marcou o filme como visto";
+          $response['message'] = "Você já marcou %o% %show% como visto";
         }
 
 
@@ -251,19 +253,19 @@ class ApiController extends Controller{
               $response['status']     = true;
               $response['mediumRate'] = $mediumRate;
               $response['myRate']     = $rate;
-              $response['message']    = "Você avaliou o show.";
+              $response['message']    = "Você avaliou %o% %show%.";
              
             }
             else{
               $response['status'] = false;
               $response['mediumRate'] = 0;
-              $response['message'] = "O show não foi avaliado.";
+              $response['message'] = "%o% %show% não foi avaliado.";
             }
 
           }
           else{
             $response['status'] = false;
-            $response['message'] = "Você ainda não marcou o filme como visto.";
+            $response['message'] = "Você ainda não marcou %o% %show% como visto.";
           }
 
           
@@ -282,7 +284,7 @@ class ApiController extends Controller{
        */
       private function generalRateToMovie($movie_id,$movie_season_id){
 
-        $rates    = DB::table('customer_rates_movie')
+        $rateSum    = DB::table('customer_rates_movie')
                   ->select("customer_rates_movie_rate as totalRate")
                   ->where('movie_id', $movie_id)
                   ->where('movie_season_id', $movie_season_id)
@@ -294,12 +296,12 @@ class ApiController extends Controller{
         ->count('customer_rates_movie_id');   
         
     
-        $mediumRate = $rates > 0 && $rateQty > 0 ? $rates / $rateQty : 0;
+        $mediumRate = $rateSum > 0 && $rateQty > 0 ? $rateSum / $rateQty : 0;
 
         //echo "publico: ".$mediumRate;
 
         MovieSeason::where('movie_id', $movie_id)
-        ->where('season', $movie_season_id)
+        ->where('movie_season_id', $movie_season_id)
         ->update([
           'rating' => $mediumRate
         ]);
@@ -308,11 +310,85 @@ class ApiController extends Controller{
       }
 
 
+      public function getMyLists($customer_id){
+
+        $myLists = DB::table('customer_list')
+        ->where('customer_id', $customer_id)
+        ->get();
+    
+        return response()->json([
+          "status"  => true,
+          "data"    => $myLists
+      ], 201);
+      }
+
+      public function setShowToMyList(Request $request){
+        $inputs = $request->all();
+
+        $response = [];
+
+        $show_id = $inputs['show_id'];
+        $list_id = $inputs['list_id'];
+
+        $dbShowToCustomerList = new MovieToCustomerList();
+
+        $dbShowToCustomerList->customer_list_id = $list_id;
+        $dbShowToCustomerList->movie_id = $show_id;
+
+        if($dbShowToCustomerList->save()){
+          $response['status']     = true;
+          $response['message']    = "Você adicionou %o% %show% na lista %list%.";
+        }
+        else{
+          $response['status']     = false;
+          $response['message']    = "Estamos com problemas em adcionar %o% %show% na lista %list%, tente novamente mais tarde.";
+        }
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+        ], 201);
+        
+      }
+
+      public function saveNewList(Request $request){
+        $inputs = $request->all();
+
+        $response = [];
+
+        $customer_id   = $inputs['customer_id'];
+        $new_list_name = $inputs['new_list_name'];
+
+        $dbCustomerList = new CustomerList();
+        $dbCustomerList->customer_list_name = $new_list_name;
+        $dbCustomerList->customer_id = $customer_id;
+        $dbCustomerList->customer_list_date_added = date("Y-m-d");
+
+        if($dbCustomerList->save()){
+          $response['status']     = true;
+          $response['message']    = "Você adicionou a Lista %list%.";
+        }
+        else{
+          $response['status']     = false;
+          $response['message']    = "Estamos com problemas em adcionar  a Lista %list%, tente novamente mais tarde.";
+        }
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+        ], 201);
+      }
+
+
       public function test(){
         $show=6;
         $season = 1;
         
         $this->generalRateToMovie($show,$season);
+      }
+
+      public function teste2(Request $request){
+        echo "ok";
       }
       
       

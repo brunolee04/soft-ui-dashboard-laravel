@@ -94,7 +94,7 @@ CREATE TABLE `challenge_description` (
 --
 
 CREATE TABLE `customer` (
-  `customer_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `customer_firstname` varchar(25) NOT NULL,
   `customer_lastname` varchar(45) NOT NULL,
   `customer_mail` varchar(45) DEFAULT NULL,
@@ -110,10 +110,10 @@ CREATE TABLE `customer` (
 --
 
 CREATE TABLE `customer_list` (
-  `customer_list_id` int(11) NOT NULL,
+  `customer_list_id` int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
   `customer_list_name` varchar(45) NOT NULL,
   `customer_list_date_added` date DEFAULT NULL,
-  `customer_customer_id` int(11) NOT NULL
+  `customer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -318,8 +318,8 @@ CREATE TABLE `movie_season` (
 --
 
 CREATE TABLE `movie_to_customer_list` (
-  `movie_to_customer_list_id` int(11) NOT NULL,
-  `customer_list_customer_list_id` int(11) NOT NULL,
+  `movie_to_customer_list_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `customer_list_id` int(11) NOT NULL,
   `movie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

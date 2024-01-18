@@ -8,14 +8,15 @@ $file = '../../storage/app/public/party/8IOW.json';
 
 
 while(true){
-        $fpointer = fopen($file,'w+');
-        fwrite($fpointer,'{"token":"8IOW","party_id":2,"keep_alive":3600,"data":["xablau":"FSADFASDF"]}');
-        fclose($fpointer);
-        // infinite loop
-  
-        
+       
+        $handle = fopen($file, "w+");
+        if(fwrite($handle,"aaaa"))break;
+        fclose($handle);
         if (ob_get_contents()) ob_end_clean();
-        flush();
-        sleep(1); // wait for 2 seconds
+        @ob_flush();@flush();
+            
+        // Break the loop if the client aborted the connection (closed the page)
+        if (connection_aborted()) {break;}
+        sleep(1/2);
    
 }

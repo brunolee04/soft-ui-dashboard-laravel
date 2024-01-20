@@ -310,16 +310,21 @@ class ApiController extends Controller{
       }
 
 
-      public function getMyLists($customer_id){
+      public function getMyLists($customer_id,$returnResponse = false){
 
         $myLists = DB::table('customer_list')
         ->where('customer_id', $customer_id)
         ->get();
-    
-        return response()->json([
-          "status"  => true,
-          "data"    => $myLists
-      ], 201);
+        
+        if(!$returnResponse){
+            return response()->json([
+              "status"  => true,
+              "data"    => $myLists
+          ], 201);
+        }else{
+          return $myLists;
+        }
+          
       }
 
       public function setShowToMyList(Request $request){
@@ -367,10 +372,12 @@ class ApiController extends Controller{
         if($dbCustomerList->save()){
           $response['status']     = true;
           $response['message']    = "Você adicionou a Lista %list%.";
+          $response['myLists']    = $this->getMyLists($customer_id,true);
         }
         else{
           $response['status']     = false;
           $response['message']    = "Estamos com problemas em adcionar  a Lista %list%, tente novamente mais tarde.";
+          $response['myLists']    =  null;
         }
 
         return response()->json([

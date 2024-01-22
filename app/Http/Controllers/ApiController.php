@@ -146,7 +146,7 @@ class ApiController extends Controller{
 
           //getting the movie genres
           foreach($db_show_data as $db_show_data_one){
-            var_dump($db_show_data_one);
+          //  var_dump($db_show_data_one);
           //   $db_show_data_one['genres'] = DB::table('movie_gender')
           // ->select('movie_gender.movie_gender_id','movie_gender_name')
           // ->join('movie_to_movie_gender', 'movie_gender.movie_gender_id', '=', 'movie_to_movie_gender.movie_gender_id')

@@ -540,7 +540,7 @@ class MovieController extends Controller{
 
                $watch_providers =  $response->json();
 
-               $watch_providers = json_decode($watch_providers,true);
+              // $watch_providers = json_decode($watch_providers,true);
 
                 foreach($watch_providers as $watch_provider){
 

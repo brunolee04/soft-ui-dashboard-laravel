@@ -526,7 +526,7 @@ class MovieController extends Controller{
         
     }
 
-    private function getMovieWatchProviders($id){
+    private function getMovieWatchProviders($movie_id){
 
         $locale = "BR";
 

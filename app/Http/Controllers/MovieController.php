@@ -565,12 +565,12 @@ class MovieController extends Controller{
     }
 
 
-    public function test(){
-         $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$movie_id.'?api_key='.config('app.guzzle_tmd_api_key').'&language=pt-BR&append_to_response=credits,videos,keywords';
-            echo $theUrl;
-            $response   = Http ::get($theUrl);
+    // public function test(){
+    //      $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$movie_id.'?api_key='.config('app.guzzle_tmd_api_key').'&language=pt-BR&append_to_response=credits,videos,keywords';
+    //         echo $theUrl;
+    //         $response   = Http ::get($theUrl);
            
 
-            if($response->getStatusCode()==200){
-    }
+    //         if($response->getStatusCode()==200){
+    // }
 }

@@ -135,6 +135,8 @@ class ApiController extends Controller{
         $db_list_shows = json_decode(json_encode($db_list_shows),true);
 
         foreach($db_list_shows as $db_list_show){
+
+          $new_show_data = [];
           
           $db_show_data = DB::table('movie')
           ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
@@ -142,7 +144,22 @@ class ApiController extends Controller{
           ->where('movie_to_system_list.system_list_id','=',$db_list_show['system_list_id'])
           ->get();
 
-          $db_list_show['show_data'] = $db_show_data;
+          //getting the movie genres
+          foreach($db_show_data as $db_show_data_one){
+            $db_show_data_one['genres'] = DB::table('movie_gender')
+          ->select('movie_gender.movie_gender_id','movie_gender_name')
+          ->join('movie_to_movie_gender', 'movie_gender.movie_gender_id', '=', 'movie_to_movie_gender.movie_gender_id')
+          ->where('movie_to_movie_gender.movie_id','=',$db_show_data_one['show_id'])
+          ->where('movie_gender.language_id','=',$this->language_id)
+          ->get();
+            $new_show_data[] = $db_show_data_one;
+          }
+
+
+
+          
+
+          $db_list_show['show_data'] = $new_show_data;
 
           $list_to_home[] = $db_list_show;
         }

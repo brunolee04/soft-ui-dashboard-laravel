@@ -563,4 +563,14 @@ class MovieController extends Controller{
 
         return $countErrors > 0 ? false : true;
     }
+
+
+    public function test(){
+         $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$movie_id.'?api_key='.config('app.guzzle_tmd_api_key').'&language=pt-BR&append_to_response=credits,videos,keywords';
+            echo $theUrl;
+            $response   = Http ::get($theUrl);
+           
+
+            if($response->getStatusCode()==200){
+    }
 }

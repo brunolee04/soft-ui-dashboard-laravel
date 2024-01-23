@@ -952,3 +952,19 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+CREATE TABLE `watch_provider`(
+  watch_provider_id int not null AUTO_INCREMENT PRIMARY KEY,
+  watch_provider_name varchar(60),
+  watch_provider_image_link varchar(150),
+  watch_provider_image_local varchar(150),
+  watch_provider_display_priority int
+);
+
+
+CREATE TABLE `movie_to_watch_provider`(
+  movie_to_watch_provider_id int not null AUTO_INCREMENT PRIMARY KEY,
+  movie_id int,
+  watch_provider_id int
+);

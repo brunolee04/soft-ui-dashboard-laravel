@@ -19,6 +19,7 @@ use App\Models\Writer;
 use App\Models\Keyword;
 use App\Models\MovieCollection;
 use App\Models\MovieVideo;
+use App\Models\WatchProvider;
 
 
 class MovieController extends Controller{

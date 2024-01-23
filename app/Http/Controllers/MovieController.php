@@ -20,6 +20,7 @@ use App\Models\Keyword;
 use App\Models\MovieCollection;
 use App\Models\MovieVideo;
 use App\Models\WatchProvider;
+use App\Models\MovieToWatchProvider;
 
 
 class MovieController extends Controller{
@@ -495,7 +496,7 @@ class MovieController extends Controller{
                     }
 
                     //Dealing with Movie Watch Providers
-                    $watch_providers = $this->getMovieWatchProviders($api_movie_id);
+                    $this->getMovieWatchProviders($api_movie_id,$movie_id);
 
                     
 
@@ -527,11 +528,11 @@ class MovieController extends Controller{
         
     }
 
-    private function getMovieWatchProviders($movie_id){
+    private function getMovieWatchProviders($site_movie_id,$movie_id){
 
         $locale = "BR";
 
-        $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$movie_id.'/watch/providers?api_key='.config('app.guzzle_tmd_api_key');
+        $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$site_movie_id.'/watch/providers?api_key='.config('app.guzzle_tmd_api_key');
 
         $response   = Http ::get($theUrl); 
         
@@ -541,16 +542,49 @@ class MovieController extends Controller{
 
                $watch_providers =  $response->json();
 
+               if(isset($watch_providers['results'])){
+                    $watch_providers = $watch_providers['results'];
+
+                    $providers_package = isset($watch_providers[$locale])?$watch_providers[$locale]:[];
+
+                    if(isset($providers_package['rent'])){
+                        $providers_package = $providers_package['rent'];
+                        foreach($providers_package as $provider){
+
+                            
+                            $key = true;
+                            while($key){
+                                $provider_info = DB::table('watch_provider')
+                                ->where('watch_provider_site_id',$provider['provider_id'])
+                                ->first();
+                                if($provider_info){
+                                    $watch_provider_id = $provider_info->watch_provider_id;
+                                    $movie_to_watch_provider = new MovieToWatchProvider();
+                                    $movie_to_watch_provider->movie_id = $movie_id;
+                                    $movie_to_watch_provider->watch_provider_id = $watch_provider_id;
+                                    $movie_to_watch_provider->save();
+                                    $key = false;
+                                }
+                                else{
+                                    $watch_provider = new WatchProvider();
+                                    $watch_provider->watch_provider_name = $provider['provider_name'];
+                                    $watch_provider->watch_provider_display_priority = $provider['display_priority'];
+                                    $watch_provider->watch_provider_image_link = $provider['logo_path'];
+                                    $watch_provider->watch_provider_site_id = $provider['provider_id'];
+                                    $watch_provider->save();                                     
+                                }
+                            }
+                            
+                        }
+                    }
+               }
+
               // $watch_providers = json_decode($watch_providers,true);
 
-                foreach($watch_providers as $watch_provider){
-
-                    $providers_package = isset($watch_providers[$locale])?$watch_providers[$locale]:null;
-
-                }
+                
             }
         
-        return $providers_package;
+        return true;
 
     }
 

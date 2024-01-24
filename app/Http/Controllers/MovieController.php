@@ -548,7 +548,7 @@ class MovieController extends Controller{
                     $providers_package = isset($watch_providers[$locale])?$watch_providers[$locale]:[];
 
                     if(isset($providers_package['rent']) || isset($providers_package['flatrate'])){
-                        $providers_package = isset($providers_package['rent']) ? $providers_package['rent'] : isset($providers_package['flatrate']);
+                        $providers_package = isset($providers_package['rent']) ? $providers_package['rent'] : $providers_package['flatrate'];
                         foreach($providers_package as $provider){
 
                             

@@ -528,11 +528,11 @@ class MovieController extends Controller{
         
     }
 
-    private function getMovieWatchProviders($site_movie_id,$movie_id){
+    private function getMovieWatchProviders($api_movie_id,$movie_id){
 
         $locale = "BR";
 
-        $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$site_movie_id.'/watch/providers?api_key='.config('app.guzzle_tmd_api_key');
+        $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$api_movie_id.'/watch/providers?api_key='.config('app.guzzle_tmd_api_key');
 
         $response   = Http ::get($theUrl); 
         
@@ -557,7 +557,7 @@ class MovieController extends Controller{
                                 $provider_info = DB::table('watch_provider')
                                 ->where('watch_provider_site_id',$provider['provider_id'])
                                 ->first();
-                                if($provider_info){
+                                if($provider_info!==null){
                                     $watch_provider_id = $provider_info->watch_provider_id;
                                     $movie_to_watch_provider = new MovieToWatchProvider();
                                     $movie_to_watch_provider->movie_id = $movie_id;

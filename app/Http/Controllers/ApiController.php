@@ -100,6 +100,11 @@ class ApiController extends Controller{
         ->where('customer_rates_movie.customer_id','=',$customer_id)
         ->get();
 
+        $db_movie_watch_providers = DB::table('movie_to_watch_provider')
+        ->join('watch_provider', 'movie_to_watch_provider.watch_provider_id', '=', 'watch_provider.watch_provider_id')
+        ->where('movie_to_watch_provider.movie_id','=',$show_id)
+        ->get();
+
 
 
 
@@ -114,6 +119,7 @@ class ApiController extends Controller{
         $movie_data['db_movie_director_info'] = $db_movie_director_info;
         $movie_data['db_movie_writer_info'] = $db_movie_writer_info;
         $movie_data['db_my_rate_movie_info'] = $db_my_rate_movie_info;
+        $movie_data['db_movie_watch_providers'] = $db_movie_watch_providers;
        
 
         return response()->json([

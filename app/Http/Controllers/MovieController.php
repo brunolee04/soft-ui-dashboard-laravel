@@ -533,7 +533,7 @@ class MovieController extends Controller{
         $locale = "BR";
 
         $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$api_movie_id.'/watch/providers?api_key='.config('app.guzzle_tmd_api_key');
-
+        echo '<br>'.$theUrl;
         $response   = Http ::get($theUrl); 
         
         $providers_package = [];
@@ -557,21 +557,21 @@ class MovieController extends Controller{
                                 $provider_info = DB::table('watch_provider')
                                 ->where('watch_provider_site_id',$provider['provider_id'])
                                 ->first();
-                                if($provider_info!==null){
-                                    $watch_provider_id = $provider_info->watch_provider_id;
-                                    $movie_to_watch_provider = new MovieToWatchProvider();
-                                    $movie_to_watch_provider->movie_id = $movie_id;
-                                    $movie_to_watch_provider->watch_provider_id = $watch_provider_id;
-                                    $movie_to_watch_provider->save();
-                                    $key = false;
-                                }
-                                else{
+                                if(is_null($provider_info)){
                                     $watch_provider = new WatchProvider();
                                     $watch_provider->watch_provider_name = $provider['provider_name'];
                                     $watch_provider->watch_provider_display_priority = $provider['display_priority'];
                                     $watch_provider->watch_provider_image_link = $provider['logo_path'];
                                     $watch_provider->watch_provider_site_id = $provider['provider_id'];
-                                    $watch_provider->save();                                     
+                                    $watch_provider->save();                                        
+                                }
+                                else{
+                                    $watch_provider_id = $provider_info->watch_provider_id;
+                                    $movie_to_watch_provider = new MovieToWatchProvider();
+                                    $movie_to_watch_provider->movie_id = $movie_id;
+                                    $movie_to_watch_provider->watch_provider_id = $watch_provider_id;
+                                    $movie_to_watch_provider->save();
+                                    $key = false;                               
                                 }
                             }
                             

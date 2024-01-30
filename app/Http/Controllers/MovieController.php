@@ -28,6 +28,9 @@ class MovieController extends Controller{
 
     private $language_id = 0;
 
+    private $isoCode    = "iso_3166_1";
+    private $localeCode = "AE";
+
     private $show_type = array(
                                 'movie' => 0,
                                 'serie' => 1
@@ -121,7 +124,7 @@ class MovieController extends Controller{
      
                     $dbMovie->movie_year_launch = $this->getYearLaunch($movie_info['release_date']);
      
-                    $dbMovie->movie_parental_rating = "L" ;//procurar da api
+                    $dbMovie->movie_parental_rating = isset($movie_info['release_dates'])?$this->getParentalRating($movie_info['release_dates']):''; //procurar da api
      
                     $dbMovie->movie_date_added = date("Y-m-d");
      
@@ -526,6 +529,22 @@ class MovieController extends Controller{
         }
 
         
+    }
+
+    private function getParentalRating($release_info){
+        $releases = isset($release_info['release_dates'])?$release_info['release_dates']:$release_info;
+        $releases = isset($releases['results'])?$releases['results']:$releases;
+        $certification = "";
+
+        foreach($releases as $values){
+            if(isset($values[$this->isoCode]) && $values[$this->isoCode] == $this->localeCode){
+                $release_dates = $values['release_dates'];
+                foreach($release_dates as $release_date){
+                    if(isset($release_date['certification']))$certification = $release_date['certification'];
+                }
+            }
+        }
+        return $certification;
     }
 
     private function getMovieWatchProviders($api_movie_id,$movie_id){

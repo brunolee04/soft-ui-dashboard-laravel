@@ -29,7 +29,7 @@ class MovieController extends Controller{
     private $language_id = 0;
 
     private $isoCode    = "iso_3166_1";
-    private $localeCode = "AE";
+    private $localeCode = "BR";
 
     private $show_type = array(
                                 'movie' => 0,

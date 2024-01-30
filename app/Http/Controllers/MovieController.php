@@ -79,7 +79,7 @@ class MovieController extends Controller{
         
         if($this->formValidation(array('movie_id'=>1))){
 
-            $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$movie_id.'?api_key='.config('app.guzzle_tmd_api_key').'&language=pt-BR&append_to_response=credits,videos,keywords';
+            $theUrl     = config('app.guzzle_tmd_api_url').'/movie/'.$movie_id.'?api_key='.config('app.guzzle_tmd_api_key').'&language=pt-BR&append_to_response=credits,videos,keywords,release_dates';
             echo $theUrl;
             $response   = Http ::get($theUrl);
            

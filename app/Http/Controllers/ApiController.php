@@ -129,6 +129,9 @@ class ApiController extends Controller{
       }
   
       public function homemovies(){
+
+        //here is a temp config to movie... let´s use the season 1 as the result of api only would be a movie, but when we became it to support a serie, it must to be addapted
+        $season =1;
         
         $this->language_id = config('app.language_id');
 
@@ -146,6 +149,7 @@ class ApiController extends Controller{
           
           $db_show_data = DB::table('movie')
           ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
+          ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')
           ->join('movie_to_system_list', 'movie.movie_id', '=', 'movie_to_system_list.movie_id')
           ->where('movie_to_system_list.system_list_id','=',$db_list_show['system_list_id'])
           ->get();
@@ -160,10 +164,6 @@ class ApiController extends Controller{
           ->get();
             $new_show_data[] = $db_show_data_one;
           }
-
-
-
-          
 
           $db_list_show['show_data'] = $new_show_data;
 

@@ -358,6 +358,18 @@ class ApiController extends Controller{
         $show_id = $inputs['show_id'];
         $list_id = $inputs['list_id'];
 
+        //1º - Checks if show is already in a List
+
+        $db_my_list_info = DB::table('customer_list')
+        ->join('movie_to_customer_list', 'customer_list.customer_list_id', '=', 'movie_to_customer_list.customer_list_id')
+        ->where('movie_to_customer_list.customer_list_id','=',$list_id)
+        ->where('movie_to_customer_list.movie_id','=',$show_id)
+        ->get();
+
+        if($db_my_list_info){
+          $db_my_list_info->delete();
+        }
+
         $dbShowToCustomerList = new MovieToCustomerList();
 
         $dbShowToCustomerList->customer_list_id = $list_id;

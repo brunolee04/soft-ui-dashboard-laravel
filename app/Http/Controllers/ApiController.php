@@ -361,10 +361,15 @@ class ApiController extends Controller{
         //1º - Checks if show is already in a List
 
         $db_my_list_info = DB::table('customer_list')
+        ->select('movie_to_customer_list.movie_to_customer_list_id')
         ->join('movie_to_customer_list', 'customer_list.customer_list_id', '=', 'movie_to_customer_list.customer_list_id')
         ->where('movie_to_customer_list.customer_list_id','=',$list_id)
         ->where('movie_to_customer_list.movie_id','=',$show_id)
-        ->delete();
+        ->get();
+
+        if($db_my_list_info){
+          $db_my_list_info::where('movie_to_customer_list_id')->delete();
+        }
 
     
 

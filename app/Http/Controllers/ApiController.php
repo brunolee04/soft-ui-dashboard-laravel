@@ -110,7 +110,7 @@ class ApiController extends Controller{
         ->join('movie_to_customer_list', 'customer_list.customer_list_id', '=', 'movie_to_customer_list.customer_list_id')
         ->where('customer_list.customer_id','=',$customer_id)
         ->where('movie_to_customer_list.movie_id','=',$show_id)
-        ->first();
+        ->get();
 
 
 

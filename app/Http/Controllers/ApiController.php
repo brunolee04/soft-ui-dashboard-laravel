@@ -105,6 +105,13 @@ class ApiController extends Controller{
         ->where('movie_to_watch_provider.movie_id','=',$show_id)
         ->get();
 
+        $db_my_list_info = DB::table('customer_list')
+        ->select('customer_list.customer_list_id','customer_list.customer_list_name')
+        ->join('movie_to_customer_list', 'customer_list.customer_list_id', '=', 'movie_to_customer_list.customer_list_id')
+        ->where('customer_list.customer_id','=',$customer_id)
+        ->where('movie_to_customer_list.movie_id','=',$show_id)
+        ->first();
+
 
 
 
@@ -120,6 +127,7 @@ class ApiController extends Controller{
         $movie_data['db_movie_writer_info'] = $db_movie_writer_info;
         $movie_data['db_my_rate_movie_info'] = $db_my_rate_movie_info;
         $movie_data['db_movie_watch_providers'] = $db_movie_watch_providers;
+        $movie_data['db_my_list_info'] = $db_my_list_info;
        
 
         return response()->json([

@@ -17,7 +17,7 @@ class ApiController extends Controller{
 
   private $language_id = 1;
 
-      public function getAccount(){
+      public function getAccount(Request $request){
         //Get access token
         $access_token = $request->header('Authorization');
 

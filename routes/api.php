@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function () {
 
     //Account apis
-    Route::post('/accout',[ApiController::class,'getAccount']);
+    Route::post('/account',[ApiController::class,'getAccount']);
 
     //Home apis
     Route::get('homeBanners',[ApiController::class, 'getHomeBanners']);

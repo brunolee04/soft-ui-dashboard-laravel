@@ -34,7 +34,12 @@ class ApiController extends Controller{
         // base64 decode to get a json string
         $token_header_json = base64_decode($token_header);
 
-        var_dump($token_header_json);
+        return response()->json([
+          "status"  => true,
+          "data"    => $token_header_json
+      ], 201);
+
+       // var_dump($token_header_json);
         
         // then convert the json to an array
         $token_header_array = json_decode($token_header_json, true);

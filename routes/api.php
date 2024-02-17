@@ -28,6 +28,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  * App Routes, needed to be authenticated to access
  */
 Route::middleware(['auth:sanctum'])->group(function () {
+
+    //Account apis
+    Route::post('/accout',[ApiController::class,'getAccount']);
+
     //Home apis
     Route::get('homeBanners',[ApiController::class, 'getHomeBanners']);
     Route::get('homemovies',[ApiController::class, 'homemovies']);

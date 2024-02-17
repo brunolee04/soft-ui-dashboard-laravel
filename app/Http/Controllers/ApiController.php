@@ -29,7 +29,7 @@ class ApiController extends Controller{
         // break up the token into its three parts
         $token_parts = explode('.', $token);
         
-        $token_header = $token_parts[0];
+        $token_header = $token_parts[1];
 
         // base64 decode to get a json string
         $token_header_json = base64_decode($token_header);

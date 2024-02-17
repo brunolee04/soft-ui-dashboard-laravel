@@ -33,23 +33,25 @@ class ApiController extends Controller{
 
         // base64 decode to get a json string
         $token_header_json = base64_decode($token_header);
+
+        var_dump($token_header_json);
         
         // then convert the json to an array
         $token_header_array = json_decode($token_header_json, true);
         
-        $user_token = $token_header_array['jti'];
+       // $user_token = $token_header_array['jti'];
         
         // find the user ID from the oauth access token table
         // based on the token we just got
-        $user_id = DB::table('oauth_access_tokens')->where('id', $user_token)->first();
+       // $user_id = DB::table('oauth_access_tokens')->where('id', $user_token)->first();
 
         
 
         // then retrieve the user from it's primary key
-        $user = User::find($user_id->id);
+        // $user = User::find($user_id->id);
 
-        echo $user->id ?? '';
-        exit();
+        // echo $user->id ?? '';
+        // exit();
 
 
       }

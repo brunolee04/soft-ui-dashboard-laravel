@@ -18,8 +18,45 @@ class ApiController extends Controller{
   private $language_id = 1;
 
       public function getAccount(Request $request){
-        $user_id = auth('api')->user()->id;
-        echo $user_id;
+        //Get access token
+        $access_token = $request->header('Authorization');
+
+        // break up the string to get just the token
+        $auth_header = explode(' ', $access_token);
+        
+        $token = $auth_header[1];
+        
+        // break up the token into its three parts
+        $token_parts = explode('.', $token);
+        
+        $token_header = $token_parts[0];
+
+        // base64 decode to get a json string
+        $token_header_json = base64_decode($token_header);
+
+        
+        // then convert the json to an array
+        $token_header_array = json_decode($token_header_json, true);
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $token_header_array
+      ], 201);
+        
+       // $user_token = $token_header_array['jti'];
+        
+        // find the user ID from the oauth access token table
+        // based on the token we just got
+       // $user_id = DB::table('oauth_access_tokens')->where('id', $user_token)->first();
+
+        
+
+        // then retrieve the user from it's primary key
+        // $user = User::find($user_id->id);
+
+        // echo $user->id ?? '';
+        // exit();
+
 
       }
 

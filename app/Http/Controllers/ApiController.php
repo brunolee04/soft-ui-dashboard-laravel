@@ -36,7 +36,7 @@ class ApiController extends Controller{
 
         return response()->json([
           "status"  => true,
-          "data"    => $token_header_json
+          "data"    => $token_header
       ], 201);
 
        // var_dump($token_header_json);

@@ -18,7 +18,7 @@ class ApiController extends Controller{
   private $language_id = 1;
 
       public function getAccount(){
-        $user = auth('customer')->user();
+        $user = auth('customer')->user()->customer_firstname;;
         return response()->json([
           "status"  => true,
           "data"    => $user

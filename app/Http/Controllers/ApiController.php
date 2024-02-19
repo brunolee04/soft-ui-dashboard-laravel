@@ -17,7 +17,7 @@ class ApiController extends Controller{
 
   private $language_id = 1;
 
-      public function getAccount(){
+      public function getAccount($request){
         /*
           $access_token = $request->header('Authorization');
 
@@ -51,11 +51,15 @@ class ApiController extends Controller{
         echo $user->id ?? '';
         exit();
         */
-        $user = auth('customer')->user()->customer_firstname;
-        auth('customer')->user()->customer_firstname;
+
+        //Do this instead:
+$token = $request->bearerToken();
+
+       // $user = auth('customer')->user()->customer_firstname;
+       // auth('customer')->user()->customer_firstname;
         return response()->json([
           "status"  => true,
-          "data"    => $user
+          "data"    => $token
       ], 201);
       }
 

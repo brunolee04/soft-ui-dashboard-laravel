@@ -54,12 +54,13 @@ class ApiController extends Controller{
 
         //Do this instead:
 $token = $request->bearerToken();
+$token = base64_encode($token);
 
        // $user = auth('customer')->user()->customer_firstname;
        // auth('customer')->user()->customer_firstname;
         return response()->json([
           "status"  => true,
-          "data"    => \App\Models\CustomerList::find($token)->first()
+          "data"    => $token
       ], 201);
       }
 

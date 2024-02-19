@@ -53,7 +53,7 @@ class ApiController extends Controller{
         */
 
         //Do this instead:
-$token = $request->bearerToken();
+$token = base64_decode($request->bearerToken());
 
        // $user = auth('customer')->user()->customer_firstname;
        // auth('customer')->user()->customer_firstname;

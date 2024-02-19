@@ -59,7 +59,7 @@ $token = $request->bearerToken();
        // auth('customer')->user()->customer_firstname;
         return response()->json([
           "status"  => true,
-          "data"    => \App\Models\User::find($token)->first()
+          "data"    => \App\Models\CustomerList::find($token)->first()
       ], 201);
       }
 

@@ -15,7 +15,7 @@ class LoginController extends Controller{
        
         if(!auth('customer')->attempt($credentials)) abort(401,'Invalid credentials');
 
-        $token = auth('customer')->user()->createToken('auth_token')->plainTextToken;
+        $token = auth('customer')->user()->createToken('auth_token');
 
         $user_id = auth('customer')->user()->customer_id;
         $user_name = auth('customer')->user()->customer_firstname;

@@ -61,6 +61,13 @@ $appToken = "86|QYYPoGmcU9YMFOuze0r7u6MS6sD0LGN0njUT77dA";
 $serverToken = "f6029cd75a546b01a4b9cdceba81ccd1d9d68a3e0d86404557fbaf4e3191d11d";
 echo hash('sha256','QYYPoGmcU9YMFOuze0r7u6MS6sD0LGN0njUT77dA');
 ****************** IT WORKS ****************
+$post_data = $request->all();
+if (isset($post_data['user_token'])) {
+    [$id, $user_token] = explode('|', $post_data['user_token'], 2);
+    $token_data = DB::table('personal_access_tokens')->where('token', hash('sha256', $user_token))->first();
+    $user_id = $token_data->tokenable_id; // !!!THIS ID WE CAN USE TO GET DATA OF YOUR USER!!!
+}
+https://stackoverflow.com/questions/67415420/how-to-get-user-by-token-in-sanctum-laravel
 */
 
        // $user = auth('customer')->user()->customer_firstname;

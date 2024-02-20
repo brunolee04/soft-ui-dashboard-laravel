@@ -54,7 +54,14 @@ class ApiController extends Controller{
 
         //Do this instead:
 $token = $request->bearerToken();
-$token = base64_encode($token);
+//$token = base64_encode($token);
+
+/*
+$appToken = "86|QYYPoGmcU9YMFOuze0r7u6MS6sD0LGN0njUT77dA";
+$serverToken = "f6029cd75a546b01a4b9cdceba81ccd1d9d68a3e0d86404557fbaf4e3191d11d";
+echo hash('sha256','QYYPoGmcU9YMFOuze0r7u6MS6sD0LGN0njUT77dA');
+****************** IT WORKS ****************
+*/
 
        // $user = auth('customer')->user()->customer_firstname;
        // auth('customer')->user()->customer_firstname;

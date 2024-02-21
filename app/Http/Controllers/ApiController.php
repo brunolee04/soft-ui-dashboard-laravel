@@ -25,9 +25,11 @@ class ApiController extends Controller{
 
         $token_data = DB::table('personal_access_tokens')->where('token', hash('sha256', $token))->first();
 
+        $customer_data = DB::table('customer')->where('customer_id', $token_data->tokenable_id)->first();
+
         return response()->json([
           "status"  => true,
-          "data"    => $token_data
+          "data"    => $customer_data
       ], 201);
       }
 

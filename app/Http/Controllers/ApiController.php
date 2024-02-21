@@ -24,12 +24,20 @@ class ApiController extends Controller{
         [$id, $token] = explode('|', $token, 2);
 
         $token_data = DB::table('personal_access_tokens')->where('token', hash('sha256', $token))->first();
+        if($token_data){
+            $customer_data = DB::table('customer')->where('customer_id', $token_data->tokenable_id)->first();
+            if($customer_data){
+              $response = $customer_data;
+            }
+            else $response = [];
+        }
+        else $response = [];
 
-        $customer_data = DB::table('customer')->where('customer_id', $token_data->tokenable_id)->first();
+        
 
         return response()->json([
           "status"  => true,
-          "data"    => $customer_data
+          "data"    => $response
       ], 201);
       }
 

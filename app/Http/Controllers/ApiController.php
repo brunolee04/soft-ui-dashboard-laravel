@@ -18,63 +18,16 @@ class ApiController extends Controller{
   private $language_id = 1;
 
       public function getAccount(Request $request){
-        /*
-          $access_token = $request->header('Authorization');
 
-        // break up the string to get just the token
-        $auth_header = explode(' ', $access_token);
-        
-        $token = $auth_header[1];
-        
-        // break up the token into its three parts
-        $token_parts = explode('.', $token);
-        
-        $token_header = $token_parts[0];
+        $token = $request->bearerToken();
 
-        // base64 decode to get a json string
-        $token_header_json = base64_decode($token_header);
-        
-        // then convert the json to an array
-        $token_header_array = json_decode($token_header_json, true);
-        
-        $user_token = $token_header_array['jti'];
-        
-        // find the user ID from the oauth access token table
-        // based on the token we just got
-        $user_id = DB::table('oauth_access_tokens')->where('id', $user_token)->first();
+        [$id, $token] = explode('|', $token, 2);
 
-        
+        $token_data = DB::table('personal_access_tokens')->where('token', hash('sha256', $token))->first();
 
-        // then retrieve the user from it's primary key
-        $user = User::find($user_id->id);
-
-        echo $user->id ?? '';
-        exit();
-        */
-
-        //Do this instead:
-$token = $request->bearerToken();
-//$token = base64_encode($token);
-
-/*
-$appToken = "86|QYYPoGmcU9YMFOuze0r7u6MS6sD0LGN0njUT77dA";
-$serverToken = "f6029cd75a546b01a4b9cdceba81ccd1d9d68a3e0d86404557fbaf4e3191d11d";
-echo hash('sha256','QYYPoGmcU9YMFOuze0r7u6MS6sD0LGN0njUT77dA');
-****************** IT WORKS ****************
-$post_data = $request->all();
-if (isset($post_data['user_token'])) {
-    [$id, $user_token] = explode('|', $post_data['user_token'], 2);
-    $token_data = DB::table('personal_access_tokens')->where('token', hash('sha256', $user_token))->first();
-    $user_id = $token_data->tokenable_id; // !!!THIS ID WE CAN USE TO GET DATA OF YOUR USER!!!
-}
-https://stackoverflow.com/questions/67415420/how-to-get-user-by-token-in-sanctum-laravel
-*/
-
-       // $user = auth('customer')->user()->customer_firstname;
-       // auth('customer')->user()->customer_firstname;
         return response()->json([
           "status"  => true,
-          "data"    => $token
+          "data"    => $token_data
       ], 201);
       }
 

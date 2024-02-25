@@ -388,7 +388,7 @@ class ApiController extends Controller{
         ->select('movie.movie_id','movie.movie_image_1','customer_rates_movie.customer_rates_movie_rate')
         ->join('movie_to_customer_list','customer_list.customer_list_id','=','movie_to_customer_list.customer_list_id')
         ->join('movie','movie_to_customer_list.movie_id','=','movie.movie_id')
-        ->join('customer_rates_movie','movie.movie_id','=','customer_rates_rates.movie_id')
+        ->join('customer_rates_movie','movie.movie_id','=','customer_rates_movie.movie_id')
         ->where('customer_list.customer_id', $customer_id)
         ->where('customer_rates_movie.customer_id', $customer_id)
         ->get();

@@ -365,10 +365,32 @@ class ApiController extends Controller{
       }
 
 
-      public function getMyLists($customer_id,$returnResponse = false){
+      public function getMyLists($customer_id){
+        $myLists = DB::table('customer_list')
+        
+        ->where('customer_id', $customer_id)
+        ->get();
+        
+        if(!$returnResponse){
+            return response()->json([
+              "status"  => true,
+              "data"    => $myLists
+          ], 201);
+        }else{
+          return $myLists;
+        }
+      }
+
+
+      public function getMyListsWithShows($customer_id,$returnResponse = false){
 
         $myLists = DB::table('customer_list')
-        ->where('customer_id', $customer_id)
+        ->select('movie.movie_id','movie.movie_image_1','customer_rates_movie.customer_rates_movie_rate')
+        ->join('movie_to_customer_list','customer_list.customer_list_id','=','movie_to_customer_list.customer_list_id')
+        ->join('movie','movie_to_customer_list.movie_id','=','movie.movie_id')
+        ->join('customer_rates_movie','movie.movie_id','=','customer_rates_rates.movie_id')
+        ->where('customer_list.customer_id', $customer_id)
+        ->where('customer_rates_movie.customer_id', $customer_id)
         ->get();
         
         if(!$returnResponse){
@@ -381,6 +403,8 @@ class ApiController extends Controller{
         }
           
       }
+
+      
 
       public function setShowToMyList(Request $request){
         $inputs = $request->all();

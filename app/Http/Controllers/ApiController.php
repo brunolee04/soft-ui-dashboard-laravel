@@ -483,6 +483,34 @@ class ApiController extends Controller{
       }
 
 
+      public function sendImage(Request $request){
+        //https://laracasts.com/discuss/channels/laravel/how-to-save-image-as-blob
+        $images = $request->file('pictures');
+        $allowedfileExtension = ['jpg','png','gif','jpeg','webp'];
+        foreach($images as $image)
+        {
+            $extension    = $image->extension();
+            $hash         = hash('md5', $image->get());
+            $filename     = "$hash.$extension";
+            $filesize     = $image->getSize() / 1024;
+            $originalName = $image->getClientOriginalName();
+            try
+            {
+                // $account = new Account;
+                // // .... etc. do something with the model
+                // $account->logo= $image->get();
+                // $account->save();
+            }
+            catch(\Illuminate\Database\QueryException $e)
+            {
+                // DEBUG IN CASE OF ERROR
+				        dd($e);
+            }
+        }
+    	return redirect()->back();
+      }
+
+
       public function test(){
         $show=6;
         $season = 1;

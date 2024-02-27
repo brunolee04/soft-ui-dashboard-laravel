@@ -31,6 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //Account apis
     Route::post('/account',[ApiController::class,'getAccount']);
+    Route::post('/sendImage',[ApiController::class,'sendImage']);
 
     //Home apis
     Route::get('homeBanners',[ApiController::class, 'getHomeBanners']);

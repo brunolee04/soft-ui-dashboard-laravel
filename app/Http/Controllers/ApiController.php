@@ -490,7 +490,7 @@ class ApiController extends Controller{
         $allowedfileExtension = ['jpg','png','gif','jpeg','webp'];
         return response()->json([
           "status"  => true,
-          "data"    => $allowedfileExtension
+          "data"    => $images
         ], 201);
         /*
         foreach($images as $image)

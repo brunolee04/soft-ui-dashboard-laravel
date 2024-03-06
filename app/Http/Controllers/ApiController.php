@@ -488,6 +488,7 @@ class ApiController extends Controller{
         var_dump($request);
         $images = $request->file('selectedImage');
         $allowedfileExtension = ['jpg','png','gif','jpeg','webp'];
+        /*
         foreach($images as $image)
         {
             $extension    = $image->extension();
@@ -510,7 +511,7 @@ class ApiController extends Controller{
 				        dd($e);
             }
         }
-    	return redirect()->back();
+    	return redirect()->back();*/
       }
 
 

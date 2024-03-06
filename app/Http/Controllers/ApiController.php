@@ -366,7 +366,7 @@ class ApiController extends Controller{
       }
 
 
-      public function getMyLists($customer_id){
+      public function getMyLists($customer_id,$returnResponse = false){
         $myLists = DB::table('customer_list')
         
         ->where('customer_id', $customer_id)

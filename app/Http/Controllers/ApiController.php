@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 
 use App\Models\CustomerRatesMovie;
@@ -486,36 +488,22 @@ class ApiController extends Controller{
       public function sendImage(Request $request){
         //https://laracasts.com/discuss/channels/laravel/how-to-save-image-as-blob
        // var_dump($request);
-        $images = $request->file('selectedImage');
+        $inputs = $request->all();
         $allowedfileExtension = ['jpg','png','gif','jpeg','webp'];
-        return response()->json([
-          "status"  => true,
-          "data"    => $images
-        ], 201);
-        /*
-        foreach($images as $image)
+        
+        $image = [];
+        foreach($inputs as $input)
         {
-            $extension    = $image->extension();
-            $hash         = hash('md5', $image->get());
-            $filename     = "$hash.$extension";
-            $filesize     = $image->getSize() / 1024;
-            $originalName = $image->getClientOriginalName();
-            try
-            {
-                // $account = new Account;
-                // // .... etc. do something with the model
-                $img = $image->get();
-                var_dump($img);
-                // $account->logo= $image->get();
-                // $account->save();
-            }
-            catch(\Illuminate\Database\QueryException $e)
-            {
-                // DEBUG IN CASE OF ERROR
-				        dd($e);
-            }
+          $image = $input;
+          
+          $filename = 'temp-image.jpg';
+          $tempImage = tempnam(sys_get_temp_dir(), $filename);
+          copy($image, $tempImage);
+          
+          return response()->download($tempImage, $filename);
         }
-    	return redirect()->back();*/
+       
+
       }
 
 

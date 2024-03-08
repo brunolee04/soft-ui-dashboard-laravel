@@ -478,32 +478,23 @@ class ApiController extends Controller{
           $response['myLists']    =  null;
         }
 
-        return response()->json([
-          "status"  => true,
-          "data"    => $response
-        ], 201);
+       
       }
 
 
       public function sendImage(Request $request){
         //https://laracasts.com/discuss/channels/laravel/how-to-save-image-as-blob
-       // var_dump($request);
-        $inputs = $request->all();
-        $allowedfileExtension = ['jpg','png','gif','jpeg','webp'];
-        
-        $image = [];
-        foreach($inputs as $input)
-        {
-          $image = $input;
-          
-          $filename = 'temp-image.jpg';
-          $tempImage = tempnam(sys_get_temp_dir(), $filename);
-          copy($image, $tempImage);
-          
-          return response()->download($tempImage, $filename);
-        }
-       
+        $this->validate($request, [
+          'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+      ]);
 
+      $image_path = $request->file('image')->store('image', 'public');
+
+
+      return response()->json([
+        "status"  => true,
+        "data"    => $image_path
+      ], 201);
       }
 
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Illuminate\Support\Facades\Storage;
 
 
 use App\Models\CustomerRatesMovie;
@@ -488,12 +489,12 @@ class ApiController extends Controller{
           'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
       ]);
 
-      $image_path = $request->file('image')->store('image', 'public');
+      $image_url = Storage::url($request->file('image')->store('image', 'public'));
 
 
       return response()->json([
         "status"  => true,
-        "data"    => $image_path
+        "data"    => env('APP_URL').$image_url
       ], 201);
       }
 

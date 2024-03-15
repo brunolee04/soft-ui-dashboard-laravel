@@ -368,7 +368,6 @@ class ApiController extends Controller{
         return $mediumRate;
       }
 
-
       public function getMyLists($customer_id,$returnResponse = false){
         $myLists = DB::table('customer_list')
         
@@ -384,7 +383,6 @@ class ApiController extends Controller{
           return $myLists;
         }
       }
-
 
       public function getMyListsWithShows($customer_id,$returnResponse = false){
 
@@ -407,8 +405,6 @@ class ApiController extends Controller{
         }
           
       }
-
-      
 
       public function setShowToMyList(Request $request){
         $inputs = $request->all();
@@ -484,20 +480,44 @@ class ApiController extends Controller{
 
 
       public function sendImage(Request $request){
-        //https://laracasts.com/discuss/channels/laravel/how-to-save-image-as-blob
+          //https://laracasts.com/discuss/channels/laravel/how-to-save-image-as-blob
 
-        //php artisan storage:link
-        $this->validate($request, [
-          'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-      ]);
+          //php artisan storage:link
+          $this->validate($request, [
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+          ]);
 
-      $image_url = url(Storage::url($request->file('image')->store('image', 'public')));
+          $image_url = url(Storage::url($request->file('image')->store('image', 'public')));
 
 
-      return response()->json([
-        "status"  => true,
-        "data"    => $image_url
-      ], 201);
+          return response()->json([
+            "status"  => true,
+            "data"    => $image_url
+          ], 201);
+      }
+
+
+      public function changePassword(Request $request){
+          $token = $request->bearerToken();
+          $password = $request->pwd;
+
+          [$id, $token] = explode('|', $token, 2);
+
+          $token_data = DB::table('personal_access_tokens')->where('token', hash('sha256', $token))->first();
+          if($token_data){
+              $customer_data = DB::table('customer')->where('customer_id', $token_data->tokenable_id)->first();
+              if($customer_data){
+                DB::table('customer')->where('customer_id', $token_data->tokenable_id)->update(['password'=>bcrypt($password)]);
+                $response = true;
+              }
+              else $response = false;
+          }
+          else $response = false;
+
+          return response()->json([
+            "status"  => true,
+            "data"    => $response
+          ], 201);
       }
 
 

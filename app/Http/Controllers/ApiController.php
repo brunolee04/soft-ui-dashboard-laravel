@@ -521,6 +521,27 @@ class ApiController extends Controller{
       }
 
 
+      public function changeData(Request $request){
+        $token = $request->bearerToken();
+        $customer_data = $this->getCustomerData($token);
+        if($customer_data!==false){
+          
+        }
+      }
+
+
+      private function getCustomerData($token){
+        [$id, $token] = explode('|', $token, 2);
+
+        $token_data = DB::table('personal_access_tokens')->where('token', hash('sha256', $token))->first();
+        if($token_data){
+            $customer_data = DB::table('customer')->where('customer_id', $token_data->tokenable_id)->first();
+            return $customer_data;
+        }
+        else $response = false;
+      }
+
+
       public function test(){
         $show=6;
         $season = 1;

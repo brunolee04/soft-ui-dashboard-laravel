@@ -33,6 +33,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/account',[ApiController::class,'getAccount']);
     Route::post('/account/sendImage',[ApiController::class,'sendImage']);
     Route::post('/account/changePassword',[ApiController::class,'changePassword']);
+    Route::post('/account/changeData',[ApiController::class,'changeData']);
+    
 
     //Home apis
     Route::get('homeBanners',[ApiController::class, 'getHomeBanners']);

@@ -31,7 +31,13 @@ class ApiController extends Controller{
         if($token_data){
             $customer_data = DB::table('customer')->where('customer_id', $token_data->tokenable_id)->first();
             if($customer_data){
-              $response = $customer_data;
+              $response = array(
+                "customer_firstname" => $customer_data->customer_firstname,
+                "customer_lastname" => $customer_data->customer_lastname,
+                "customer_date_birth" => $customer_data->customer_date_birth,
+                "customer_bio"        => $customer_data->customer_bio,
+                "email" => $customer_data->email
+              );
             }
             else $response = [];
         }
@@ -44,6 +50,84 @@ class ApiController extends Controller{
           "data"    => $response
       ], 201);
       }
+
+      public function sendImage(Request $request){
+        //https://laracasts.com/discuss/channels/laravel/how-to-save-image-as-blob
+
+        //php artisan storage:link
+        $this->validate($request, [
+          'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+
+        $image_url = url(Storage::url($request->file('image')->store('image', 'public')));
+
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $image_url
+        ], 201);
+    }
+
+
+    public function changePassword(Request $request){
+        $token = $request->bearerToken();
+        $password = $request->pwd;
+
+        [$id, $token] = explode('|', $token, 2);
+
+        $token_data = DB::table('personal_access_tokens')->where('token', hash('sha256', $token))->first();
+        if($token_data){
+            $customer_data = DB::table('customer')->where('customer_id', $token_data->tokenable_id)->first();
+            if($customer_data){
+              DB::table('customer')->where('customer_id', $token_data->tokenable_id)->update(['password'=>bcrypt($password)]);
+              $response = true;
+            }
+            else $response = false;
+        }
+        else $response = false;
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+        ], 201);
+    }
+
+
+    public function changeData(Request $request){
+      $token = $request->bearerToken();
+      $data = $request->all();
+      $customer_data = $this->getCustomerData($token);
+      if($customer_data!==false){
+        DB::table('customer')->where('customer_id', $customer_data->customer_id)->update(
+          ['customer_firstname'=>$data['firstname'],
+          'customer_lastname'=>$data['lastname'],
+          'customer_bio'=>$data['bio']]);
+      }
+      $customer_data = $this->getCustomerData($token);
+      $response_data = array(
+        "customer_firstname" => $customer_data->customer_firstname,
+        "customer_lastname" => $customer_data->customer_lastname,
+        "customer_date_birth" => $customer_data->customer_date_birth,
+        "email" => $customer_data->email,
+        "customer_bio" => $customer_data->customer_bio,
+      );
+      return response()->json([
+        "status"  => true,
+        "data"    => $response_data
+      ], 201);
+    }
+
+
+    private function getCustomerData($token){
+      [$id, $token] = explode('|', $token, 2);
+
+      $token_data = DB::table('personal_access_tokens')->where('token', hash('sha256', $token))->first();
+      if($token_data){
+          $customer_data = DB::table('customer')->where('customer_id', $token_data->tokenable_id)->first();
+          return $customer_data;
+      }
+      else $response = false;
+    }
 
       public function getMovies() {
         $db_movie_info = DB::table('movie')
@@ -479,67 +563,7 @@ class ApiController extends Controller{
       }
 
 
-      public function sendImage(Request $request){
-          //https://laracasts.com/discuss/channels/laravel/how-to-save-image-as-blob
-
-          //php artisan storage:link
-          $this->validate($request, [
-            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-          ]);
-
-          $image_url = url(Storage::url($request->file('image')->store('image', 'public')));
-
-
-          return response()->json([
-            "status"  => true,
-            "data"    => $image_url
-          ], 201);
-      }
-
-
-      public function changePassword(Request $request){
-          $token = $request->bearerToken();
-          $password = $request->pwd;
-
-          [$id, $token] = explode('|', $token, 2);
-
-          $token_data = DB::table('personal_access_tokens')->where('token', hash('sha256', $token))->first();
-          if($token_data){
-              $customer_data = DB::table('customer')->where('customer_id', $token_data->tokenable_id)->first();
-              if($customer_data){
-                DB::table('customer')->where('customer_id', $token_data->tokenable_id)->update(['password'=>bcrypt($password)]);
-                $response = true;
-              }
-              else $response = false;
-          }
-          else $response = false;
-
-          return response()->json([
-            "status"  => true,
-            "data"    => $response
-          ], 201);
-      }
-
-
-      public function changeData(Request $request){
-        $token = $request->bearerToken();
-        $customer_data = $this->getCustomerData($token);
-        if($customer_data!==false){
-          
-        }
-      }
-
-
-      private function getCustomerData($token){
-        [$id, $token] = explode('|', $token, 2);
-
-        $token_data = DB::table('personal_access_tokens')->where('token', hash('sha256', $token))->first();
-        if($token_data){
-            $customer_data = DB::table('customer')->where('customer_id', $token_data->tokenable_id)->first();
-            return $customer_data;
-        }
-        else $response = false;
-      }
+      
 
 
       public function test(){

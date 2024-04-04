@@ -116,6 +116,7 @@ CREATE TABLE `customer` (
   `customer_id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
   `customer_firstname` varchar(25) NOT NULL,
   `customer_lastname` varchar(45) NOT NULL,
+  `customer_bio` varchar(250),
   `customer_mail` varchar(45) DEFAULT NULL,
   `customer_pass` varchar(25) DEFAULT NULL,
   `customer_status` smallint(6) DEFAULT NULL,

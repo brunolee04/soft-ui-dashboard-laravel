@@ -13,7 +13,7 @@ class RegisterController extends Controller{
     public function register(Request $request,Customer $customer){
         
         //TO-DO: to valid request
-        $customerData  = $request->only('customer_firstname','customer_lastname','customer_date_birth','email','password','customer_status');
+        $customerData  = $request->only('customer_user_id','customer_firstname','customer_lastname','customer_date_birth','email','password','customer_status');
         $customerData['customer_date_birth']  = Carbon::createFromFormat('d/m/Y',$customerData['customer_date_birth'])->format('Y-m-d');
 
         $customerData['password'] = bcrypt($customerData['password']);
@@ -28,6 +28,7 @@ class RegisterController extends Controller{
             ]
         ]);
     }
+    
 
     public function test(Request $request){
         echo "teste";

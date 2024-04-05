@@ -66,7 +66,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout',[\App\Http\Controllers\Auth\Api\LoginController::class,'logout']);
 
     Route::post('/newcustomer',[RegisterController::class,'register']);
-    Route::post('/checkIfUserIdExists',[RegisterController::class,'checkIfUserIdExists']);
+    Route::post('/checkIfUserIdExists',[ApiController::class,'checkIfUserIdExists']);
     
     
 

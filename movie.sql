@@ -100,7 +100,8 @@ CREATE TABLE `customer` (
   `customer_mail` varchar(45) DEFAULT NULL,
   `customer_pass` varchar(25) DEFAULT NULL,
   `customer_status` smallint(6) DEFAULT NULL,
-  `customer_date_birth` date DEFAULT NULL
+  `customer_date_birth` date DEFAULT NULL,
+  `customer_user_id` varchar(20)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

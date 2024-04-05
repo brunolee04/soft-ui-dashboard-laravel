@@ -129,6 +129,20 @@ class ApiController extends Controller{
       else $response = false;
     }
 
+
+    public function checkIfUserIdExists(Request $request){
+      $data = $request->all();
+      $customer = DB::table('customer')->where('customer_user_id', $data['userId'])->first();
+      $response = [];
+      $response['status'] = $customer ? false : true;
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+      ], 201);
+    }
+
+
+
       public function getMovies() {
         $db_movie_info = DB::table('movie')
         ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')

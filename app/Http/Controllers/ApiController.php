@@ -31,7 +31,9 @@ class ApiController extends Controller{
         if($token_data){
             $customer_data = DB::table('customer')->where('customer_id', $token_data->tokenable_id)->first();
             if($customer_data){
+              $customer_user_id = is_null($customer_data->customer_user_id) ? "" : "@".$customer_data->customer_user_id;
               $response = array(
+                "customer_user_id" => $customer_user_id,
                 "customer_firstname" => $customer_data->customer_firstname,
                 "customer_lastname" => $customer_data->customer_lastname,
                 "customer_date_birth" => $customer_data->customer_date_birth,

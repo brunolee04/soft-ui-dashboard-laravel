@@ -156,7 +156,9 @@ CREATE TABLE `customer_rates_movie` (
 CREATE TABLE `streaming` (
   `streaming_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `streaming_name` varchar(25) NOT NULL,
-  `streaming_status` smallint,
+  `streaming_image` varchar(150),
+  `streaming_image_url` varchar(200),
+  `streaming_status` smallint
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -170,7 +172,7 @@ CREATE TABLE `streaming` (
 CREATE TABLE `customer_streaming` (
   `customer_streaming_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `streaming_id` int NOT NULL,
-  `customer_id` int NOT NULL,
+  `customer_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

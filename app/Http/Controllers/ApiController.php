@@ -14,6 +14,7 @@ use App\Models\Movie;
 use App\Models\MovieSeason;
 use App\Models\MovieToCustomerList;
 use App\Models\CustomerList;
+use App\Models\CustomerStreaming;
 
 //https://mui.com/material-ui/getting-started/installation/
 
@@ -144,7 +145,45 @@ class ApiController extends Controller{
     }
 
 
+    public function setMyStreaming(Request $request){
 
+      $token = $request->bearerToken();
+
+      $data = $request->all();
+
+      $streamings = $data['streamings'];
+
+      $customer_data = $this->getCustomerData($token);
+
+      if($customer_data!==false){
+
+        foreach($streamings as $streaming){
+          $customer_streaming = new CustomerStreaming();
+          $customer_streaming->customer_id =  $customer_data->customer_id;
+          $customer_streaming->streaming_id = 1;
+      
+          $customer_streaming->save($data);
+        }
+
+      }
+
+      
+  
+      
+
+
+      return response()->json([
+        "status"  => true,
+        "data"    => $streamings
+    ], 201);
+    }
+      /*
+        =============================================================
+        =============================================================
+        =============================================================
+        =============================================================
+        =============================================================
+      */
       public function getMovies() {
         $db_movie_info = DB::table('movie')
         ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')

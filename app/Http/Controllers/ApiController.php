@@ -590,6 +590,36 @@ class ApiController extends Controller{
         
       }
 
+
+      public function getMyStreamingList(Request $request){
+
+        $token = $request->bearerToken();
+
+        $customer_data = $this->getCustomerData($token);
+
+        $response = [];
+
+        if($customer_data!==false){
+
+          $data = DB::table('streaming')
+          ->join('customer_streaming','streaming.streaming_id','=','customer_streaming.streaming_id')
+          ->where('streaming.streaming_status', 1)
+          ->where('customer_streaming.customer_id ', $customer_data->customer_id)
+          ->get();
+
+          $response['status'] = true;
+
+          $response['data']   = $customer_data;
+
+        }
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+        ], 201);
+       
+      }
+
       public function saveNewList(Request $request){
         $inputs = $request->all();
 

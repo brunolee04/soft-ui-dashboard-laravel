@@ -34,6 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/account/sendImage',[ApiController::class,'sendImage']);
     Route::post('/account/changePassword',[ApiController::class,'changePassword']);
     Route::post('/account/changeData',[ApiController::class,'changeData']);
+    Route::get('account/getMyStreamingList',[ApiController::class,'getMyStreamingList']);
     Route::post('/account/setMyStreaming',[ApiController::class,'setMyStreaming']);
     
 

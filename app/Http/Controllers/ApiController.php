@@ -152,29 +152,27 @@ class ApiController extends Controller{
       $data = $request->all();
 
       $streamings = $data['streamings'];
+      $streamingsAnswer = $streamings;
 
       $customer_data = $this->getCustomerData($token);
 
       if($customer_data!==false){
 
-        foreach($streamings as $streaming){
+        CustomerStreaming::where('customer_id',$customer_data->customer_id)->delete();
+
+        foreach($streamings as $streaming_id){
           $customer_streaming = new CustomerStreaming();
           $customer_streaming->customer_id =  $customer_data->customer_id;
-          $customer_streaming->streaming_id = 1;
+          $customer_streaming->streaming_id = $streaming_id;
       
           $customer_streaming->save($data);
         }
 
       }
 
-      
-  
-      
-
-
       return response()->json([
         "status"  => true,
-        "data"    => $streamings
+        "data"    => $streamingsAnswer
     ], 201);
     }
       /*
@@ -588,6 +586,27 @@ class ApiController extends Controller{
           "data"    => $response
         ], 201);
         
+      }
+
+
+      public function getStreamingList(){
+
+        $response = [];
+
+        $data = DB::table('streaming')
+        ->where('streaming.streaming_status', 1)
+        ->get();
+
+        $response['status'] = true;
+
+        $response['data']   = $data;
+
+        
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+        ], 201);
+
       }
 
 

@@ -992,7 +992,8 @@ CREATE TABLE `watch_provider`(
   watch_provider_image_link varchar(150),
   watch_provider_image_local varchar(150),
   watch_provider_display_priority int,
-  watch_provider_site_id int
+  watch_provider_site_id int,
+  watch_provider_status smallint not null,
 );
 
 

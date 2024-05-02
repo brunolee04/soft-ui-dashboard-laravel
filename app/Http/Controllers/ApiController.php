@@ -601,25 +601,7 @@ class ApiController extends Controller{
 
         if($customer_data!==false){
 
-          $streamings = DB::table('streaming')
-          ->where('streaming.streaming_status', 1)
-          ->get();
-
-          foreach($streamings as $streaming){
-
-            $countMyStreaming = DB::table('customer_streaming')
-            ->where('customer_streaming.streaming_id',$streaming->streaming_id)
-            ->where('customer_streaming.customer_id',$customer_data->customer_id)
-            ->count();
-
-            $streaming_list[] = array(
-              'id'=>$streaming->streaming_id,
-              'name'=>$streaming->streaming_name,
-              'myStreaming'=>$countMyStreaming>0 ? true : false
-            );
-
-          }
-
+          $streaming_list = $this->getStreamingResponse($customer_data);
 
         }
 
@@ -634,6 +616,34 @@ class ApiController extends Controller{
           "status"  => true,
           "data"    => $response
         ], 201);
+
+      }
+
+
+      private function getStreamingResponse($customer_data){
+
+        $streaming_list = [];
+
+        $streamings = DB::table('streaming')
+        ->where('streaming.streaming_status', 1)
+        ->get();
+
+        foreach($streamings as $streaming){
+
+          $countMyStreaming = DB::table('customer_streaming')
+          ->where('customer_streaming.streaming_id',$streaming->streaming_id)
+          ->where('customer_streaming.customer_id',$customer_data->customer_id)
+          ->count();
+
+          $streaming_list[] = array(
+            'id'=>$streaming->streaming_id,
+            'name'=>$streaming->streaming_name,
+            'myStreaming'=>$countMyStreaming>0 ? true : false
+          );
+
+        }
+
+        return $streaming_list;
 
       }
 
@@ -654,9 +664,11 @@ class ApiController extends Controller{
           ->where('customer_streaming.customer_id ', $customer_data->customer_id)
           ->get();
 
+          $streaming_list = $this->getStreamingResponse($customer_data);
+
           $response['status'] = true;
 
-          $response['data']   = $customer_data;
+          $response['data']   = $streaming_list;
 
         }
 

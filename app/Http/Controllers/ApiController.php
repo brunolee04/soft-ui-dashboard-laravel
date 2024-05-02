@@ -599,6 +599,33 @@ class ApiController extends Controller{
 
         $streaming_list = [];
 
+        
+        $streaming_list = $this->getStreamingResponse($customer_data);
+
+        if($streaming_list !== false){
+          $response['status'] = true;
+
+          $response['data']   = $streaming_list;
+        }
+        else {
+
+          $response['status'] = false;
+
+        }
+
+  
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+        ], 201);
+
+      }
+
+
+      private function getStreamingResponse($customer_data){
+
+        $streaming_list = [];
+
         if($customer_data!==false){
 
           $streamings = DB::table('streaming')
@@ -620,21 +647,11 @@ class ApiController extends Controller{
 
           }
 
-
+          return $streaming_list;
         }
-
-
-
-        $response['status'] = true;
-
-        $response['data']   = $streaming_list;
+        else return false;
 
         
-        return response()->json([
-          "status"  => true,
-          "data"    => $response
-        ], 201);
-
       }
 
 

@@ -152,7 +152,6 @@ class ApiController extends Controller{
       $data = $request->all();
 
       $streamings = $data['streamings'];
-      $streamingsAnswer = $streamings;
 
       $customer_data = $this->getCustomerData($token);
 
@@ -169,6 +168,8 @@ class ApiController extends Controller{
         }
 
       }
+
+      $streamingsAnswer = $this->getStreamingResponse($customer_data);
 
       return response()->json([
         "status"  => true,
@@ -622,7 +623,7 @@ class ApiController extends Controller{
       }
 
 
-      private function getStreamingResponse($customer_data){
+      public function getStreamingResponse($customer_data){
 
         $streaming_list = [];
 
@@ -673,7 +674,7 @@ class ApiController extends Controller{
 
           $response['status'] = true;
 
-          $response['data']   = $customer_data;
+          $response['data']   = $data;
 
         }
 

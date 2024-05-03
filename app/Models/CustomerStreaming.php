@@ -12,13 +12,13 @@ class CustomerStreaming extends Model{
      *
      * @var string
      */
-    protected $table = 'customer_streaming';
+    protected $table = 'watch_provider_to_customer';
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'customer_streaming_id';
+    protected $primaryKey = 'watch_provider_to_customer_id';
     /**odel should be timestamped.
      *
      * Indicates if the m

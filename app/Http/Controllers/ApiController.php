@@ -162,7 +162,7 @@ class ApiController extends Controller{
         foreach($streamings as $streaming_id){
           $customer_streaming = new CustomerStreaming();
           $customer_streaming->customer_id =  $customer_data->customer_id;
-          $customer_streaming->streaming_id = $streaming_id;
+          $customer_streaming->watch_provider_id = $streaming_id;
       
           $customer_streaming->save($data);
         }
@@ -566,7 +566,6 @@ class ApiController extends Controller{
           MovieToCustomerList::where('movie_to_customer_list_id',$db_my_list_info->movie_to_customer_list_id )->delete();
         }
 
-    
 
         $dbShowToCustomerList = new MovieToCustomerList();
 
@@ -613,7 +612,6 @@ class ApiController extends Controller{
           $response['status'] = false;
 
         }
-
   
         return response()->json([
           "status"  => true,
@@ -623,26 +621,27 @@ class ApiController extends Controller{
       }
 
 
+
       public function getStreamingResponse($customer_data){
 
         $streaming_list = [];
 
         if($customer_data!==false){
 
-          $streamings = DB::table('streaming')
-          ->where('streaming.streaming_status', 1)
+          $streamings = DB::table('watch_provider')
+          ->where('watch_provider.watch_provider_status', 1)
           ->get();
 
           foreach($streamings as $streaming){
 
-            $countMyStreaming = DB::table('customer_streaming')
-            ->where('customer_streaming.streaming_id',$streaming->streaming_id)
-            ->where('customer_streaming.customer_id',$customer_data->customer_id)
+            $countMyStreaming = DB::table('watch_provider_to_customer')
+            ->where('watch_provider_to_customer.watch_provider_id',$streaming->watch_provider_id)
+            ->where('watch_provider_to_customer.customer_id',$customer_data->customer_id)
             ->count();
 
             $streaming_list[] = array(
-              'id'=>$streaming->streaming_id,
-              'name'=>$streaming->streaming_name,
+              'id'=>$streaming->watch_provider_id,
+              'name'=>$streaming->watch_provider_name,
               'myStreaming'=>$countMyStreaming>0 ? true : false
             );
 
@@ -666,10 +665,10 @@ class ApiController extends Controller{
 
         if($customer_data!==false){
 
-          $data = DB::table('streaming')
-          ->join('customer_streaming','streaming.streaming_id','=','customer_streaming.streaming_id')
-          ->where('streaming.streaming_status', 1)
-          ->where('customer_streaming.customer_id ', $customer_data->customer_id)
+          $data = DB::table('watch_provider')
+          ->join('watch_provider_to_customer','watch_provider.watch_provider_id','=','watch_provider_to_customer.watch_provider_id')
+          ->where('watch_provider.watch_provider_status', 1)
+          ->where('watch_provider_to_customer.customer_id', $customer_data->customer_id)
           ->get();
 
           $response['status'] = true;

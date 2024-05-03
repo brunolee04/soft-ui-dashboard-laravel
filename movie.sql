@@ -996,6 +996,12 @@ CREATE TABLE `watch_provider`(
   watch_provider_status smallint not null,
 );
 
+CREATE TABLE `watch_provider_to_customer` (
+  watch_provider_to_customer_id int not null AUTO_INCREMENT PRIMARY KEY,
+  watch_provider_id int not null,
+  customer_id int not null
+);
+
 
 CREATE TABLE `movie_to_watch_provider`(
   movie_to_watch_provider_id int not null AUTO_INCREMENT PRIMARY KEY,

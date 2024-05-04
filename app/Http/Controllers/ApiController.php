@@ -603,6 +603,8 @@ class ApiController extends Controller{
         $streaming_list = $this->getStreamingResponse($customer_data);
 
         if($streaming_list !== false){
+
+
           $response['status'] = true;
 
           $response['data']   = $streaming_list;
@@ -642,6 +644,7 @@ class ApiController extends Controller{
             $streaming_list[] = array(
               'id'=>$streaming->watch_provider_id,
               'name'=>$streaming->watch_provider_name,
+              'streaming_image_url'=> config('app.guzzle_tmd_image_url').'/'.$streaming->watch_provider_image_link,
               'myStreaming'=>$countMyStreaming>0 ? true : false
             );
 

@@ -711,6 +711,10 @@ class ApiController extends Controller{
           $response['myLists']    =  null;
         }
 
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+        ], 201);
        
       }
 

@@ -146,6 +146,19 @@ CREATE TABLE `customer_rates_movie` (
   `movie_season_movie_season_id` int(11) NOT NULL COMMENT 'Cada filme ou série deverá ter obrigatóriamente ao menos 1 temporada. Inclusive, no caso dos filmes, 1 temporada será vinculada a ele.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `customer_setting`
+--
+
+CREATE TABLE IF NOT EXISTS `customer_setting`(
+  `customer_setting_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `customer_id` int not null,
+  `customer_setting_code` varchar(5),
+  `customer_setting_setting` text
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 

@@ -15,6 +15,7 @@ use App\Models\MovieSeason;
 use App\Models\MovieToCustomerList;
 use App\Models\CustomerList;
 use App\Models\CustomerStreaming;
+use App\Models\CustomerSetting;
 
 //https://mui.com/material-ui/getting-started/installation/
 
@@ -716,6 +717,76 @@ class ApiController extends Controller{
           "data"    => $response
         ], 201);
        
+      }
+
+      public function updateSetting(Request $request){
+
+        $inputs = $request->all();
+
+        $token = $request->bearerToken();
+
+        $customer_data = $this->getCustomerData($token);
+
+        $customer_settings = [];
+
+        $settings = [];
+
+        $response = [];
+
+        $setting_keys = [];
+
+        if($customer_data!==false){
+          //1 - Checks if customer already has a setting saved, if it doesn´t, a new one will be created
+          $customer_settings = DB::table("customer_setting")->where('customer_setting.customer_id','=',$customer_data->customer_id)->first();
+          if(is_null($customer_settings)){
+            
+            foreach($inputs as $input){
+              $settings[$input['key']] = $input['value'];
+            }
+            //1.1 - A new object´s setting will be created and saved
+            $dbCustomerSetting = new CustomerSetting();
+            $dbCustomerSetting->customer_id = $customer_data->customer_id;
+            $dbCustomerSetting->customer_setting_setting = json_encode($settings);
+            $dbCustomerSetting->save();
+            $response = array("status"=>true,"message"=>"Configurações Atualizadas com Sucesso");
+          }
+          else{
+          //2 - In case to exists some setting to customer, the settings will be updated
+          //2.1 - In case to exists a key to customer´s settings the key´s value will be updated
+
+            $settings = json_decode($customer_settings->customer_setting_setting,true);
+            
+            foreach($settings as $key => $value){
+              $setting_keys[] = $key;
+              foreach($inputs as $input){
+                if($key == $input['key']){
+                  $settings[$key] = $input['value'];
+                }
+              }
+            }
+
+            //2.2 - In case to not exists any key setting to customer, a new one is created
+            foreach($inputs as $input){
+              if(!in_array($input['key'],$setting_keys)){
+                $settings[$input['key']] = $input['value'];
+              }
+            }
+
+            //3 - Finally the settings json string is updated
+            $settings = json_encode($settings);
+            CustomerSetting::where('customer_id', $customer_data->customer_id)
+            ->update([
+              'customer_setting_setting' => $settings
+            ]);
+            
+            $response = array("status"=>true,"message"=>"Configurações Atualizadas com Sucesso");
+          }
+        }
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+        ], 201);
       }
 
 

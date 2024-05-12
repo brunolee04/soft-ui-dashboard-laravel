@@ -789,6 +789,43 @@ class ApiController extends Controller{
         ], 201);
       }
 
+      public function getCustomerSetting(Request $request){
+
+        $inputs = $request->all();
+
+        $token = $request->bearerToken();
+
+        $customer_data = $this->getCustomerData($token);
+
+        $response = [];
+       
+        if($customer_data!==false){
+          
+          //1 - Checks if customer already has a setting saved, if it doesn´t, a new one will be created
+          $customer_settings = DB::table("customer_setting")->where('customer_setting.customer_id','=',$customer_data->customer_id)->first();
+ 
+          if(!is_null($customer_settings)){
+            $response = array(
+              'data' => $customer_settings->customer_setting_setting,
+              'status' => true
+            );
+          }
+          else {
+            $response = array(
+              'status' => false
+            );
+          }
+        }
+        else {
+          $response = array(
+            'status' => false
+          );
+        }
+
+        return response()->json($response, 201);
+
+      }
+
 
       
 

@@ -37,6 +37,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/account/setMyStreaming',[ApiController::class,'setMyStreaming']);
 
     //Settings apis
+    Route::get('setting/getCustomerSetting',[ApiController::class,'getCustomerSetting']);
     Route::post('/setting/updateSetting',[ApiController::class,'updateSetting']);
     
 

@@ -507,7 +507,7 @@ class ApiController extends Controller{
         return $mediumRate;
       }
 
-      public function getMyLists($returnResponse = false){
+      public function getMyLists(Request $request,$returnResponse = false){
 
         $token = $request->bearerToken();
 

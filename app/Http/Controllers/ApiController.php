@@ -507,12 +507,20 @@ class ApiController extends Controller{
         return $mediumRate;
       }
 
-      public function getMyLists($customer_id,$returnResponse = false){
-        $myLists = DB::table('customer_list')
+      public function getMyLists($returnResponse = false){
+
+        $token = $request->bearerToken();
+
+        $customer_data = $this->getCustomerData($token);
+
+        if($customer_data!==false){
+          $myLists = DB::table('customer_list')
         
-        ->where('customer_id', $customer_id)
-        ->get();
-        
+          ->where('customer_id', $customer_data->customer_id)
+          ->get();
+        }
+        else $myLists = [];
+   
         if(!$returnResponse){
             return response()->json([
               "status"  => true,

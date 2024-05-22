@@ -701,7 +701,17 @@ class ApiController extends Controller{
 
         $response = [];
 
-        $customer_id   = $inputs['customer_id'];
+        $token = $request->bearerToken();
+
+        $customer_data = $this->getCustomerData($token);
+
+        if($customer_data!==false){
+          $customer_id   = $customer_data->customer_id;
+        }
+        else $customer_id = 0;
+
+
+        
         $new_list_name = $inputs['new_list_name'];
 
         $dbCustomerList = new CustomerList();

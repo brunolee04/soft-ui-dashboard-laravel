@@ -515,7 +515,6 @@ class ApiController extends Controller{
 
         if($customer_data!==false){
           $myLists = DB::table('customer_list')
-        
           ->where('customer_id', $customer_data->customer_id)
           ->get();
         }
@@ -529,6 +528,16 @@ class ApiController extends Controller{
         }else{
           return $myLists;
         }
+      }
+
+      public function getMyListsReturn($customer_id){
+
+        $myLists = DB::table('customer_list')
+          ->where('customer_id', $customer_id)
+          ->get();
+        
+        return $myLists;
+
       }
 
       public function getMyListsWithShows($customer_id,$returnResponse = false){
@@ -722,7 +731,7 @@ class ApiController extends Controller{
         if($dbCustomerList->save()){
           $response['status']     = true;
           $response['message']    = "Você adicionou a Lista %list%.";
-          $response['myLists']    = $this->getMyLists($customer_id,true);
+          $response['myLists']    = $this->getMyListsReturn($customer_id);
         }
         else{
           $response['status']     = false;

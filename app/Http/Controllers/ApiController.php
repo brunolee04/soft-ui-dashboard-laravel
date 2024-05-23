@@ -563,46 +563,63 @@ class ApiController extends Controller{
       }
 
       public function setShowToMyList(Request $request){
+
+        $token = $request->bearerToken();
+
         $inputs = $request->all();
+
+        $customer_data = $this->getCustomerData($token);
 
         $response = [];
 
-        $show_id = $inputs['show_id'];
-        $list_id = $inputs['list_id'];
-        $customer_id = $inputs['customer_id'];
+        if($customer_data!==false){
 
-        //1º - Checks if show is already in a List
+          $show_id = $inputs['show_id'];
+          $list_id = $inputs['list_id'];
+          $customer_id = $customer_data->customer_id;
 
-        $db_my_list_info = DB::table('customer_list')
-        ->select('movie_to_customer_list.movie_to_customer_list_id')
-        ->join('movie_to_customer_list', 'customer_list.customer_list_id', '=', 'movie_to_customer_list.customer_list_id')
-        ->where('customer_list.customer_id','=',$customer_id)
-        ->where('movie_to_customer_list.movie_id','=',$show_id)
-        ->first();
+          //1º - Checks if show is already in a List
+          $db_my_list_info = DB::table('customer_list')
+          ->select('movie_to_customer_list.movie_to_customer_list_id')
+          ->join('movie_to_customer_list', 'customer_list.customer_list_id', '=', 'movie_to_customer_list.customer_list_id')
+          ->where('customer_list.customer_id','=',$customer_id)
+          ->where('movie_to_customer_list.movie_id','=',$show_id)
+          ->first();
 
-        if($db_my_list_info){
-          MovieToCustomerList::where('movie_to_customer_list_id',$db_my_list_info->movie_to_customer_list_id )->delete();
-        }
+          if($db_my_list_info){
+            MovieToCustomerList::where('movie_to_customer_list_id',$db_my_list_info->movie_to_customer_list_id )->delete();
+          }
 
 
-        $dbShowToCustomerList = new MovieToCustomerList();
+          $dbShowToCustomerList = new MovieToCustomerList();
 
-        $dbShowToCustomerList->customer_list_id = $list_id;
-        $dbShowToCustomerList->movie_id = $show_id;
+          $dbShowToCustomerList->customer_list_id = $list_id;
+          $dbShowToCustomerList->movie_id = $show_id;
 
-        if($dbShowToCustomerList->save()){
-          $response['status']     = true;
-          $response['message']    = "Você adicionou %o% %show% na lista %list%.";
+          if($dbShowToCustomerList->save()){
+            $response['status']     = true;
+            $response['message']    = "Você adicionou %o% %show% na lista %list%.";
+          }
+          else{
+            $response['status']     = false;
+            $response['message']    = "Estamos com problemas em adcionar %o% %show% na lista %list%, tente novamente mais tarde.";
+          }
+
         }
         else{
           $response['status']     = false;
-          $response['message']    = "Estamos com problemas em adcionar %o% %show% na lista %list%, tente novamente mais tarde.";
+          $response['message']    = "Não encontramos suas informações.";
         }
 
         return response()->json([
           "status"  => true,
           "data"    => $response
         ], 201);
+    
+
+        
+
+        
         
       }
 

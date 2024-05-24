@@ -22,6 +22,7 @@ class LoginController extends Controller{
         $user_mail = auth('customer')->user()->email;
         $user_profile_id = auth('customer')->user()->customer_user_id;
         $user_avatar = auth('customer')->user()->customer_image_url;
+        $user_bio = auth('customer')->user()->customer_bio;
 
    
 
@@ -35,6 +36,7 @@ class LoginController extends Controller{
                     'mail' => $user_mail,
                     'profile_id' => $user_profile_id,
                     'avatar' => $user_avatar,
+                    'bio' => $user_bio,
                 ]
             ]
         ]);

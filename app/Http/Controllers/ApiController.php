@@ -65,7 +65,7 @@ class ApiController extends Controller{
 
         $image_url = url(Storage::url($request->file('image')->store('image', 'public')));
 
-
+        //customer_image_url //atualizar imagem na tabela do cliente
         return response()->json([
           "status"  => true,
           "data"    => $image_url

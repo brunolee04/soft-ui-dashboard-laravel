@@ -101,11 +101,18 @@ class ApiController extends Controller{
       $token = $request->bearerToken();
       $data = $request->all();
       $customer_data = $this->getCustomerData($token);
+      
+      $customer_firstname = isset($data['firstname']) ? $data['firstname']:'';
+      $customer_lastname  = isset($data['lastname']) ? $data['lastname']:'';
+      $customer_bio       = isset($data['bio']) ? $data['bio'] : '';
+      $customer_mail      = isset($data['email']) ? $data['email'] : '';
+
       if($customer_data!==false){
         DB::table('customer')->where('customer_id', $customer_data->customer_id)->update(
-          ['customer_firstname'=>$data['firstname'],
-          'customer_lastname'=>$data['lastname'],
-          'customer_bio'=>$data['bio']]);
+          ['customer_firstname'=>$customer_firstname,
+          'customer_lastname'=>$customer_lastname,
+          'email' => $customer_mail,
+          'customer_bio'=>$customer_bio]);
       }
       $customer_data = $this->getCustomerData($token);
       $response_data = array(

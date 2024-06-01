@@ -119,6 +119,8 @@ class ApiController extends Controller{
         "customer_firstname" => $customer_data->customer_firstname,
         "customer_lastname" => $customer_data->customer_lastname,
         "customer_date_birth" => $customer_data->customer_date_birth,
+        "customer_image_url" => $customer_data->customer_image_url,
+        "customer_user_id"  => $customer_data->customer_user_id,
         "email" => $customer_data->email,
         "customer_bio" => $customer_data->customer_bio,
       );

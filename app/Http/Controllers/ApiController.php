@@ -62,17 +62,22 @@ class ApiController extends Controller{
         $image = $image[0];
         $image = $image[1];
         //php artisan storage:link
+        $image_url = "NOUPLOAD";
+        $avaiable_extensions = ['jpg','png','jpeg','gif','svg'];
+        if(in_array($image['type'],$avaiable_extensions)){
+          $image_url = url(Storage::url($image['image']->store('image', 'public')));
+        }
       
-        $this->validate($image['type'], [
-          'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-        ]);
+        // $this->validate($image['type'], [
+        //   'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        // ]);
   
        // $image_url = url(Storage::url($image['image']->store('image', 'public')));
 
         //customer_image_url //atualizar imagem na tabela do cliente
         return response()->json([
           "status"  => true,
-          "data"    => $image
+          "data"    => $image_url
         ], 201);
     }
 

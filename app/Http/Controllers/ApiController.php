@@ -65,7 +65,8 @@ class ApiController extends Controller{
         $image_url = "NOUPLOAD";
         $avaiable_extensions = ['jpg','png','jpeg','gif','svg'];
         if(in_array($image['type'],$avaiable_extensions)){
-          $image_url = url(Storage::url($image['image']->store('image', 'public')));
+          $image_url = "horizonte";
+         // $image_url = url(Storage::url($image['image']->store('image', 'public')));
         }
       
         // $this->validate($image['type'], [

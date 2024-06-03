@@ -65,13 +65,13 @@ class ApiController extends Controller{
         $this->validate($image, [
           'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
-  /* 
-        $image_url = url(Storage::url($request->file('image')->store('image', 'public')));
-*/
+  
+        $image_url = url(Storage::url($$image->store('image', 'public')));
+
         //customer_image_url //atualizar imagem na tabela do cliente
         return response()->json([
           "status"  => true,
-          "data"    => $image
+          "data"    => $image_url
         ], 201);
     }
 

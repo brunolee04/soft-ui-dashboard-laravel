@@ -68,7 +68,7 @@ class ApiController extends Controller{
         //customer_image_url //atualizar imagem na tabela do cliente
         return response()->json([
           "status"  => true,
-          "data"    => $inputs
+          "data"    => $request
         ], 201);
     }
 

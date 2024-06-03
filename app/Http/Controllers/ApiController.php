@@ -60,6 +60,7 @@ class ApiController extends Controller{
         $inputs = $request->all();
         $image = $inputs["formData"];
         $image = $image[0];
+        $image = $image[1];
         //php artisan storage:link
       
         // $this->validate($image, [

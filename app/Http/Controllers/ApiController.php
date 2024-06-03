@@ -57,7 +57,7 @@ class ApiController extends Controller{
 
       public function sendImage(Request $request){
         //https://laracasts.com/discuss/channels/laravel/how-to-save-image-as-blob
-        $inputs = $request->all();
+        $inputs = $request->file('image');
         //php artisan storage:link
         // $this->validate($inputs['image'], [
         //   'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',

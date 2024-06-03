@@ -66,7 +66,7 @@ class ApiController extends Controller{
         $avaiable_extensions = ['jpg','png','jpeg','gif','svg'];
         if(in_array($image['type'],$avaiable_extensions)){
           $image_url = "horizonte";
-          $image_url = url(Storage::url($image['uri']->store('image', 'public')));
+        //  $image_url = url(Storage::url($image['uri']->store('image', 'public')));
         }
       
         // $this->validate($image['type'], [
@@ -78,7 +78,7 @@ class ApiController extends Controller{
         //customer_image_url //atualizar imagem na tabela do cliente
         return response()->json([
           "status"  => true,
-          "data"    => $image_url
+          "data"    => $image
         ], 201);
     }
 

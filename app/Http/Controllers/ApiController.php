@@ -63,7 +63,7 @@ class ApiController extends Controller{
         $image = $image[1];
         //php artisan storage:link
       
-        $this->validate($image, [
+        $this->validate($inputs["formData"], [
           'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
   

@@ -65,7 +65,7 @@ class ApiController extends Controller{
         //   'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         // ]);
 
-        //$image_url = url(Storage::url($inputs->file('image')->store('image', 'public')));
+        $image_url = url(Storage::url($inputs['image']->store('image', 'public')));
 
         //customer_image_url //atualizar imagem na tabela do cliente
         return response()->json([

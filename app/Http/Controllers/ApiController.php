@@ -459,7 +459,7 @@ class ApiController extends Controller{
             ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
             ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')
             ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
-            ->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
+            ->where('movie_to_customer_list.customer_list_id ','=',$db_list_show['customer_list_id'])
             ->get();
             if($db_show_data){
               //getting the movie genres

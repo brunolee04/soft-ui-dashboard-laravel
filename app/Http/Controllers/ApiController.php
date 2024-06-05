@@ -461,7 +461,7 @@ class ApiController extends Controller{
             ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
             ->where('movie_to_customer_list.customer_list_id ','=',$db_list_show['customer_list_id'])
             ->get();
-            if($db_show_data){
+            if($db_show_data->count() > 0){
               //getting the movie genres
               foreach($db_show_data as $db_show_data_one){
                 $db_show_data_one->genres = DB::table('movie_gender')

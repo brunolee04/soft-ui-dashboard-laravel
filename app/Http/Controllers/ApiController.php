@@ -461,20 +461,21 @@ class ApiController extends Controller{
             ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
             ->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
             ->get();
-  
-            //getting the movie genres
-            foreach($db_show_data as $db_show_data_one){
-              $db_show_data_one->genres = DB::table('movie_gender')
-            ->select('movie_gender.movie_gender_id','movie_gender_name')
-            ->join('movie_to_movie_gender', 'movie_gender.movie_gender_id', '=', 'movie_to_movie_gender.movie_gender_id')
-            ->where('movie_to_movie_gender.movie_id','=',$db_show_data_one->movie_id)
-            ->where('movie_gender.language_id','=',$this->language_id)
-            ->get();
-              $new_show_data[] = $db_show_data_one;
+            if(!is_null($db_show_data)){
+              //getting the movie genres
+              foreach($db_show_data as $db_show_data_one){
+                $db_show_data_one->genres = DB::table('movie_gender')
+                ->select('movie_gender.movie_gender_id','movie_gender_name')
+                ->join('movie_to_movie_gender', 'movie_gender.movie_gender_id', '=', 'movie_to_movie_gender.movie_gender_id')
+                ->where('movie_to_movie_gender.movie_id','=',$db_show_data_one->movie_id)
+                ->where('movie_gender.language_id','=',$this->language_id)
+                ->get();
+                $new_show_data[] = $db_show_data_one;
+              }
+    
+              $db_list_show['show_data'] = $new_show_data;
             }
-  
-            $db_list_show['show_data'] = $new_show_data;
-  
+    
             $list_to_customer[] = $db_list_show;
           }
         }

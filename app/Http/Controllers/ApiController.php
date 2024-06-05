@@ -436,7 +436,7 @@ class ApiController extends Controller{
 
         $token = $request->bearerToken();
 
-        $data = $request->all();
+       // $data = $request->all();
     
         $customer_data = $this->getCustomerData($token);
   
@@ -446,7 +446,7 @@ class ApiController extends Controller{
           $list_to_customer = [];
   
           $db_list_shows = DB::table('customer_list')
-          ->where(`customer_id`,$customer_data->customer_id)
+          ->where('customer_id',$customer_data->customer_id)
           ->get();
   
           $db_list_shows = json_decode(json_encode($db_list_shows),true);

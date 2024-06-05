@@ -426,6 +426,67 @@ class ApiController extends Controller{
       ], 201);
         
       }
+
+
+
+      public function customerList(Request $request){
+
+        //here is a temp config to movie... let´s use the season 1 as the result of api only would be a movie, but when we became it to support a serie, it must to be addapted
+        $season =1;
+
+        $token = $request->bearerToken();
+
+        $data = $request->all();
+    
+        $customer_data = $this->getCustomerData($token);
+  
+        if($customer_data!==false){
+          $this->language_id = config('app.language_id');
+
+          $list_to_customer = [];
+  
+          $db_list_shows = DB::table('customer_list')
+          ->where(`customer_id`,$customer_data->customer_id)
+          ->get();
+  
+          $db_list_shows = json_decode(json_encode($db_list_shows),true);
+  
+          foreach($db_list_shows as $db_list_show){
+  
+            $new_show_data = [];
+            
+            $db_show_data = DB::table('movie')
+            ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
+            ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')
+            ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
+            ->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
+            ->get();
+  
+            //getting the movie genres
+            foreach($db_show_data as $db_show_data_one){
+              $db_show_data_one->genres = DB::table('movie_gender')
+            ->select('movie_gender.movie_gender_id','movie_gender_name')
+            ->join('movie_to_movie_gender', 'movie_gender.movie_gender_id', '=', 'movie_to_movie_gender.movie_gender_id')
+            ->where('movie_to_movie_gender.movie_id','=',$db_show_data_one->movie_id)
+            ->where('movie_gender.language_id','=',$this->language_id)
+            ->get();
+              $new_show_data[] = $db_show_data_one;
+            }
+  
+            $db_list_show['show_data'] = $new_show_data;
+  
+            $list_to_customer[] = $db_list_show;
+          }
+        }
+        
+        
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $list_to_customer
+      ], 201);
+      }
+
    
       /**
        * Rate Movie

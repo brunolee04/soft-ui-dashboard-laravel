@@ -474,9 +474,10 @@ class ApiController extends Controller{
               }
     
               $db_list_show['show_data'] = $new_show_data;
+              $list_to_customer[] = $db_list_show;
             }
     
-            $list_to_customer[] = $db_list_show;
+            
           }
         }
         

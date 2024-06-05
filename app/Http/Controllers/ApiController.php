@@ -429,7 +429,7 @@ class ApiController extends Controller{
 
 
 
-      public function completeCustomerList(Request $request){
+      public function getShows(Request $request){
 
         //here is a temp config to movie... let´s use the season 1 as the result of api only would be a movie, but when we became it to support a serie, it must to be addapted
         $season =1;

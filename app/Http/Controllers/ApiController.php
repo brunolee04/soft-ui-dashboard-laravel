@@ -219,12 +219,10 @@ class ApiController extends Controller{
         $token = $request->bearerToken();
 
         $inputs = $request->all();
-
-       // $show_id = $inputs['show_id'];
     
         $customer_data = $this->getCustomerData($token);
 
-        $customer_data = false;
+       // $customer_data = false;
 
         if($customer_data){
           $db_movie_info = DB::table('movie')
@@ -327,7 +325,7 @@ class ApiController extends Controller{
 
         return response()->json([
             "status"  => true,
-            "data"    => [$show_id,$request]
+            "data"    => $movie_data
         ], 201);
       }
   

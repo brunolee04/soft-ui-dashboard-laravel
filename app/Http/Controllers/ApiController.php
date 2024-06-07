@@ -211,7 +211,7 @@ class ApiController extends Controller{
       }
 
 
-      public function getMovie(Request $request){
+      public function getMovie($show_id,Request $request){
 
       
         $movie_data = [];
@@ -327,7 +327,7 @@ class ApiController extends Controller{
 
         return response()->json([
             "status"  => true,
-            "data"    => $token
+            "data"    => [$show_id,$request]
         ], 201);
       }
   

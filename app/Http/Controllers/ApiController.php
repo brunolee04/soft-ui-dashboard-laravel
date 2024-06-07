@@ -216,7 +216,7 @@ class ApiController extends Controller{
       
         $movie_data = [];
 
-        $show_id = $request->show_id;
+       // $show_id = $request->show_id;
 
         $token = $request->bearerToken();
     

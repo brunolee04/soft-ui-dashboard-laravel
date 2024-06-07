@@ -222,6 +222,8 @@ class ApiController extends Controller{
     
         $customer_data = $this->getCustomerData($token);
 
+        $customer_data = false;
+
         if($customer_data){
           $db_movie_info = DB::table('movie')
           ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
@@ -325,7 +327,7 @@ class ApiController extends Controller{
 
         return response()->json([
             "status"  => true,
-            "data"    => $movie_data
+            "data"    => $request
         ], 201);
       }
   

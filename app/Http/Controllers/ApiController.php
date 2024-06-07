@@ -327,7 +327,7 @@ class ApiController extends Controller{
 
         return response()->json([
             "status"  => true,
-            "data"    => $inputs
+            "data"    => $token
         ], 201);
       }
   

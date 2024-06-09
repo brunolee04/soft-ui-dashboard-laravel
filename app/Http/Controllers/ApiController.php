@@ -519,50 +519,57 @@ class ApiController extends Controller{
 
           $inputs = $request->all();
 
+          $token = $request->bearerToken();
+
           $response = [];
+       
+          $customer_data = $this->getCustomerData($token);
+     
+          if($customer_data!==false){
+            $show_id         = $inputs['show_id'];
+            $customer_id     = $customer_data->customer_id;
+            $movie_season_id = $inputs['movie_season_id'];
+            $rate            = $inputs['rate'];
 
-          $show_id         = $inputs['show_id'];
-          $customer_id     = $inputs['customer_id'];
-          $movie_season_id = $inputs['movie_season_id'];
-          $rate            = $inputs['rate'];
-
-          
-          $customer_rates_movie_info = DB::table('customer_rates_movie')
+            $customer_rates_movie_info = DB::table('customer_rates_movie')
           ->where('customer_id',$customer_id)
           ->where('movie_id',$show_id)
           ->where('movie_season_id',$movie_season_id)
           ->first();
 
-          if(!is_null($customer_rates_movie_info)){
-            $customer_rates_movie_id = $customer_rates_movie_info->customer_rates_movie_id;
+            if(!is_null($customer_rates_movie_info)){
+              $customer_rates_movie_id = $customer_rates_movie_info->customer_rates_movie_id;
 
-            $customerRateInfo = CustomerRatesMovie::find($customer_rates_movie_id);
-            
-            $customerRateInfo->customer_rates_movie_rate = $rate;
+              $customerRateInfo = CustomerRatesMovie::find($customer_rates_movie_id);
+              
+              $customerRateInfo->customer_rates_movie_rate = $rate;
 
-            if($customerRateInfo->save()){
+              if($customerRateInfo->save()){
 
-              //makes the general rate
-              $mediumRate = $this->generalRateToMovie($show_id,$movie_season_id);
+                //makes the general rate
+                $mediumRate = $this->generalRateToMovie($show_id,$movie_season_id);
 
-              $response['status']     = true;
-              $response['mediumRate'] = $mediumRate;
-              $response['myRate']     = $rate;
-              $response['message']    = "Você avaliou %o% %show%.";
-             
+                $response['status']     = true;
+                $response['mediumRate'] = $mediumRate;
+                $response['myRate']     = $rate;
+                $response['message']    = "Você avaliou %o% %show%.";
+              
+              }
+              else{
+                $response['status'] = false;
+                $response['mediumRate'] = 0;
+                $response['message'] = "%o% %show% não foi avaliado.";
+              }
+
             }
             else{
               $response['status'] = false;
-              $response['mediumRate'] = 0;
-              $response['message'] = "%o% %show% não foi avaliado.";
+              $response['message'] = "Você ainda não marcou %o% %show% como visto.";
             }
 
           }
-          else{
-            $response['status'] = false;
-            $response['message'] = "Você ainda não marcou %o% %show% como visto.";
-          }
 
+ 
           
           return response()->json([
             "status"  => true,

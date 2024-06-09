@@ -391,50 +391,58 @@ class ApiController extends Controller{
 
       public function markThisShowAsSaw(Request $request){
 
-        $inputs = $request->all();
-
         $response = [];
 
-        $show_id = $inputs['show_id'];
-        $customer_id = $inputs['customer_id'];
-        $movie_season_id = $inputs['movie_season_id'];
-       
-        $customer_rates_movie_info = DB::table('customer_rates_movie')
-                  ->where('customer_id',$customer_id)
-                  ->where('movie_id',$show_id)
-                  ->where('movie_season_id',$movie_season_id)
-                  ->first();
+        $inputs = $request->all();
 
-        if(is_null($customer_rates_movie_info)){
+        $token = $request->bearerToken();
+    
+        $customer_data = $this->getCustomerData($token);
+  
+        if($customer_data!==false){
 
-          $dbCustomerRatesMovie = new CustomerRatesMovie();
+          $show_id = $inputs['show_id'];
+          $customer_id = $customer_data->customer_id;
+          $movie_season_id = $inputs['movie_season_id'];
 
-          $dbCustomerRatesMovie->customer_rates_movie_rate = null;
-          $dbCustomerRatesMovie->customer_rates_movie_date_added = date("Y-m-d H:i:s");
-          $dbCustomerRatesMovie->movie_id = $show_id;
-          $dbCustomerRatesMovie->customer_id = $customer_id;
-          $dbCustomerRatesMovie->movie_season_id = $movie_season_id;
+          $customer_rates_movie_info = DB::table('customer_rates_movie')
+          ->where('customer_id',$customer_id)
+          ->where('movie_id',$show_id)
+          ->where('movie_season_id',$movie_season_id)
+          ->first();
 
-          if($dbCustomerRatesMovie->save()){
-            $response['status'] = true;
-            $response['message'] = "Você marcou %o% %show% como visto.";
+          if(is_null($customer_rates_movie_info)){
+
+            $dbCustomerRatesMovie = new CustomerRatesMovie();
+
+            $dbCustomerRatesMovie->customer_rates_movie_rate = null;
+            $dbCustomerRatesMovie->customer_rates_movie_date_added = date("Y-m-d H:i:s");
+            $dbCustomerRatesMovie->movie_id = $show_id;
+            $dbCustomerRatesMovie->customer_id = $customer_id;
+            $dbCustomerRatesMovie->movie_season_id = $movie_season_id;
+
+            if($dbCustomerRatesMovie->save()){
+              $response['status'] = true;
+              $response['message'] = "Você marcou %o% %show% como visto.";
+            }
+            else{
+              $response['status'] = false;
+              $response['message'] = "Erro ao marcar %o% %show% como visto";
+            }
           }
           else{
             $response['status'] = false;
-            $response['message'] = "Erro ao marcar %o% %show% como visto";
+            $response['message'] = "Você já marcou %o% %show% como visto";
           }
-        }
-        else{
-          $response['status'] = false;
-          $response['message'] = "Você já marcou %o% %show% como visto";
+
         }
 
 
         
-        return response()->json([
-          "status"  => true,
-          "data"    => $response
-      ], 201);
+         return response()->json([
+            "status"  => true,
+            "data"    => $response
+        ], 201);
         
       }
 

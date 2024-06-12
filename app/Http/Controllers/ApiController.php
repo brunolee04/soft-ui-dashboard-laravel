@@ -807,6 +807,7 @@ class ApiController extends Controller{
 
         if($customer_data){
           $response = DB::table('movie_gender')
+          ->select('movie_gender_id','movie_gender_name')
           ->where('movie_gender.language_id', $this->language_id)
           ->get();
         }

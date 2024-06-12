@@ -813,7 +813,7 @@ class ApiController extends Controller{
 
         return response()->json([
           "status"  => true,
-          "data"    => $response
+          "data"    => $customer_data
         ], 201);
 
       }

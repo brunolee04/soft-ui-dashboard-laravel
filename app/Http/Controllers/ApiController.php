@@ -797,6 +797,28 @@ class ApiController extends Controller{
       }
 
 
+      public function getGenres(Request $request){
+
+        $token = $request->bearerToken();
+
+        $customer_data = $this->getCustomerData($token);
+
+        $response = [];
+
+        if($customer_data){
+          $response = DB::table('movie_gender')
+          ->where('movie_gender.language_id', $this->language_id)
+          ->get();
+        }
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+        ], 201);
+
+      }
+
+
       public function getMyStreamingList(Request $request){
 
         $token = $request->bearerToken();

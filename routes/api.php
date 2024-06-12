@@ -47,10 +47,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('homemovies',[ApiController::class, 'homemovies']);
 
     //App apis
-    //Streaming apis
+    //Streaming and Movie apis
     Route::get('streaming_list',[ApiController::class, 'getStreamingList']); 
     Route::get('movies',[ApiController::class, 'getMovies']);
     Route::get('movie/{show_id}',[ApiController::class, 'getMovie']);
+    Route::get('movie/getGenres',[ApiController::class, 'getGenres']);
+
    // Route::get('movie/{show_id}',[ApiController::class, 'getMovie']);
     Route::post('/movie/markThisShowAsSaw',[ApiController::class, 'markThisShowAsSaw']);
     Route::post('/movie/rateShow',[ApiController::class, 'rateMovie']);

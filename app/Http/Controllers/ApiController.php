@@ -815,7 +815,7 @@ class ApiController extends Controller{
           if($genders){
             $response[] = array(
               'header' => 'Generos',
-              'data' = > $genders
+              'data' => $genders
             );
           }
 

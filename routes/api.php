@@ -50,7 +50,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //Streaming and Movie apis
     Route::get('streaming_list',[ApiController::class, 'getStreamingList']); 
     Route::get('movies',[ApiController::class, 'getMovies']);
-    Route::get('movies/getGenres',[ApiController::class, 'getGenres']);
+    Route::get('movies/getFilters',[ApiController::class, 'getFilters']);
     Route::get('movie/{show_id}',[ApiController::class, 'getMovie']);
     
 

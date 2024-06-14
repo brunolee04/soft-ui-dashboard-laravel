@@ -797,7 +797,7 @@ class ApiController extends Controller{
       }
 
 
-      public function getGenres(Request $request){
+      public function getFilters(Request $request){
 
         $token = $request->bearerToken();
 
@@ -806,10 +806,20 @@ class ApiController extends Controller{
         $response = [];
 
         if($customer_data){
-          $response = DB::table('movie_gender')
+
+          //Get Show Genders
+          $genders = DB::table('movie_gender')
           ->select('movie_gender_id','movie_gender_name')
           ->where('movie_gender.language_id', $this->language_id)
           ->get();
+          if($genders){
+            $response[] = array(
+              'header' => 'Generos',
+              'data' = > $genders
+            );
+          }
+
+          
         }
 
         return response()->json([

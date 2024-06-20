@@ -455,7 +455,7 @@ class ApiController extends Controller{
 
         $token = $request->bearerToken();
 
-       // $data = $request->all();
+        $input = $request->all();
     
         $customer_data = $this->getCustomerData($token);
   
@@ -504,7 +504,7 @@ class ApiController extends Controller{
 
         return response()->json([
           "status"  => true,
-          "data"    => $list_to_customer
+          "data"    => $input
       ], 201);
       }
 

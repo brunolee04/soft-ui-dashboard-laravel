@@ -455,7 +455,7 @@ class ApiController extends Controller{
 
         $token = $request->bearerToken();
 
-        $input = $request->all();
+        $inputs = $request->all();
     
         $customer_data = $this->getCustomerData($token);
   
@@ -478,8 +478,13 @@ class ApiController extends Controller{
             ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
             ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')
             ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
+            //filter
+            if(isset($inputs['genderFilterValues'])&& count($inputs['genderFilterValues']) > 0){
+              ->join('movie_to_movie_gender', 'movie.movie_id', '=', 'movie_to_movie_gender.movie_id')
+            }
             ->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
             ->get();
+
             if($db_show_data->count() > 0){
               //getting the movie genres
               foreach($db_show_data as $db_show_data_one){
@@ -504,7 +509,7 @@ class ApiController extends Controller{
 
         return response()->json([
           "status"  => true,
-          "data"    => $input
+          "data"    => $list_to_customer
       ], 201);
       }
 

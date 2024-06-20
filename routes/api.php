@@ -62,7 +62,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('getMyListsWithShows/{customer_id}',[ApiController::class,'getMyListsWithShows']);
     Route::post('/myList/addShow',[ApiController::class, 'setShowToMyList']);
     Route::post('/myList/saveNewList',[ApiController::class, 'saveNewList']);
-    Route::get('myList/getShows',[ApiController::class, 'completeCustomerList']);
+    //Route::get('myList/getShows',[ApiController::class, 'completeCustomerList']);
+    Route::post('/myList/getShows',[ApiController::class, 'completeCustomerList']);
     
    
 });

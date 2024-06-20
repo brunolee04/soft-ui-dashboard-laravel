@@ -482,7 +482,7 @@ class ApiController extends Controller{
               ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
               ->join('movie_to_movie_gender', 'movie.movie_id', '=', 'movie_to_movie_gender.movie_id')
               ->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
-              ->whereIn('movie_to_movie_gender.gender_id',$inputs['genderFilterValues'])
+              ->whereIn('movie_to_movie_gender.movie_gender_id',$inputs['genderFilterValues'])
               ->get();
             }
             else{

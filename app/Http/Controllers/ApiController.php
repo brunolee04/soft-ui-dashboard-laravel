@@ -473,17 +473,27 @@ class ApiController extends Controller{
           foreach($db_list_shows as $db_list_show){
   
             $new_show_data = [];
-            
-            $db_show_data = DB::table('movie')
-            ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
-            ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')
-            ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
-            //filter
-            if(isset($inputs['genderFilterValues'])&& count($inputs['genderFilterValues']) > 0){
+
+             //filter
+             if(isset($inputs['genderFilterValues'])&& count($inputs['genderFilterValues']) > 0){
+              $db_show_data = DB::table('movie')
+              ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
+              ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')
+              ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
               ->join('movie_to_movie_gender', 'movie.movie_id', '=', 'movie_to_movie_gender.movie_id')
+              ->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
+              ->get();
             }
-            ->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
-            ->get();
+            else{
+              $db_show_data = DB::table('movie')
+              ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
+              ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')
+              ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
+              ->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
+              ->get();
+            }
+            
+          
 
             if($db_show_data->count() > 0){
               //getting the movie genres

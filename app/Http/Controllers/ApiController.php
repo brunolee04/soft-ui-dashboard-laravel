@@ -475,7 +475,7 @@ class ApiController extends Controller{
             $new_show_data = [];
 
             $searchString = isset($inputs['searchInputText']) && strlen($inputs['searchInputText']) > 0 ? $inputs['searchInputText'] : "";
-            $genderFilterValues = isset($inputs['genderFilterValues']) && count($inputs['genderFilterValues']) > 0 ? $inputs['genderFilterValues'] : [];
+            $genderFilterValues = isset($inputs['genderFilterValues']) && is_array($inputs['genderFilterValues']) && count($inputs['genderFilterValues']) > 0 ? $inputs['genderFilterValues'] : [];
              //filter
              
               $db_show_data = DB::table('movie')

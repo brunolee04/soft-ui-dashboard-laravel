@@ -822,6 +822,12 @@ class ApiController extends Controller{
         $response = [];
 
         if($customer_data){
+          //Get show Search
+          $response[] = array(
+            'header' => 'Pesquisar',
+            'type'   => 'search',
+            'data'   => []
+          );
 
           //Get Show Genders
           $genders = DB::table('movie_gender')
@@ -831,9 +837,11 @@ class ApiController extends Controller{
           if($genders){
             $response[] = array(
               'header' => 'Generos',
-              'data' => $genders
+              'type'   => 'genre',
+              'data'   => $genders
             );
           }
+
 
           
         }

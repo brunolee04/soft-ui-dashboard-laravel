@@ -328,26 +328,6 @@ class ApiController extends Controller{
             "data"    => $movie_data
         ], 201);
       }
-
-      public function getMoviesWithFilters(Request $request){
-
-        $response = [];
-
-        $inputs = $request->all();
-
-        $token = $request->bearerToken();
-    
-        $customer_data = $this->getCustomerData($token);
-  
-        if($customer_data!==false){
-            
-        }
-
-          return response()->json([
-            "status"  => true,
-            "data"    => $list_to_home
-        ], 201);
-      }
   
       public function homemovies(){
 
@@ -494,21 +474,15 @@ class ApiController extends Controller{
   
             $new_show_data = [];
 
-            //filter
-            $filter = [];
-
-            $filter['gender'] = isset($inputs['genderFilterValues']) && count($inputs['genderFilterValues']) ? $inputs['genderFilterValues'] : [];
-
-            $filter['search'] = isset($inputs['searchFilterValues']) && strlen($inputs['searchFilterValues']) > 0 ? $inputs['searchFilterValues'] : '';
-
-            if($filter){
+             //filter
+             if(isset($inputs['genderFilterValues'])&& count($inputs['genderFilterValues']) > 0){
               $db_show_data = DB::table('movie')
               ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
               ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')
               ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
               ->join('movie_to_movie_gender', 'movie.movie_id', '=', 'movie_to_movie_gender.movie_id')
               ->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
-              ->whereIn('movie_to_movie_gender.movie_gender_id',$filter['gender'])
+              ->whereIn('movie_to_movie_gender.movie_gender_id',$inputs['genderFilterValues'])
               ->get();
             }
             else{

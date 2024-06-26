@@ -479,22 +479,21 @@ class ApiController extends Controller{
             $genderFilterValues = isset($inputs['genderFilterValues']) && is_array($inputs['genderFilterValues']) && count($inputs['genderFilterValues']) > 0 ? $inputs['genderFilterValues'] : [];
              //filter
              
-              $db_show_data = DB::table('movie')
-              ->distinct()              
+              $db_show_data = DB::table('movie')             
               ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
               ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')
-              ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id');
+              ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')->get();;
               
-                if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
-                  return $db_show_data->join('movie_to_movie_gender', 'movie.movie_id', '=', 'movie_to_movie_gender.movie_id');
-                }
+                // if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
+                //   return $db_show_data->join('movie_to_movie_gender', 'movie.movie_id', '=', 'movie_to_movie_gender.movie_id');
+                // }
                
               // ->join('movie_to_movie_gender',  function($query) use ($genderFilterValues){
               //   if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
               //     $query->on('movie.movie_id', '=', 'movie_to_movie_gender.movie_id');
               //   }
               // })
-              $db_show_data->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])->get();
+              // $db_show_data->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
               // ->when($searchString,function($query,$searchString){
               //   if(strlen($searchString) > 0){
               //     return $query->where('movie_description.movie_description_name','LIKE',"%{$searchString}%");

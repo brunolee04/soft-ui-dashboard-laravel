@@ -479,7 +479,7 @@ class ApiController extends Controller{
             $genderFilterValues = isset($inputs['genderFilterValues']) && is_array($inputs['genderFilterValues']) && count($inputs['genderFilterValues']) > 0 ? $inputs['genderFilterValues'] : [];
              //filter
              
-              $db_show_data = DB::table('movie ')
+              $db_show_data = DB::table('movie')
               ->distinct()              
               ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
               ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')

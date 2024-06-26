@@ -499,11 +499,11 @@ class ApiController extends Controller{
                   return $query->where('movie_description.movie_description_name','LIKE',"%{$searchString}%");
                 }
               })
-              ->when($genderFilterValues,function($query,$genderFilterValues){
-                if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
-                  return $query->whereIn('movie_to_movie_gender.movie_gender_id ',$genderFilterValues);
-                }
-              });
+              // ->when($genderFilterValues,function($query,$genderFilterValues){
+              //   if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
+              //     return $query->whereIn('movie_to_movie_gender.movie_gender_id ',$genderFilterValues);
+              //   }
+              // });
               
               $response_show_data = $db_show_data->get();
             
@@ -542,7 +542,7 @@ class ApiController extends Controller{
 
         return response()->json([
           "status"  => true,
-          "data"    => $response_show_data
+          "data"    => $genderFilterValues
       ], 201);
       }
 

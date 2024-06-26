@@ -487,26 +487,24 @@ class ApiController extends Controller{
                 if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
                   return $db_show_data->join('movie_to_movie_gender', 'movie.movie_id', '=', 'movie_to_movie_gender.movie_id');
                 }
-
-                $db_show_data = $db_show_data->get();
                
               // ->join('movie_to_movie_gender',  function($query) use ($genderFilterValues){
               //   if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
               //     $query->on('movie.movie_id', '=', 'movie_to_movie_gender.movie_id');
               //   }
               // })
-              // $db_show_data->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
-              // ->when($searchString,function($query,$searchString){
-              //   if(strlen($searchString) > 0){
-              //     return $query->where('movie_description.movie_description_name','LIKE',"%{$searchString}%");
-              //   }
-              // })
-              // ->when($genderFilterValues,function($query,$genderFilterValues){
-              //   if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
-              //     return $query->whereIn('movie_to_movie_gender.movie_gender_id',$genderFilterValues);
-              //   }
-              // })
-              
+              $db_show_data->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
+              ->when($searchString,function($query,$searchString){
+                if(strlen($searchString) > 0){
+                  return $query->where('movie_description.movie_description_name','LIKE',"%{$searchString}%");
+                }
+              })
+              ->when($genderFilterValues,function($query,$genderFilterValues){
+                if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
+                  return $query->whereIn('movie_to_movie_gender.movie_gender_id',$genderFilterValues);
+                }
+              })
+              $db_show_data =  $db_show_data->get();
             
             // else{
             //   $db_show_data = DB::table('movie')

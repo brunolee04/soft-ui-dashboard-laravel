@@ -482,7 +482,7 @@ class ApiController extends Controller{
               $db_show_data = DB::table('movie')             
               ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
               ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')
-              ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
+              ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id');
               
                 if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
                   return $db_show_data->join('movie_to_movie_gender', 'movie.movie_id', '=', 'movie_to_movie_gender.movie_id');

@@ -486,7 +486,7 @@ class ApiController extends Controller{
               ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
               ->join('movie_to_movie_gender', function (JoinClause $query) {
                 if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
-                  return $query->on('movie.movie_id', '=', 'movie_to_movie_gender.movie_id');
+                  $query->on('movie.movie_id', '=', 'movie_to_movie_gender.movie_id');
                 }
               })
               ->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])

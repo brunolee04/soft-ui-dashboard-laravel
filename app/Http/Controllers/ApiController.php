@@ -501,7 +501,7 @@ class ApiController extends Controller{
               })
               ->when($genderFilterValues,function($query,$genderFilterValues){
                 if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
-                  return $query->whereIn('movie_to_movie_gender.movie_gender_id ',$genderFilterValues);
+                  return $query->whereIn('movie_to_movie_gender.movie_gender_id',$genderFilterValues);
                 }
               });
               

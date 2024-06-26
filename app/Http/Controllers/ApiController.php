@@ -483,8 +483,10 @@ class ApiController extends Controller{
               ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
               ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')
               ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
-              ->leftJoin('movie_to_movie_gender', function ($join) {
-                $join->on('movie.movie_id', '=', 'movie_to_movie_gender.movie_id');
+              ->leftJoin('movie_to_movie_gender', function ($query,$genderFilterValues) {
+                if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
+                  $query->on('movie.movie_id', '=', 'movie_to_movie_gender.movie_id');
+                }
               })
               ->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])
               ->when($searchString,function($query,$searchString){

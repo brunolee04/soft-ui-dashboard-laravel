@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Query\JoinClause;
 
 
 use App\Models\CustomerRatesMovie;
@@ -483,9 +484,9 @@ class ApiController extends Controller{
               ->join('movie_description', 'movie.movie_id', '=', 'movie_description.movie_id')
               ->join('movie_season', 'movie_season.movie_id', '=', 'movie.movie_id')
               ->join('movie_to_customer_list', 'movie.movie_id', '=', 'movie_to_customer_list.movie_id')
-              ->leftJoin('movie_to_movie_gender', function ($query,$genderFilterValues) {
+              ->join('movie_to_movie_gender', function (JoinClause $query) {
                 if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
-                  $query->on('movie.movie_id', '=', 'movie_to_movie_gender.movie_id');
+                  return $query->on('movie.movie_id', '=', 'movie_to_movie_gender.movie_id');
                 }
               })
               ->where('movie_to_customer_list.customer_list_id','=',$db_list_show['customer_list_id'])

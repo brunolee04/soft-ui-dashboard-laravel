@@ -488,7 +488,7 @@ class ApiController extends Controller{
                 //   return $db_show_data->join('movie_to_movie_gender', 'movie.movie_id', '=', 'movie_to_movie_gender.movie_id');
                 // }
 
-                $db_show_data->get();
+                $db_show_data = $db_show_data->get();
                
               // ->join('movie_to_movie_gender',  function($query) use ($genderFilterValues){
               //   if(is_array($genderFilterValues) && count($genderFilterValues) > 0){

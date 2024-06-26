@@ -498,12 +498,12 @@ class ApiController extends Controller{
                 if(strlen($searchString) > 0){
                   return $query->where('movie_description.movie_description_name','LIKE',"%{$searchString}%");
                 }
+              })
+              ->when($genderFilterValues,function($query,$genderFilterValues){
+                if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
+                  return $query->whereIn('movie_to_movie_gender.movie_gender_id ',$genderFilterValues);
+                }
               });
-              // ->when($genderFilterValues,function($query,$genderFilterValues){
-              //   if(is_array($genderFilterValues) && count($genderFilterValues) > 0){
-              //     return $query->whereIn('movie_to_movie_gender.movie_gender_id ',$genderFilterValues);
-              //   }
-              // });
               
               $response_show_data = $db_show_data->get();
             
@@ -518,21 +518,21 @@ class ApiController extends Controller{
             
           
 
-            // if($response_show_data->count() > 0){
-            //   //getting the movie genres
-            //   foreach($response_show_data as $db_show_data_one){
-            //     $db_show_data_one->genres = DB::table('movie_gender')
-            //     ->select('movie_gender.movie_gender_id','movie_gender_name')
-            //     ->join('movie_to_movie_gender', 'movie_gender.movie_gender_id', '=', 'movie_to_movie_gender.movie_gender_id')
-            //     ->where('movie_to_movie_gender.movie_id','=',$db_show_data_one->movie_id)
-            //     ->where('movie_gender.language_id','=',$this->language_id)
-            //     ->get();
-            //     $new_show_data[] = $db_show_data_one;
-            //   }
+            if($response_show_data->count() > 0){
+              //getting the movie genres
+              foreach($response_show_data as $db_show_data_one){
+                $db_show_data_one->genres = DB::table('movie_gender')
+                ->select('movie_gender.movie_gender_id','movie_gender_name')
+                ->join('movie_to_movie_gender', 'movie_gender.movie_gender_id', '=', 'movie_to_movie_gender.movie_gender_id')
+                ->where('movie_to_movie_gender.movie_id','=',$db_show_data_one->movie_id)
+                ->where('movie_gender.language_id','=',$this->language_id)
+                ->get();
+                $new_show_data[] = $db_show_data_one;
+              }
     
-            //   $db_list_show['show_data'] = $new_show_data;
-            //   $list_to_customer[] = $db_list_show;
-            // }
+              $db_list_show['show_data'] = $new_show_data;
+              $list_to_customer[] = $db_list_show;
+            }
     
             
           }
@@ -542,7 +542,7 @@ class ApiController extends Controller{
 
         return response()->json([
           "status"  => true,
-          "data"    => $genderFilterValues
+          "data"    => $list_to_customer
       ], 201);
       }
 

@@ -834,7 +834,10 @@ class ApiController extends Controller{
         
       }
 
-
+      /*
+        @method: Get Filters
+        @desc: gets a lot of filters
+      */
       public function getFilters(Request $request){
 
         $token = $request->bearerToken();
@@ -848,6 +851,12 @@ class ApiController extends Controller{
           $response[] = array(
             'header' => 'Pesquisar',
             'type'   => 'search',
+            'data'   => []
+          );
+          //Get show Duration
+          $response[] = array(
+            'header' => 'Duração',
+            'type'   => 'duration',
             'data'   => []
           );
 

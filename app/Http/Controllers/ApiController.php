@@ -546,6 +546,34 @@ class ApiController extends Controller{
       ], 201);
       }
 
+
+      public function getMyListById(Request $request){
+        
+        $listId = $request->listId;
+
+        $token = $request->bearerToken();
+
+        $customer_data = $this->getCustomerData($token);
+
+        $response = [];
+  
+        if($customer_data!==false){
+          //1 - check if list owns to identified customer
+          $db_list_info = DB::table('customer_list')
+              ->where('customer_list.customer_list_id','=',$listId)
+              ->where('customer_list.customer_id','=',$customer_data->customer_id)
+              ->first();
+
+          $response['data'] = $db_list_info;
+        }
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+      ], 201);
+
+      }
+
    
       /**
        * Rate Movie

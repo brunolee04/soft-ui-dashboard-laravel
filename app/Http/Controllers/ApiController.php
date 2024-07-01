@@ -559,7 +559,7 @@ class ApiController extends Controller{
   
         if($customer_data!==false){
           //1 - check if list owns to identified customer
-          $db_list_info = DB::table('customer_list ')
+          $db_list_info = DB::table('customer_list')
               ->where('customer_list.customer_list_id','=',$customer_list_id)
               ->where('customer_list.customer_id','=',$customer_data->customer_id)
               ->first();

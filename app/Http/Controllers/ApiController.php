@@ -583,6 +583,35 @@ class ApiController extends Controller{
 
       }
 
+
+      public function delMyListById(Request $request){
+        $customer_list_id = $request->listId;
+
+        $token = $request->bearerToken();
+
+        $customer_data = $this->getCustomerData($token);
+
+        $response = false;
+  
+        if($customer_data!==false){
+            //1 - check if list owns to identified customer
+            $db_list_info = DB::table('customer_list')
+            ->where('customer_list.customer_list_id','=',$customer_list_id)
+            ->where('customer_list.customer_id','=',$customer_data->customer_id)
+            ->first();
+
+            if($db_list_info){
+              MovieToCustomerList::where('customer_list_id',$customer_list_id)->delete();
+              CustomerList::where('customer_list_id',$customer_list_id)->delete();
+              $response = true;
+            }
+
+        return response()->json([
+          "status"  => true,
+          "data"    => $response
+        ], 201);
+      }
+
    
       /**
        * Rate Movie

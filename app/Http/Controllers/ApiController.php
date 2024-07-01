@@ -606,10 +606,11 @@ class ApiController extends Controller{
               $response = true;
             }
 
-        return response()->json([
-          "status"  => true,
-          "data"    => $response
-        ], 201);
+          return response()->json([
+            "status"  => true,
+            "data"    => $response
+          ], 201);
+        }
       }
 
    

@@ -549,7 +549,7 @@ class ApiController extends Controller{
 
       public function getMyListById(Request $request){
         
-        $listId = $request->listId;
+        $customer_list_id = $request->listId;
 
         $token = $request->bearerToken();
 
@@ -560,9 +560,15 @@ class ApiController extends Controller{
         if($customer_data!==false){
           //1 - check if list owns to identified customer
           $db_list_info = DB::table('customer_list')
-              ->where('customer_list.customer_list_id','=',$listId)
+              ->where('customer_list.customer_list_id','=',$customer_list_id)
               ->where('customer_list.customer_id','=',$customer_data->customer_id)
               ->first();
+
+          //2 - Gets the list shows
+          $db_list_info['shows'] = DB::table("movie_to_customer_list")
+          ->where('movie_to_customer_list.customer_list_id','=',$customer_list_id)
+          ->get();
+          
 
           $response['data'] = $db_list_info;
         }
@@ -785,12 +791,7 @@ class ApiController extends Controller{
           "status"  => true,
           "data"    => $response
         ], 201);
-    
-
-        
-
-        
-        
+     
       }
 
 
